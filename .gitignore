@@ -3,4 +3,5 @@
 
 # 只保留 eassy 版本 PDF 和 .gitignore
 !eassy_*.pdf
+eassy_*_cn.pdf
 !.gitignore
