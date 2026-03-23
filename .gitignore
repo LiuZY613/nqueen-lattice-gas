@@ -1,13 +1,6 @@
-# LaTeX 编译产物
-*.aux
-*.log
-*.out
-*.synctex.gz
-*.fls
-*.fdb_latexmk
-*.bbl
-*.blg
+# 忽略所有文件
+*
 
-# Python 缓存
-__pycache__/
-*.pyc
+# 只保留 eassy 版本 PDF 和 .gitignore
+!eassy_*.pdf
+!.gitignore
