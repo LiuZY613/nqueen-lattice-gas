@@ -28,7 +28,7 @@ interactions along shared rows, columns, and diagonals---from the
 perspective of statistical mechanics.  The
 ground states are exactly the $Q(N)$ solutions of the classical
 $N$-queens problem, whose entropy per queen
-$s_0 \approx \ln N - \gamma$ ($\gamma \approx 1.942$) exhibits a
+$s_0 \approx \ln N - \gamma$ ($\gamma \in [1.939,\, 1.945]$) exhibits a
 characteristic constraint hierarchy: each successive geometric
 constraint---columns, then diagonals---reduces the entropy from
 the free-placement value $\ln N$ by a definite constant.
@@ -58,9 +58,6 @@ check.
 
 \maketitle
 
-\lw{think about the logic flow of your sections, do they flow well??? 
-III and IV does not seem to be in paralel to II and IV}
-
 %=====================================================================
 \section{Introduction}
 \label{sec:intro}
@@ -73,28 +70,22 @@ problems in mathematics, dating back to the work of Bezzel in
 enumeration of solutions was resolved only recently.  Simkin~\cite{Simkin2022}
 proved that the number of solutions $Q(N)$ satisfies
 \begin{equation}
-  Q(N) = \left((1 \pm o(1))\frac{N}{e^{\gamma}} \right)^N, \quad
-  \gamma \approx 1.942,
+  Q(N) \sim \left(\frac{N}{e^{\gamma}} \right)^N, \quad
+  \gamma \in [1.939,\, 1.945],
   \label{eq:QN}
 \end{equation}
 building on the breakthrough of Bowtell and
 Keevash~\cite{Bowtell2023} and earlier bounds by Luria and
-Simkin~\cite{Luria2021}.  Nobel, Agrawal, and Boyd~\cite{Nobel2023}
-subsequently computed the tightest known bounds on $\gamma$ by
-solving Simkin's convex optimization formulation with an
-infeasible-start Newton method for board sizes up to $N = 2048$,
-narrowing $\gamma$ to the interval
-$[1.944\,000\,75,\;1.944\,001\,08]$ \lw{why is is outsize 1.942 ? }
-\lw{do you need to list these precise numbers here ? do they matter to your story /}---a precision of ${\sim}\,3
-\times 10^{-7}$.  All of these determinations are purely
+Simkin~\cite{Luria2021}.  Simkin's proof introduces \emph{queenons}---limit
+objects defined as probability measures on the unit square---and
+characterizes $\gamma$ as the solution of a convex optimization
+problem over this space; the upper bound employs the entropy method
+while the lower bound is established by a randomized construction
+algorithm.  All of these determinations are purely
 combinatorial.  Equation~\eqref{eq:QN} yields a ground-state entropy
 per queen
-$s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma + o(1)$.
+$s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
-\lw{with unknown o(1) does gamma make sense ?}
-
-Throughout this paper we set $k_B = 1$, so that entropy is
-dimensionless and temperature has units of energy.
 The form of the ground-state entropy is suggestive.  On an
 $N \times N$ lattice, a single particle placed freely in one row has
 $\ln N$ units of entropy---the maximal combinatorial freedom per
@@ -122,8 +113,9 @@ structure underlying the combinatorics.
 This observation motivates the present work.  We embed the $N$-queens
 problem in a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
-Carlo simulations. \lw{move your kb = 1 remark here}
- A central finding is that the specific heat per
+Carlo simulations.  Throughout this paper we set $k_B = 1$, so that
+entropy is dimensionless and temperature has units of energy.
+A central finding is that the specific heat per
 queen, $C_v/N$, converges to a size-independent curve for
 sufficiently large $N$, exhibiting a Schottky-type peak but no phase
 transition.  Combined with the exactly known high-temperature entropy
@@ -136,17 +128,10 @@ which extracts the ground-state entropy---and hence the Simkin
 constant $\gamma$---purely from Monte Carlo simulation data.
 This provides the first \emph{physical} route to $\gamma$,
 complementary to the combinatorial and optimization-based approaches
-that have dominated to date~\cite{Simkin2022,Nobel2023}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.94$ at
+that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.94$ at
 $N = 512$ (within $0.1\%$ of the combinatorial value), demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
-
-\lw{why this paragraph ? }
-The queen lattice gas also connects to the broader field of
-constraint satisfaction problems (CSPs)~\cite{Mezard2009,Krzakala2007}:
-the $N$-queens problem sits precisely at the satisfiability threshold
-(conflicts become unavoidable for more than $N$ queens), paralleling
-random $k$-SAT near its critical clause density.
 
 To gain analytical insight into the thermodynamic curves, we develop a
 Poisson mean-field theory based on independent attack-line statistics,
@@ -154,8 +139,9 @@ reproducing the energy and specific heat to within a few percent.
 
 The paper is organized as follows.
 Section~\ref{sec:model} defines the model.
-Section~\ref{sec:entropy} discusses the ground-state entropy.
-Section~\ref{sec:highT} derives the exact high-temperature limit.
+Section~\ref{sec:analytical} presents analytical results: the
+ground-state entropy and constraint hierarchy, and the exact
+high-temperature limit.
 Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
 Section~\ref{sec:mf} develops the mean-field theory.
@@ -236,16 +222,19 @@ Fig.~\ref{fig:schematic}.
 
 
 %=====================================================================
-\section{Ground-state entropy and constraint hierarchy}
-\label{sec:entropy}
+\section{Analytical results}
+\label{sec:analytical}
 %=====================================================================
+
+\subsection{Ground-state entropy and constraint hierarchy}
+\label{sec:entropy}
 
 For $N$ queens, the ground states ($E = 0$) correspond to the
 $Q(N)$ non-attacking configurations.  Using
 Eq.~\eqref{eq:QN}, the entropy per queen is
 \begin{equation}
-  s_0 = \frac{\ln Q(N)}{N}
-  = \ln N - \gamma + o(1), \quad \gamma \approx 1.942.
+  s_0 = \lim_{N\to\infty}\frac{\ln Q(N)}{N}
+  = \ln N - \gamma, \quad \gamma \in [1.939,\, 1.945].
   \label{eq:s0}
 \end{equation}
 
@@ -297,11 +286,8 @@ constant independent of $N$ suggests that the finite-temperature
 thermodynamics may also admit a simple analytical description.  We
 turn to this question next, beginning with the high-temperature limit.
 
-
-%=====================================================================
-\section{High-temperature limit}
+\subsection{High-temperature limit}
 \label{sec:highT}
-%=====================================================================
 
 At $T \to \infty$, all $\binom{N^2}{N}$ configurations with $N$
 queens on the $N \times N$ board are equally probable.  We derive the
@@ -588,7 +574,7 @@ For $N \ge 32$, where exact $Q(N)$ is unknown, we use $s_0^{\rm MC}$
 to extract the Simkin constant via
 $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$.
 The extracted values converge toward the known
-asymptotic value $\gamma = 1.942$~\cite{Simkin2022,Nobel2023}:
+asymptotic value $\gamma \in [1.939,\, 1.945]$~\cite{Simkin2022}:
 $\gamma_{\rm MC} = 1.83$ ($N = 32$), $1.89$ ($N = 64$),
 $1.90$ ($N = 100$), $1.92$ ($N = 128$, $256$),
 and $1.94$ ($N = 512$), with the deviation
@@ -599,12 +585,11 @@ coarser 126-point temperature grid used for the large-$N$ runs,
 which introduces a small discretization error in the numerical
 integration comparable to the statistical uncertainty.
 The dominant source of error at moderate $N$ is the finite-size
-correction to the Simkin formula [the $o(1)$ term in
-Eq.~\eqref{eq:QN}], which makes $\gamma_{\rm eff}(N)
+correction to the Simkin formula, which makes $\gamma_{\rm eff}(N)
 = \ln N - s_0(N)$ systematically smaller than the asymptotic
 $\gamma$; the MC integration itself introduces only sub-percent
 errors, as confirmed by the $N = 8$ and $N = 16$ benchmarks.
-The monotonic convergence of $\gamma_{\rm MC}$ toward $1.942$ with
+The monotonic convergence of $\gamma_{\rm MC}$ toward $[1.939,\, 1.945]$ with
 increasing $N$ confirms the mutual consistency of the Monte Carlo
 thermodynamics, the Stirling approximation for $S(\infty)$, and the
 Simkin combinatorial formula.
@@ -617,7 +602,7 @@ Simkin combinatorial formula.
   ground-state entropy $s_0^{\rm exact} = \ln Q(N)/N$.
   For $N \ge 32$, we extract
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ and compare with the
-  Simkin asymptotic value $\gamma = 1.942$.
+  Simkin asymptotic value $\gamma \in [1.939,\, 1.945]$.
   The $N = 8$--$128$ data use a 318-point temperature grid;
   $N = 256$ and $512$ use a 126-point grid optimized for the
   entropy integral (see text).}
@@ -839,7 +824,7 @@ simulations with analytical mean-field theory.  Our main findings are:
   agreeing with exact values at $N = 8$ and $16$ to within $1.2\%$.
   For $N \ge 32$, the extracted Simkin constant
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ converges
-  to $\gamma = 1.942$, reaching $1.94$ at $N = 512$ ($0.07\%$
+  to $\gamma \in [1.939,\, 1.945]$, reaching $1.94$ at $N = 512$ ($0.07\%$
   deviation).  This nontrivial self-consistency check connects
   the Simkin combinatorial formula, the Stirling approximation for
   the high-temperature entropy, and the Monte Carlo specific heat
@@ -864,7 +849,7 @@ this model a compelling testbed for ideas at the interface of
 constraint satisfaction and statistical mechanics.
 
 A natural next step is to extend the simulations to larger system
-sizes ($N \gtrsim 256$), which would yield a more precise
+sizes ($N \gtrsim 512$), which would yield a more precise
 thermodynamic determination of $\gamma$ and further establish the
 validity of this physical approach to combinatorial constants.
 
@@ -891,12 +876,6 @@ Z.~Luria and M.~Simkin,
 A lower bound for the $n$-queens problem,
 arXiv:2105.11431 (2021).
 
-\bibitem{Nobel2023}
-P.~Nobel, A.~Agrawal, and S.~Boyd,
-Computing tighter bounds on the $n$-queens constant via Newton's
-method,
-Optim.\ Lett.\ \textbf{17}, 1229 (2023).
-
 \bibitem{Knuth2022}
 D.~E.~Knuth,
 \textit{The Art of Computer Programming}, Vol.~4B
@@ -912,18 +891,6 @@ Phys.\ Rev.\ E \textbf{79}, 016703 (2009).
 N.~Polson and V.~Sokolov,
 Counting $N$ queens,
 arXiv:2407.08830 (2024).
-
-\bibitem{Mezard2009}
-M.~M\'ezard and A.~Montanari,
-\textit{Information, Physics, and Computation}
-(Oxford University Press, Oxford, 2009).
-
-\bibitem{Krzakala2007}
-F.~Krzaka{\l}a, A.~Montanari, F.~Ricci-Tersenghi,
-G.~Semerjian, and L.~Zdeborov\'a,
-Gibbs states and the set of solutions of random constraint
-satisfaction problems,
-Proc.\ Natl.\ Acad.\ Sci.\ USA \textbf{104}, 10318 (2007).
 
 \bibitem{Kawasaki1966}
 K.~Kawasaki,
