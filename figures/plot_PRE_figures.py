@@ -52,10 +52,6 @@ COL_WIDTH = 3.4   # PRE single-column width
 PANEL_HEIGHT = 2.5  # height per panel
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-TASK2 = r'C:\Users\刘宗岳\Desktop\nqueen_simulation\task2_N等于L'
-PRECISE_DIR = os.path.join(TASK2, '精确结果')
-DENSE_DIR = os.path.join(TASK2, '密集结果')
-HIGHT_DIR = os.path.join(TASK2, '高温结果')
 
 
 def load(path):
@@ -75,41 +71,21 @@ def load(path):
 # ============================================================
 # Load and merge all data
 # ============================================================
-Ns = [8, 16, 32, 64, 100, 128]
+Ns = [8, 16, 32, 64, 128, 256]
 colors = ['#0072B2', '#D55E00', '#009E73', '#E69F00', '#CC79A7', '#000000']
 markers = ['o', 's', '^', 'D', 'v', 'h']
 
 merged = {}
 
 for N in Ns:
-    parts = []
-    f_precise = os.path.join(PRECISE_DIR, f'data_L{N}.dat')
-    if os.path.exists(f_precise):
-        d = load(f_precise)
+    fpath = os.path.join(BASE, f'data_N{N}.dat')
+    if os.path.exists(fpath):
+        d = load(fpath)
         if d.shape[0] > 0:
-            parts.append(d)
-            print(f"  N={N}: precise {d.shape[0]} pts (T={d[0,0]:.3f}~{d[-1,0]:.3f})")
-
-    f_dense = os.path.join(DENSE_DIR, f'data_L{N}_dense.dat')
-    if os.path.exists(f_dense):
-        d = load(f_dense)
-        if d.shape[0] > 0:
-            parts.append(d)
-            print(f"  N={N}: dense {d.shape[0]} pts (T={d[0,0]:.3f}~{d[-1,0]:.3f})")
-
-    f_highT = os.path.join(HIGHT_DIR, f'data_L{N}_highT.dat')
-    if os.path.exists(f_highT):
-        d = load(f_highT)
-        if d.shape[0] > 0:
-            parts.append(d)
-            print(f"  N={N}: high-T {d.shape[0]} pts (T={d[0,0]:.1f}~{d[-1,0]:.1f})")
-
-    if parts:
-        all_data = np.vstack(parts)
-        _, unique_idx = np.unique(all_data[:, 0], return_index=True)
-        merged[N] = all_data[unique_idx]
-        print(f"  N={N}: merged {merged[N].shape[0]} temperature points "
-              f"(T={merged[N][0,0]:.3f}~{merged[N][-1,0]:.1f})")
+            merged[N] = d
+            print(f"  N={N}: loaded {d.shape[0]} pts (T={d[0,0]:.3f}~{d[-1,0]:.3f})")
+    else:
+        print(f"  N={N}: file not found, skipping")
 
 print()
 
@@ -323,7 +299,7 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(COL_WIDTH, 2 * PANEL_HEIGHT))
 # --- Top panel (a): E/N comparison ---
 # MC data (only N=100, 128 for clarity)
 for i, N in enumerate(Ns):
-    if N not in merged or N < 100:
+    if N not in merged or N < 128:
         continue
     d = merged[N]
     mask = d[:, 0] <= 2.0
@@ -350,7 +326,7 @@ ax1.text(0.03, 0.95, '(a)', transform=ax1.transAxes,
 
 # --- Bottom panel (b): Cv/N comparison ---
 for i, N in enumerate(Ns):
-    if N not in merged or N < 100:
+    if N not in merged or N < 128:
         continue
     d = merged[N]
     mask = (d[:, 0] >= 0.01) & (d[:, 0] <= 1.0)

@@ -1,153 +1,151 @@
-# N=512 Queen Lattice Gas — Large-Scale Simulation Plan
+# N=512 皇后格点气体 — 大规模模拟方案
 
-> Date: 2026-03-23
-> Author: Zong-Yue Liu
-> Purpose: Extract ground-state entropy s_0 for N=512 via thermodynamic integration
+> 日期：2026-03-23
+> 作者：刘宗岳
+> 目标：通过热力学积分提取 N=512 的基态熵 s_0
 
 ---
 
-## 1. Physical Goal
+## 1. 物理目标
 
-Ground-state entropy per queen:
+每个皇后的基态熵：
 
 ```
-s_0^MC = S(inf)/N - integral_0^inf (Cv / NT) dT
+s_0^MC = S(inf)/N - ∫_0^∞ (Cv / NT) dT
 ```
 
-where `S(inf)/N = (1/N) * ln C(N^2, N)` is exact. For N=512:
+其中 `S(inf)/N = (1/N) * ln C(N^2, N)` 为精确值。对于 N=512：
 
 - `S(inf)/N = 7.229462`
 - `ln(N) = 6.238325`
-- Expected `s_0 ≈ 4.29`, `gamma_MC = ln(N) - s_0 ≈ 1.937` (vs true gamma = 1.942)
+- 预期 `s_0 ≈ 4.29`，`γ_MC = ln(N) - s_0 ≈ 1.937`（真实值 γ = 1.942）
 
 ---
 
-## 2. Why N=512 is Feasible
+## 2. N=512 的可行性分析
 
-### 2.1 tau_int does NOT grow at the Cv peak
+### 2.1 τ_int 在 Cv 峰处不增长
 
-| N   | tau_int(T=0.225) | tau_int(T=0.075) |
-|-----|-------------------|-------------------|
-| 64  | 135               | 14390             |
-| 100 | 134               | 16454             |
-| 128 | 133               | 18123             |
-| 512 (extrap.) | ~127      | ~31000            |
+| N   | τ_int(T=0.225) | τ_int(T=0.075) |
+|-----|----------------|----------------|
+| 64  | 135            | 14390          |
+| 100 | 134            | 16454          |
+| 128 | 133            | 18123          |
+| 512（外推） | ~127    | ~31000         |
 
-The Cv peak (T ~ 0.225) is the region that contributes most to the integral.
-There, tau_int ~ 130 sweeps regardless of N — dynamics are not critical-slowed.
+Cv 峰值（T ~ 0.225）是对积分贡献最大的区域。
+在该处，τ_int ~ 130 步，与 N 无关——动力学不存在临界慢化。
 
-### 2.2 Cv/N has converged
+### 2.2 Cv/N 已收敛
 
-For N >= 32, Cv/N collapses to a universal function. N=512 data should be
-essentially identical to N=128, with smaller finite-size corrections.
+当 N >= 32 时，Cv/N 坍缩到普适函数上。N=512 的数据应与 N=128 基本一致，有限尺寸修正更小。
 
-### 2.3 Integral contribution by temperature region (N=128 data)
+### 2.3 各温区对积分的贡献（N=128 数据）
 
-| Region       | T range    | Integral contribution | Fraction |
-|--------------|------------|----------------------|----------|
-| Low-T        | 0 ~ 0.1   | 0.076                | 2.6%     |
-| **Peak**     | 0.1 ~ 0.5 | 2.032                | **70.3%** |
-| Mid-T        | 0.5 ~ 2.0 | 0.672                | 23.3%    |
-| High-T       | 2.0 ~ 400 | 0.112                | 3.9%     |
-| **Total**    |            | **2.892**            | 100%     |
-
----
-
-## 3. Benchmark (Server: single core)
-
-| N   | 10^6 sweeps | 10^8 sweeps |
-|-----|-------------|-------------|
-| 128 | 3.4 s       | 5.6 min     |
-| 256 | 6.7 s       | 11.2 min    |
-| 512 | 15.6 s      | 26 min      |
+| 区域         | 温度范围    | 积分贡献  | 占比       |
+|--------------|------------|----------|-----------|
+| 低温区       | 0 ~ 0.1   | 0.076    | 2.6%      |
+| **峰值区**   | 0.1 ~ 0.5 | 2.032    | **70.3%** |
+| 中温区       | 0.5 ~ 2.0 | 0.672    | 23.3%     |
+| 高温区       | 2.0 ~ 400 | 0.112    | 3.9%      |
+| **总计**     |            | **2.892**| 100%      |
 
 ---
 
-## 4. Temperature Grid (140 points total)
+## 3. 性能基准测试（服务器：单核）
 
-### Region 1: Low-T (5 points)
+| N   | 10^6 步   | 10^8 步    |
+|-----|-----------|-----------|
+| 128 | 3.4 秒    | 5.6 分钟   |
+| 256 | 6.7 秒    | 11.2 分钟  |
+| 512 | 15.6 秒   | 26 分钟    |
+
+---
+
+## 4. 温度网格（共 140 个温度点）
+
+### 区域 1：低温区（5 个点）
 - T = 0.050, 0.0625, 0.075, 0.0875, 0.100
-- nmeas = 10^7, therm = 10^6
-- Reason: Cv ~ 0 here; just need to verify ground-state freezing
-- tau_int ~ 20000-30000, but irrelevant since Cv/T ~ 0
-- CPU: 5 x 2.6 min = 13 min
+- 测量步数 nmeas = 10^7，热化步数 therm = 10^6
+- 原因：此处 Cv ~ 0；只需验证基态冻结
+- τ_int ~ 20000-30000，但因 Cv/T ~ 0 而无关紧要
+- CPU 时间：5 × 2.6 分钟 = 13 分钟
 
-### Region 2: Peak (80 points) — CRITICAL
-- T = 0.105, 0.110, ..., 0.500 (step 0.005)
-- nmeas = 10^8, therm = 2 x 10^6
-- Reason: 70% of the integral; need dense grid + high statistics
-- tau_int ~ 130 (at peak) to 16000 (at T=0.1)
-- At T=0.225: 10^8 / 133 = 750,000 independent samples
-- CPU: 80 x 26 min = 34.7 hours
+### 区域 2：峰值区（80 个点）— 关键区域
+- T = 0.105, 0.110, ..., 0.500（步长 0.005）
+- 测量步数 nmeas = 10^8，热化步数 therm = 2 × 10^6
+- 原因：贡献积分的 70%；需要密集网格 + 高统计量
+- τ_int ~ 130（峰值处）至 16000（T=0.1 处）
+- 在 T=0.225 处：10^8 / 133 = 750,000 个独立样本
+- CPU 时间：80 × 26 分钟 = 34.7 小时
 
-### Region 3: Mid-T (40 points)
-- T = 0.55, 0.60, 0.65, ..., 2.0 (step 0.05 up to 1.0)
-- T = 2.0, 2.5, 3.0, 3.5, 4.0, 5.0 (step 0.5)
-- nmeas = 10^7, therm = 5 x 10^5
-- Reason: 23% of integral; tau_int ~ 5-7, very fast decorrelation
-- CPU: 40 x 2.6 min = 1.7 hours
+### 区域 3：中温区（40 个点）
+- T = 0.55, 0.60, 0.65, ..., 2.0（步长 0.05 至 1.0）
+- T = 2.0, 2.5, 3.0, 3.5, 4.0, 5.0（步长 0.5）
+- 测量步数 nmeas = 10^7，热化步数 therm = 5 × 10^5
+- 原因：贡献积分的 23%；τ_int ~ 5-7，去关联极快
+- CPU 时间：40 × 2.6 分钟 = 1.7 小时
 
-### Region 4: High-T (15 points)
+### 区域 4：高温区（15 个点）
 - T = 6, 7, 8, 9, 10, 15, 20, 30, 40, 60, 80, 100, 200, 300, 400
-- nmeas = 10^6, therm = 10^5
-- Reason: < 4% of integral; dominated by 1/T^3 tail
-- CPU: 15 x 0.26 min = 4 min
+- 测量步数 nmeas = 10^6，热化步数 therm = 10^5
+- 原因：贡献不足积分的 4%；由 1/T^3 尾部主导
+- CPU 时间：15 × 0.26 分钟 = 4 分钟
 
 ---
 
-## 5. Computational Cost
+## 5. 计算成本
 
-| Item             | CPU time    |
-|------------------|-------------|
-| Low-T (5 pts)    | 13 min      |
-| Peak (80 pts)    | 34.7 hours  |
-| Mid-T (40 pts)   | 1.7 hours   |
-| High-T (15 pts)  | 4 min       |
-| **Total CPU**    | **~37 hours** |
+| 项目             | CPU 时间      |
+|------------------|--------------|
+| 低温区（5 个点）  | 13 分钟       |
+| 峰值区（80 个点） | 34.7 小时     |
+| 中温区（40 个点） | 1.7 小时      |
+| 高温区（15 个点） | 4 分钟        |
+| **总 CPU 时间**  | **约 37 小时** |
 
-With 30 parallel cores on `home` partition:
-- **Wall time ~ 37h / 30 = 1.2 hours**
-- Using 2 nodes (60 cores): ~40 minutes
-
----
-
-## 6. Expected Results
-
-| N   | gamma_MC | Deviation from 1.942 |
-|-----|----------|---------------------|
-| 64  | 1.891    | 2.6%                |
-| 100 | 1.901    | 2.1%                |
-| 128 | 1.921    | 1.1%                |
-| 512 | ~1.937   | ~0.2-0.3%           |
-
-The monotonic convergence of gamma_MC toward 1.942 with increasing N
-confirms the mutual consistency of the Monte Carlo thermodynamics,
-the Stirling approximation for S(inf), and the Simkin combinatorial formula.
+在 `home` 分区使用 30 个并行核心：
+- **墙钟时间 ~ 37h / 30 = 1.2 小时**
+- 使用 2 个节点（60 核）：约 40 分钟
 
 ---
 
-## 7. SLURM Submission
+## 6. 预期结果
+
+| N   | γ_MC  | 与 1.942 的偏差 |
+|-----|-------|----------------|
+| 64  | 1.891 | 2.6%           |
+| 100 | 1.901 | 2.1%           |
+| 128 | 1.921 | 1.1%           |
+| 512 | ~1.937| ~0.2-0.3%      |
+
+γ_MC 随 N 增大单调趋近 1.942，这证实了蒙特卡洛热力学、
+S(inf) 的 Stirling 近似以及 Simkin 组合公式三者的相互自洽性。
+
+---
+
+## 7. SLURM 作业提交
 
 ```bash
-# Single node, 32 CPUs, home partition (no time limit)
+# 单节点，32 个 CPU，home 分区（无时间限制）
 #SBATCH --partition=home
 #SBATCH --cpus-per-task=32
 ```
 
-Script: `run_N512.sh` — compiles mc_canonical.c with -O3,
-runs all 140 temperature points with max 30 parallel processes,
-merges output into `data_N512.dat`.
+脚本：`run_N512.sh` — 使用 -O3 编译 mc_canonical.c，
+以最多 30 个并行进程运行全部 140 个温度点，
+将输出合并为 `data_N512.dat`。
 
 ---
 
-## 8. Post-Processing
+## 8. 后处理
 
 ```python
-# Entropy extraction:
+# 熵的提取：
 S_inf = lgamma(512**2 + 1) - lgamma(513) - lgamma(512**2 - 511) ) / 512
 integral = trapz(Cv_over_N / T, T) + tail_correction
 s0_MC = S_inf - integral
 gamma_MC = ln(512) - s0_MC
 ```
 
-Tail correction: fit Cv/N ~ c/T^2 at T_max, then integral from T_max to inf = c/(2*T_max^2).
+尾部修正：在 T_max 处拟合 Cv/N ~ c/T^2，然后从 T_max 到无穷的积分 = c/(2*T_max^2)。

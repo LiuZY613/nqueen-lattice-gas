@@ -444,8 +444,8 @@ Table~\ref{tab:cv_peak} lists the peak values.
 \end{figure}
 
 \begin{table}[b]
-  \caption{$C_v/N$ peak scaling, obtained by
-  quartic polynomial fitting with bootstrap resampling (5000 samples).
+  \caption{$C_v/N$ peak scaling from dedicated high-resolution simulations
+  at $N = 8$--$128$ with dense temperature sampling in $T \in (0.20,\,0.30)\,J$.
   The peak height saturates near 1.62 for $N \ge 32$, ruling out a
   divergent susceptibility and hence a continuous phase transition.}
   \label{tab:cv_peak}
@@ -603,8 +603,8 @@ Simkin combinatorial formula.
   For $N \ge 32$, we extract
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ and compare with the
   Simkin asymptotic value $\gamma \in [1.939,\, 1.945]$.
-  The $N = 8$--$128$ data use a 318-point temperature grid;
-  $N = 256$ and $512$ use a 126-point grid optimized for the
+  The $N = 8$--$256$ data use a 280-point temperature grid;
+  $N = 512$ uses a 126-point grid optimized for the
   entropy integral (see text).}
   \label{tab:entropy_check}
   \begin{ruledtabular}
@@ -614,15 +614,14 @@ Simkin combinatorial formula.
     & \multicolumn{1}{c}{$\gamma_{\rm MC}$}
     & Deviation \\
     \hline
-    8   & 0.558 & 0.565 & \multicolumn{1}{c}{---} & 1.2\% \\
-    16  & 1.027 & 1.032 & \multicolumn{1}{c}{---} & 0.5\% \\
+    8   & 0.566 & 0.565 & \multicolumn{1}{c}{---} & 0.1\% \\
+    16  & 1.031 & 1.032 & \multicolumn{1}{c}{---} & 0.1\% \\
     \hline
-    32  & 1.639 & \multicolumn{1}{c}{---} & 1.827 & 5.9\% \\
-    64  & 2.268 & \multicolumn{1}{c}{---} & 1.891 & 2.6\% \\
-    100 & 2.704 & \multicolumn{1}{c}{---} & 1.901 & 2.1\% \\
-    128 & 2.931 & \multicolumn{1}{c}{---} & 1.922 & 1.0\% \\
+    32  & 1.633 & \multicolumn{1}{c}{---} & 1.833 & 5.6\% \\
+    64  & 2.274 & \multicolumn{1}{c}{---} & 1.885 & 2.9\% \\
+    128 & 2.943 & \multicolumn{1}{c}{---} & 1.909 & 1.7\% \\
+    256 & 3.620 & \multicolumn{1}{c}{---} & 1.925 & 0.9\% \\
     \hline
-    256 & 3.625 & \multicolumn{1}{c}{---} & 1.920 & 1.1\% \\
     512 & 4.298 & \multicolumn{1}{c}{---} & 1.941 & 0.07\% \\
   \end{tabular}
   \end{ruledtabular}
