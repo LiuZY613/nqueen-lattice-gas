@@ -6,9 +6,11 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 
+\newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
+
 \begin{document}
 
-\title{Statistical mechanics of the queen lattice gas:\\
+\title{Statistical mechanics of the n-queens lattice gas:\\
 Monte Carlo simulations and Poisson mean-field theory}
 
 \author{Zong-Yue Liu}
@@ -20,7 +22,7 @@ Monte Carlo simulations and Poisson mean-field theory}
 \date{\today}
 
 \begin{abstract}
-We investigate the queen lattice gas---a model in which $N$ queens
+We investigate the n-queens problem as a lattice gas---a model in which $N$ queens
 are placed on an $N \times N$ chessboard with pairwise repulsive
 interactions along shared rows, columns, and diagonals---from the
 perspective of statistical mechanics.  The
@@ -857,6 +859,8 @@ A natural next step is to extend the simulations to larger system
 sizes ($N \gtrsim 256$), which would yield a more precise
 thermodynamic determination of $\gamma$ and further establish the
 validity of this physical approach to combinatorial constants.
+
+\lw{check all references avoid hulucination}
 
 
 %=====================================================================
