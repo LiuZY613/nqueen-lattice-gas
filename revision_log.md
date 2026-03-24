@@ -1,5 +1,18 @@
 # Revision Log — eassy_nqueen
 
+## CPL 版本 | 2026-03-24
+
+新增 `CPL/` 子目录，将论文改写为 Chinese Physics Letters (IOP `iopjournal` 格式) letter 版本，作为 PRE 长文的精简对照版。主要变化：
+
+- 删除全部平均场理论内容（Section VI、Fig 5、Table II）
+- 删除收敛诊断小节（Fig 2）
+- 合并 Energy 和 C_v 图为一张并排双图（Fig 2）
+- 保留核心结果：约束层级、高温精确极限、C_v 收敛与无相变、热力学积分提取 γ
+- 参考文献从 11 条精简至 10 条
+- 总页数：5 页（PRE 版约 9 页）
+
+---
+
 ## v2 → v2 (revised) | 2026-03-24
 
 ### 导师修改 (Lei Wang, commit a6990ff)
