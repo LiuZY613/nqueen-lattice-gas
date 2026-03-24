@@ -5,3 +5,11 @@
 !eassy_*.pdf
 eassy_*_cn.pdf
 !.gitignore
+
+# 保留 figures 文件夹
+!figures/
+!figures/**
+
+# 保留大规模文件夹
+!大规模/
+!大规模/**
