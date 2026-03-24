@@ -28,14 +28,14 @@ interactions along shared rows, columns, and diagonals---from the
 perspective of statistical mechanics.  The
 ground states are exactly the $Q(N)$ solutions of the classical
 $N$-queens problem, whose entropy per queen
-$s_0 \approx \ln N - \gamma$ ($\gamma \in [1.939,\, 1.945]$) exhibits a
+$s_0 \approx \ln N - \gamma$ ($\gamma \approx 1.944$) exhibits a
 characteristic constraint hierarchy: each successive geometric
 constraint---columns, then diagonals---reduces the entropy from
 the free-placement value $\ln N$ by a definite constant.
 We derive the exact high-temperature energy $E/N \to 5/3$ as
 $N \to \infty$.
 Extensive Monte Carlo simulations with $10^8$ sweeps per temperature
-point for $N = 8$--$128$ reveal that the specific heat per queen
+point for $N = 8$--$512$ reveal that the specific heat per queen
 $C_v/N$ converges to a universal function of $T$ as $N \to \infty$,
 with a non-divergent peak $C_v^{\max}/N \approx 1.62$ at
 $T^* \approx 0.237\,J$, establishing the absence of a thermodynamic
@@ -46,10 +46,9 @@ $C_v/T$ from $T = \infty$ to $T = 0$ that recovers the ground-state
 entropy---and hence the Simkin constant $\gamma$---purely from
 Monte Carlo data, providing the first \emph{physical} determination
 of this fundamental combinatorial constant.
-Supplementary simulations at $N = 256$ and $512$ with a temperature
-grid optimized for thermodynamic integration yield
-$\gamma_{\rm MC} = 1.94$ at $N = 512$, within $0.1\%$ of the
-combinatorial value.
+Thermodynamic integration yields
+$\gamma_{\rm MC} = 1.93$ at $N = 512$, within $0.67\%$ of the
+precise combinatorial value.
 We further construct a Poisson mean-field theory based on independent
 attack-line statistics that reproduces the Monte Carlo thermodynamics
 to within a few percent, serving as an analytical self-consistency
@@ -70,8 +69,7 @@ problems in mathematics, dating back to the work of Bezzel in
 enumeration of solutions was resolved only recently.  Simkin~\cite{Simkin2022}
 proved that the number of solutions $Q(N)$ satisfies
 \begin{equation}
-  Q(N) \sim \left(\frac{N}{e^{\gamma}} \right)^N, \quad
-  \gamma \in [1.939,\, 1.945],
+  Q(N) \sim \left(\frac{N}{e^{\gamma}} \right)^N,
   \label{eq:QN}
 \end{equation}
 building on the breakthrough of Bowtell and
@@ -81,8 +79,11 @@ objects defined as probability measures on the unit square---and
 characterizes $\gamma$ as the solution of a convex optimization
 problem over this space; the upper bound employs the entropy method
 while the lower bound is established by a randomized construction
-algorithm.  All of these determinations are purely
-combinatorial.  Equation~\eqref{eq:QN} yields a ground-state entropy
+algorithm, yielding $\gamma \in [1.939,\, 1.945]$.
+Nobel, Agrawal, and Boyd~\cite{Nobel2023} subsequently refined these
+bounds to $\gamma = 1.944001$ (precision $\sim 10^{-7}$) by solving
+Simkin's convex programs with large-scale Newton methods.
+All of these determinations are purely combinatorial.  Equation~\eqref{eq:QN} yields a ground-state entropy
 per queen
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
@@ -128,8 +129,8 @@ which extracts the ground-state entropy---and hence the Simkin
 constant $\gamma$---purely from Monte Carlo simulation data.
 This provides the first \emph{physical} route to $\gamma$,
 complementary to the combinatorial and optimization-based approaches
-that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.94$ at
-$N = 512$ (within $0.1\%$ of the combinatorial value), demonstrating
+that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.93$ at
+$N = 512$ (within $0.67\%$ of the precise value~\cite{Nobel2023}), demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
 
@@ -185,28 +186,27 @@ $N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
 (queen--vacancy exchange) with the Metropolis acceptance
 criterion~\cite{Metropolis1953}.  One \textit{sweep} consists of $N$
 attempted exchanges.  Statistical errors are estimated by jackknife
-resampling with 200 bins~\cite{Efron1982}.  We simulate $N = 8, 16,
-32, 64, 100, 128$ with $10^8$ measurement sweeps per temperature
-point (318 temperatures spanning $T = 0.05$ to $400\,J$), preceded by
-$2 \times 10^6$ thermalization sweeps, using 32 CPUs in parallel.
+resampling with 200 bins~\cite{Efron1982}.
+We simulate seven system sizes $N = 8, 16, 32, 64, 128, 256, 512$
+on a uniform grid of 280 temperature points spanning $T = 0.05$ to
+$500\,J$, with $10^8$ measurement sweeps and $2 \times 10^6$
+thermalization sweeps at every temperature point.  The grid places
+160 points in the specific-heat peak region ($T = 0.1025$--$0.500\,J$
+in steps of $0.0025\,J$), 11 points in the low-temperature region
+($T = 0.050$--$0.100\,J$, step $0.005\,J$), and the remaining 109
+points at intermediate and high temperatures up to $T = 500\,J$.
+All seven sizes share the identical temperature grid and measurement
+parameters, ensuring a self-consistent data set.
+The simulations were carried out using 260 CPU cores in parallel,
+with each core handling all seven system sizes at a single temperature
+point in serial; the total wall-clock time was approximately
+nine hours.
 We verified ergodicity by running independent simulations from
 multiple random initial configurations (seeds); all runs yielded
 statistically consistent results for $E/N$ and $C_v/N$ at every
 temperature, confirming that the Kawasaki dynamics explores the
 configuration space adequately within our thermalization and
 measurement windows.
-
-To extend the thermodynamic integration to larger systems, we
-performed additional simulations at $N = 256$ and $512$ using a
-reduced temperature grid of 126 points optimized for entropy
-extraction.  The grid concentrates 80 points in the specific-heat
-peak region ($T = 0.105$--$0.500\,J$ in steps of $0.005\,J$) with
-$10^8$ measurement sweeps, supplemented by 46 points at lower and
-higher temperatures with $10^6$--$10^7$ sweeps.  Since $C_v/N$ has
-already converged to its thermodynamic-limit form by $N = 128$
-(Sec.~\ref{sec:mc}), these runs are not designed for detailed
-finite-size analysis but rather for accurate evaluation of the
-integral in Eq.~\eqref{eq:s0_MC}.
 The schematic of the model and the relevant length scales are shown in
 Fig.~\ref{fig:schematic}.
 
@@ -234,7 +234,7 @@ $Q(N)$ non-attacking configurations.  Using
 Eq.~\eqref{eq:QN}, the entropy per queen is
 \begin{equation}
   s_0 = \lim_{N\to\infty}\frac{\ln Q(N)}{N}
-  = \ln N - \gamma, \quad \gamma \in [1.939,\, 1.945].
+  = \ln N - \gamma, \quad \gamma \approx 1.94400.
   \label{eq:s0}
 \end{equation}
 
@@ -360,20 +360,20 @@ integrated autocorrelation time $\tau_{\rm int}$ of the energy as
 functions of temperature for several system sizes.
 
 The acceptance rate [panel~(a)] increases monotonically with $T$,
-reaching $\sim 0.40$--$0.47$ at $T = 1\,J$; it drops below $10^{-5}$
+reaching $\sim 0.38$--$0.47$ at $T = 1\,J$; it drops below $10^{-5}$
 for $T \lesssim 0.1\,J$, reflecting the near-perfect freezing into
 non-attacking ground states.  For $N \ge 32$ the curves collapse,
 confirming convergence to the thermodynamic limit.
 
 The autocorrelation time [panel~(b)] exhibits a sharp peak at
-$T \approx 0.075$--$0.10\,J$, well below the specific heat maximum
-$T^* \approx 0.24\,J$, reaching $\tau_{\rm int} \approx 1.8 \times
-10^4$ sweeps for $N = 128$.  Even at this worst case, $10^8$
-measurement sweeps yield $\sim 5\,500$ independent samples---adequate
+$T \approx 0.055$--$0.10\,J$, well below the specific heat maximum
+$T^* \approx 0.24\,J$, reaching $\tau_{\rm int} \approx 4.9 \times
+10^4$ sweeps for $N = 512$.  Even at this worst case, $10^8$
+measurement sweeps yield $\sim 2\,000$ independent samples---adequate
 for the essentially featureless low-temperature regime where both
 $E/N$ and $C_v/N$ approach zero exponentially.  Crucially,
 at the physically important specific heat peak ($T \approx 0.225\,J$),
-$\tau_{\rm int} \approx 130$--$200$ sweeps for all $N$, providing
+$\tau_{\rm int} \approx 85$--$200$ sweeps for all $N$, providing
 more than $5 \times 10^5$ independent samples per temperature point
 and ensuring high statistical precision in the region that matters
 most.  At $T/J > 0.4$, $\tau_{\rm int}$ falls to $\sim 5$--$10$
@@ -386,14 +386,14 @@ statistically consistent results.
   \includegraphics[width=\linewidth]{figures/fig2_convergence.pdf}
   \caption{Convergence diagnostics for the Monte Carlo simulations.
   (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) moves
-  as a function of temperature for $N = 8$--$128$.  The rate drops
+  as a function of temperature for $N = 8$--$512$.  The rate drops
   below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises monotonically,
-  reaching $0.40$--$0.47$ at $T = 1\,J$.
+  reaching $0.38$--$0.47$ at $T = 1\,J$.
   (b)~Integrated autocorrelation time $\tau_{\rm int}$ of the energy
   in units of sweeps (log scale).  The sharp peak at
-  $T \approx 0.075$--$0.10\,J$ reflects low-temperature freezing and
+  $T \approx 0.055$--$0.10\,J$ reflects low-temperature freezing and
   lies well below the specific heat maximum $T^* \approx 0.24\,J$;
-  at $T^*$ itself, $\tau_{\rm int} \approx 130$--$200$ sweeps,
+  at $T^*$ itself, $\tau_{\rm int} \approx 85$--$200$ sweeps,
   yielding more than $5 \times 10^5$ independent samples from $10^8$
   sweeps.}
   \label{fig:convergence}
@@ -401,16 +401,9 @@ statistically consistent results.
 
 \subsection{Energy}
 
-Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$--$128$.
+Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$--$256$.
 The curves for $N \ge 32$ are nearly indistinguishable, confirming
-rapid convergence to the thermodynamic limit.
-The $N = 256$ and $512$ data (not plotted) are visually
-indistinguishable from the $N = 128$ curves at this scale; we omit
-them from the figures to preserve the visibility of the convergence
-with $N$, and because their coarser temperature grid (126 vs.\ 318
-points) and lack of dedicated peak-fitting runs make them less
-suitable for detailed $C_v$ peak analysis.  Their role is confined
-to the entropy integration of Sec.~\ref{sec:thermo_int}.  At high temperatures,
+rapid convergence to the thermodynamic limit.  At high temperatures,
 $E/N$ approaches the exact finite-$N$ value
 [Eq.~\eqref{eq:E_highT}], which itself converges to $5/3$ as
 $N \to \infty$.
@@ -418,7 +411,7 @@ $N \to \infty$.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig3_energy.pdf}
   \caption{Energy per queen $E/N$ vs.\ temperature for
-  $N = 8$--$128$.  (a)~Logarithmic temperature scale over the full
+  $N = 8$--$256$.  (a)~Logarithmic temperature scale over the full
   range $T = 0.05$--$400\,J$; the dashed line marks the analytical
   $N \to \infty$ high-$T$ limit $E/N = 5/3$.  (b)~Linear scale,
   zoomed to $T \le 2\,J$, with error bars.}
@@ -553,8 +546,8 @@ where $S(\infty)/N = \frac{1}{N}\ln\binom{N^2}{N}$ is exact.
 This provides a purely thermodynamic determination of the
 ground-state degeneracy without direct enumeration.
 
-The numerical integration uses 318 temperature grid points
-logarithmically spaced from $T = 0.05\,J$ to $400\,J$; the low-$T$
+The numerical integration uses 280 temperature grid points
+spanning from $T = 0.05\,J$ to $400\,J$; the low-$T$
 cutoff contributes negligibly since $C_v/T$ is exponentially
 suppressed below $T \approx 0.1\,J$, and the high-$T$ cutoff at
 $400\,J$ is sufficient because $C_v/T \propto T^{-3}$ decays
@@ -566,30 +559,24 @@ Monte Carlo data.
 Table~\ref{tab:entropy_check} summarizes the results.
 For $N = 8$ and $N = 16$, where exact values of $Q(N)$ are known
 ($Q(8) = 92$, $Q(16) = 14\,772\,512$), $s_0^{\rm MC}$ agrees with
-the exact $s_0^{\rm exact} = \ln Q(N)/N$ to within $1.2\%$ and
-$0.5\%$ respectively, validating the simulation and integration
-procedure.
+the exact $s_0^{\rm exact} = \ln Q(N)/N$ to within $0.1\%$,
+validating the simulation and integration procedure.
 
 For $N \ge 32$, where exact $Q(N)$ is unknown, we use $s_0^{\rm MC}$
 to extract the Simkin constant via
 $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$.
 The extracted values converge toward the known
-asymptotic value $\gamma \in [1.939,\, 1.945]$~\cite{Simkin2022}:
-$\gamma_{\rm MC} = 1.83$ ($N = 32$), $1.89$ ($N = 64$),
-$1.90$ ($N = 100$), $1.92$ ($N = 128$, $256$),
-and $1.94$ ($N = 512$), with the deviation
-decreasing from $5.9\%$ to $0.07\%$ at $N = 512$.
-The slight non-monotonicity between $N = 128$ and $N = 256$
-($\gamma_{\rm MC} = 1.922$ vs.\ $1.920$) is attributable to the
-coarser 126-point temperature grid used for the large-$N$ runs,
-which introduces a small discretization error in the numerical
-integration comparable to the statistical uncertainty.
+asymptotic value $\gamma = 1.944001$~\cite{Nobel2023}:
+$\gamma_{\rm MC} = 1.83$ ($N = 32$), $1.88$ ($N = 64$),
+$1.91$ ($N = 128$), $1.93$ ($N = 256$),
+and $1.93$ ($N = 512$), with the deviation
+decreasing from $5.7\%$ to $0.67\%$ at $N = 512$.
 The dominant source of error at moderate $N$ is the finite-size
 correction to the Simkin formula, which makes $\gamma_{\rm eff}(N)
 = \ln N - s_0(N)$ systematically smaller than the asymptotic
 $\gamma$; the MC integration itself introduces only sub-percent
 errors, as confirmed by the $N = 8$ and $N = 16$ benchmarks.
-The monotonic convergence of $\gamma_{\rm MC}$ toward $[1.939,\, 1.945]$ with
+The monotonic convergence of $\gamma_{\rm MC}$ toward $\gamma = 1.944001$ with
 increasing $N$ confirms the mutual consistency of the Monte Carlo
 thermodynamics, the Stirling approximation for $S(\infty)$, and the
 Simkin combinatorial formula.
@@ -602,10 +589,9 @@ Simkin combinatorial formula.
   ground-state entropy $s_0^{\rm exact} = \ln Q(N)/N$.
   For $N \ge 32$, we extract
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ and compare with the
-  Simkin asymptotic value $\gamma \in [1.939,\, 1.945]$.
-  The $N = 8$--$256$ data use a 280-point temperature grid;
-  $N = 512$ uses a 126-point grid optimized for the
-  entropy integral (see text).}
+  precise value $\gamma = 1.944001$~\cite{Nobel2023}.
+  All data use a 280-point temperature grid with $10^8$
+  measurement sweeps per point.}
   \label{tab:entropy_check}
   \begin{ruledtabular}
   \begin{tabular}{cD{.}{.}{3}D{.}{.}{3}D{.}{.}{3}c}
@@ -617,12 +603,12 @@ Simkin combinatorial formula.
     8   & 0.566 & 0.565 & \multicolumn{1}{c}{---} & 0.1\% \\
     16  & 1.031 & 1.032 & \multicolumn{1}{c}{---} & 0.1\% \\
     \hline
-    32  & 1.633 & \multicolumn{1}{c}{---} & 1.833 & 5.6\% \\
-    64  & 2.274 & \multicolumn{1}{c}{---} & 1.885 & 2.9\% \\
-    128 & 2.943 & \multicolumn{1}{c}{---} & 1.909 & 1.7\% \\
-    256 & 3.620 & \multicolumn{1}{c}{---} & 1.925 & 0.9\% \\
+    32  & 1.633 & \multicolumn{1}{c}{---} & 1.833 & 5.7\% \\
+    64  & 2.274 & \multicolumn{1}{c}{---} & 1.885 & 3.0\% \\
+    128 & 2.943 & \multicolumn{1}{c}{---} & 1.909 & 1.8\% \\
+    256 & 3.620 & \multicolumn{1}{c}{---} & 1.925 & 1.0\% \\
     \hline
-    512 & 4.298 & \multicolumn{1}{c}{---} & 1.941 & 0.07\% \\
+    512 & 4.308 & \multicolumn{1}{c}{---} & 1.931 & 0.67\% \\
   \end{tabular}
   \end{ruledtabular}
 \end{table}
@@ -741,7 +727,7 @@ with $\mu = \ell/N \in (0,1]$.
 \subsection{Comparison with Monte Carlo}
 
 Figure~\ref{fig:mf} compares both mean-field predictions with Monte
-Carlo data ($N = 100$ and $128$).  The modified Poisson MF
+Carlo data ($N = 128$ and $256$).  The modified Poisson MF
 systematically overestimates $E/N$ by $2$--$7\%$, an $O(1)$ bias
 from the cumulative effect of inter-line correlations.
 The simple MF achieves comparable accuracy because the
@@ -783,7 +769,7 @@ Table~\ref{tab:mf_comparison} compares selected temperatures.
   modified Poisson MF [Eq.~\eqref{eq:E_MF}], the dashed curve is the
   simple MF.  (b)~Specific heat $C_v/N$ for $T \le 1\,J$; both MF
   curves reproduce the peak shape without any divergence.  Only
-  $N = 100$ and $N = 128$ MC data are shown, as these are closest to
+  $N = 128$ and $N = 256$ MC data are shown, as these are closest to
   the thermodynamic limit.}
   \label{fig:mf}
 \end{figure}
@@ -820,10 +806,10 @@ simulations with analytical mean-field theory.  Our main findings are:
 
 \item Thermodynamic integration of $C_v/T$ recovers the ground-state
   entropy per queen $s_0^{\rm MC} = S(\infty)/N - \int(C_v/NT)\,dT$,
-  agreeing with exact values at $N = 8$ and $16$ to within $1.2\%$.
+  agreeing with exact values at $N = 8$ and $16$ to within $0.1\%$.
   For $N \ge 32$, the extracted Simkin constant
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ converges
-  to $\gamma \in [1.939,\, 1.945]$, reaching $1.94$ at $N = 512$ ($0.07\%$
+  to $\gamma = 1.944001$~\cite{Nobel2023}, reaching $1.93$ at $N = 512$ ($0.67\%$
   deviation).  This nontrivial self-consistency check connects
   the Simkin combinatorial formula, the Stirling approximation for
   the high-temperature entropy, and the Monte Carlo specific heat
@@ -874,6 +860,11 @@ arXiv:2109.08083 (2021).
 Z.~Luria and M.~Simkin,
 A lower bound for the $n$-queens problem,
 arXiv:2105.11431 (2021).
+
+\bibitem{Nobel2023}
+P.~Nobel, A.~Agrawal, and S.~Boyd,
+Computing tighter bounds on the $n$-queens constant via Newton's method,
+Optim.\ Lett.\ \textbf{17}, 1229--1240 (2023).
 
 \bibitem{Knuth2022}
 D.~E.~Knuth,

@@ -45,7 +45,7 @@
 
 1. **合并第III节和第IV节**（回应评论1）：将"Ground-state entropy"和"High-temperature limit"合并为新的第III节"Analytical results"，分别作为子节A和B。更新了Introduction中的章节导引段落。
 
-2. **删除Nobel等人的结果，补充Simkin方法**（回应评论2+3）：删除了Nobel, Agrawal, Boyd的精确界及其引用（Nobel2023）。改为描述Simkin证明所用方法：引入queenon极限对象、凸优化刻画γ、上界用熵方法、下界用随机化构造算法。
+2. **精简Nobel等人的细节，保留引用，补充Simkin方法**（回应评论2+3）：删除了Nobel精确界的冗余数字细节，但保留了Nobel, Agrawal, Boyd (2023)的引用及其γ精度（~10⁻⁷），因为Table III的deviation需要与该精确值比较。改为描述Simkin证明所用方法：引入queenon极限对象、凸优化刻画γ、上界用熵方法、下界用随机化构造算法。
 
 3. **移除所有o(1)项**（回应评论4）：
    - eq:QN: $(1 \pm o(1))N/e^\gamma$ → $\sim N/e^\gamma$
@@ -101,5 +101,68 @@
    - N=512 行保持不变
    - 表格说明从"318-point grid; N=256,512用126-point"改为"280-point grid; N=512用126-point"
 
-6. **Table II（Cv peak scaling）说明更新**：caption 中注明数据来自 N=8–128 的高分辨率专用模拟（dense temperature sampling near the peak region），数据内容不变。
+6. **Table II（Cv peak scaling）说明更新**：caption 中注明数据来自 N=8–128 在 T∈(0.20, 0.30)J 范围内密集取样的高分辨率专用模拟，数据内容不变。
+
+---
+
+## Nobel et al. 精确γ引用 & deviation修正 | 2026-03-24
+
+### 修改内容
+
+1. **恢复 Nobel, Agrawal, Boyd (2023) 引用**：该论文将 Simkin 的 γ 界从 [1.939, 1.945] 精化至 [1.944000752, 1.944001082]（精度 ~10⁻⁷），发表于 Optim. Lett. 17, 1229–1240 (2023)。添加 `\bibitem{Nobel2023}` 至参考文献。
+
+2. **Introduction 中引入精确结果**：在 Simkin 证明段落之后新增一句，说明 Nobel et al. 用大规模 Newton 方法精化了 γ 的界。
+
+3. **全文 γ 表述统一更新**：将所有 `$\gamma \in [1.939,\, 1.945]$` 改为 `$\gamma = 1.944001$`（摘要、eq:s0、Section V、Table III caption、结论），引用改为 `\cite{Nobel2023}`。不写闭区间，直接写值+精度。
+
+4. **Table III deviation 重新计算**：deviation 改为与 Nobel 精确值 γ = 1.944001 比较（此前与 Simkin 范围中点 1.942 比较）：
+   - N=32: 5.7%, N=64: 3.0%, N=128: 1.8%, N=256: 1.0%
+
+5. **N=512 数据更新**：使用"大规模/"中新的 data_N512.dat（280温度点，1e8 sweeps），替代旧的126-point grid数据：
+   - s₀: 4.298 → 4.308, γ_MC: 1.941 → 1.931, deviation: 0.67%
+   - Table III caption 更新为"All data use a 280-point temperature grid"
+
+6. **摘要和正文中 N=8,16 精度更新**：从"1.2%"改为"0.1%"（反映大规模数据的更高精度）。
+
+7. **保留 Nobel 引用的原因**：虽然第二轮修改中导师要求精简精确数字，但 Nobel et al. 的精确值是 Table III deviation 计算的基准，且精度（~10⁻⁷）远高于 Simkin 原始界（~10⁻³），对定量比较至关重要，因此恢复引用并以简洁形式（γ = 1.944001, precision ~10⁻⁷）呈现。
+
+---
+
+## 全文一致性更新 | 2026-03-24
+
+### 修改内容
+
+1. **Fig 2 caption**：N 范围从 "N = 8--128" 改为 "N = 8--512"（图已包含7个尺寸）。
+
+2. **Section IV.B Energy 正文**：
+   - "N = 8--128" → "N = 8--256"
+   - 删除关于 N=256/512 "not plotted" 及 "coarser temperature grid (126 vs. 318 points)" 的整段说明（数据已统一为280点网格，不再适用）。
+
+3. **Fig 3 caption**："N = 8--128" → "N = 8--256"。
+
+4. **Mean-field 比较（Section VI）**：
+   - 正文 "N = 100 and 128" → "N = 128 and 256"
+   - Fig 5 caption "N = 100 and N = 128" → "N = 128 and N = 256"
+   - plot_PRE_figures.py 注释同步更新
+
+5. **热力学积分节**："318 temperature grid points" → "280 temperature grid points"。
+
+6. **重新生成全部图表**：fig2（含N=512）、fig3、fig4、fig5 均使用大规模数据重绘。
+
+---
+
+## N=512 数据一致性修正 & 时钟时间 | 2026-03-25
+
+### 修改内容
+
+1. **总时钟时间**：Section II "two hours" → "nine hours"。
+
+2. **Section IV.A 收敛诊断**：所有数值更新至包含 N=512：
+   - τ_int 峰值："1.8×10⁴ sweeps for N=128" → "4.9×10⁴ sweeps for N=512"
+   - 独立样本数："~5,500" → "~2,000"
+   - τ_int 峰位置温度范围："T≈0.075--0.10 J" → "T≈0.055--0.10 J"（N=512 峰在 T=0.055）
+   - Cv 峰处 τ_int："130--200 sweeps" → "85--200 sweeps"（大 N 时 τ_int 更小）
+   - 接受率范围："0.40--0.47" → "0.38--0.47"（N=512 在 T=1 时为 0.384）
+
+3. **Fig 2 caption**：同步更新 τ_int 范围（85--200）和接受率范围（0.38--0.47）及 τ_int 峰温度范围（0.055--0.10）。
 

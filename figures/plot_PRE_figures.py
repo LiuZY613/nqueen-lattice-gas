@@ -297,7 +297,7 @@ Cv_simple = ((1.0 + gamma_val) / (4.0 * T_simple**2)) * np.exp(-1.0 / (2.0 * T_s
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(COL_WIDTH, 2 * PANEL_HEIGHT))
 
 # --- Top panel (a): E/N comparison ---
-# MC data (only N=100, 128 for clarity)
+# MC data (only N=128, 256 for clarity)
 for i, N in enumerate(Ns):
     if N not in merged or N < 128:
         continue
