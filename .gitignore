@@ -5,6 +5,8 @@
 !eassy_*.pdf
 eassy_*_cn.pdf
 !.gitignore
+!revision_log.md
+!eassy_*.tex
 
 # 保留 figures 文件夹
 !figures/
