@@ -35,10 +35,10 @@ the free-placement value $\ln N$ by a definite constant.
 We derive the exact high-temperature energy $E/N \to 5/3$ as
 $N \to \infty$.
 Extensive Monte Carlo simulations with $10^8$ sweeps per temperature
-point for $N = 8$--$512$ reveal that the specific heat per queen
+point for $N = 8$--$1024$ reveal that the specific heat per queen
 $C_v/N$ converges to a universal function of $T$ as $N \to \infty$,
-with a non-divergent peak $C_v^{\max}/N \approx 1.62$ at
-$T^* \approx 0.237\,J$, establishing the absence of a thermodynamic
+with a non-divergent peak $C_v^{\max}/N \approx 1.63$ at
+$T^* \approx 0.235\,J$, establishing the absence of a thermodynamic
 phase transition.
 Combined with the exactly known high-temperature entropy, the
 convergence of $C_v/N$ enables a thermodynamic integration of
@@ -47,7 +47,7 @@ entropy---and hence the Simkin constant $\gamma$---purely from
 Monte Carlo data, providing the first \emph{physical} determination
 of this fundamental combinatorial constant.
 Thermodynamic integration yields
-$\gamma_{\rm MC} = 1.93$ at $N = 512$, within $0.67\%$ of the
+$\gamma_{\rm MC} = 1.946$ at $N = 1024$, within $0.1\%$ of the
 precise combinatorial value.
 We further construct a Poisson mean-field theory based on independent
 attack-line statistics that reproduces the Monte Carlo thermodynamics
@@ -129,8 +129,8 @@ which extracts the ground-state entropy---and hence the Simkin
 constant $\gamma$---purely from Monte Carlo simulation data.
 This provides the first \emph{physical} route to $\gamma$,
 complementary to the combinatorial and optimization-based approaches
-that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.93$ at
-$N = 512$ (within $0.67\%$ of the precise value~\cite{Nobel2023}), demonstrating
+that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.946$ at
+$N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}), demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
 
@@ -187,7 +187,7 @@ $N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
 criterion~\cite{Metropolis1953}.  One \textit{sweep} consists of $N$
 attempted exchanges.  Statistical errors are estimated by jackknife
 resampling with 200 bins~\cite{Efron1982}.
-We simulate seven system sizes $N = 8, 16, 32, 64, 128, 256, 512$
+We simulate eight system sizes $N = 8, 16, 32, 64, 128, 256, 512, 1024$
 on a uniform grid of 280 temperature points spanning $T = 0.05$ to
 $500\,J$, with $10^8$ measurement sweeps and $2 \times 10^6$
 thermalization sweeps at every temperature point.  The grid places
@@ -195,7 +195,7 @@ thermalization sweeps at every temperature point.  The grid places
 in steps of $0.0025\,J$), 11 points in the low-temperature region
 ($T = 0.050$--$0.100\,J$, step $0.005\,J$), and the remaining 109
 points at intermediate and high temperatures up to $T = 500\,J$.
-All seven sizes share the identical temperature grid and measurement
+All eight sizes share the identical temperature grid and measurement
 parameters, ensuring a self-consistent data set.
 The simulations were carried out using 260 CPU cores in parallel,
 with each core handling all seven system sizes at a single temperature
@@ -367,12 +367,12 @@ confirming convergence to the thermodynamic limit.
 
 The autocorrelation time [panel~(b)] exhibits a sharp peak at
 $T \approx 0.055$--$0.10\,J$, well below the specific heat maximum
-$T^* \approx 0.24\,J$, reaching $\tau_{\rm int} \approx 4.9 \times
-10^4$ sweeps for $N = 512$.  Even at this worst case, $10^8$
+$T^* \approx 0.235\,J$, reaching $\tau_{\rm int} \approx 5.0 \times
+10^4$ sweeps for $N = 1024$.  Even at this worst case, $10^8$
 measurement sweeps yield $\sim 2\,000$ independent samples---adequate
 for the essentially featureless low-temperature regime where both
 $E/N$ and $C_v/N$ approach zero exponentially.  Crucially,
-at the physically important specific heat peak ($T \approx 0.225\,J$),
+at the physically important specific heat peak ($T \approx 0.235\,J$),
 $\tau_{\rm int} \approx 85$--$200$ sweeps for all $N$, providing
 more than $5 \times 10^5$ independent samples per temperature point
 and ensuring high statistical precision in the region that matters
@@ -386,13 +386,13 @@ statistically consistent results.
   \includegraphics[width=\linewidth]{figures/fig2_convergence.pdf}
   \caption{Convergence diagnostics for the Monte Carlo simulations.
   (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) moves
-  as a function of temperature for $N = 8$--$512$.  The rate drops
+  as a function of temperature for $N = 8$--$1024$.  The rate drops
   below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises monotonically,
   reaching $0.38$--$0.47$ at $T = 1\,J$.
   (b)~Integrated autocorrelation time $\tau_{\rm int}$ of the energy
   in units of sweeps (log scale).  The sharp peak at
   $T \approx 0.055$--$0.10\,J$ reflects low-temperature freezing and
-  lies well below the specific heat maximum $T^* \approx 0.24\,J$;
+  lies well below the specific heat maximum $T^* \approx 0.235\,J$;
   at $T^*$ itself, $\tau_{\rm int} \approx 85$--$200$ sweeps,
   yielding more than $5 \times 10^5$ independent samples from $10^8$
   sweeps.}
@@ -401,7 +401,7 @@ statistically consistent results.
 
 \subsection{Energy}
 
-Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$--$256$.
+Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$--$1024$.
 The curves for $N \ge 32$ are nearly indistinguishable, confirming
 rapid convergence to the thermodynamic limit.  At high temperatures,
 $E/N$ approaches the exact finite-$N$ value
@@ -411,7 +411,7 @@ $N \to \infty$.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig3_energy.pdf}
   \caption{Energy per queen $E/N$ vs.\ temperature for
-  $N = 8$--$256$.  (a)~Logarithmic temperature scale over the full
+  $N = 8$--$1024$.  (a)~Logarithmic temperature scale over the full
   range $T = 0.05$--$400\,J$; the dashed line marks the analytical
   $N \to \infty$ high-$T$ limit $E/N = 5/3$.  (b)~Linear scale,
   zoomed to $T \le 2\,J$, with error bars.}
@@ -428,7 +428,8 @@ Table~\ref{tab:cv_peak} lists the peak values.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig4_cv.pdf}
-  \caption{Specific heat per queen $C_v/N$ vs.\ $T$.
+  \caption{Specific heat per queen $C_v/N$ vs.\ $T$ for
+  $N = 8$--$1024$.
   (a)~Peak region ($T \le 1\,J$, linear scale) with error bars.
   (b)~Full temperature range on a logarithmic $T$ scale.
   The curves for $N \ge 32$ collapse onto a single function,
@@ -439,7 +440,7 @@ Table~\ref{tab:cv_peak} lists the peak values.
 \begin{table}[b]
   \caption{$C_v/N$ peak scaling from dedicated high-resolution simulations
   at $N = 8$--$128$ with dense temperature sampling in $T \in (0.20,\,0.30)\,J$.
-  The peak height saturates near 1.62 for $N \ge 32$, ruling out a
+  The peak height saturates near $1.63$ for $N \ge 32$, ruling out a
   divergent susceptibility and hence a continuous phase transition.}
   \label{tab:cv_peak}
   \begin{ruledtabular}
@@ -458,15 +459,15 @@ Table~\ref{tab:cv_peak} lists the peak values.
   \end{ruledtabular}
 \end{table}
 
-The key observation is that $C_v^{\max}/N$ saturates near $1.62$ for
+The key observation is that $C_v^{\max}/N$ saturates near $1.63$ for
 $N \ge 32$ and does \emph{not} diverge with system size.  This rules
 out a thermodynamic phase transition and identifies the crossover as a
 Schottky-type anomaly~\cite{Binder2010}---a broad peak in $C_v$
 arising from thermal excitation across a finite energy gap, without
-any symmetry breaking.  The peak temperature $T^* \approx 0.237\,J$
+any symmetry breaking.  The peak temperature $T^* \approx 0.235\,J$
 stabilizes for $N \ge 64$, and the peak height converges
 monotonically from above: the residual finite-size correction
-between $N = 64$ and $N = 128$ is only $\Delta C_v^{\max}/N
+between $N = 128$ and $N = 1024$ is only $\Delta C_v^{\max}/N
 \approx 0.001$, well within the statistical error bars.
 
 The convergence of $C_v/N$ to a definite limiting function has a
@@ -567,17 +568,18 @@ to extract the Simkin constant via
 $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$.
 The extracted values converge toward the known
 asymptotic value $\gamma = 1.944001$~\cite{Nobel2023}:
-$\gamma_{\rm MC} = 1.83$ ($N = 32$), $1.88$ ($N = 64$),
+$\gamma_{\rm MC} = 1.83$ ($N = 32$), $1.89$ ($N = 64$),
 $1.91$ ($N = 128$), $1.93$ ($N = 256$),
-and $1.93$ ($N = 512$), with the deviation
-decreasing from $5.7\%$ to $0.67\%$ at $N = 512$.
+$1.93$ ($N = 512$), and $1.946$ ($N = 1024$), with the deviation
+decreasing from $5.7\%$ to $0.11\%$ at $N = 1024$.
 The dominant source of error at moderate $N$ is the finite-size
 correction to the Simkin formula, which makes $\gamma_{\rm eff}(N)
 = \ln N - s_0(N)$ systematically smaller than the asymptotic
 $\gamma$; the MC integration itself introduces only sub-percent
 errors, as confirmed by the $N = 8$ and $N = 16$ benchmarks.
 The monotonic convergence of $\gamma_{\rm MC}$ toward $\gamma = 1.944001$ with
-increasing $N$ confirms the mutual consistency of the Monte Carlo
+increasing $N$---reaching $0.11\%$ accuracy at $N = 1024$---confirms
+the mutual consistency of the Monte Carlo
 thermodynamics, the Stirling approximation for $S(\infty)$, and the
 Simkin combinatorial formula.
 
@@ -602,13 +604,13 @@ Simkin combinatorial formula.
     \hline
     8   & 0.566 & 0.565 & \multicolumn{1}{c}{---} & 0.1\% \\
     16  & 1.031 & 1.032 & \multicolumn{1}{c}{---} & 0.1\% \\
-    \hline
+    \noalign{\smallskip}\hline\noalign{\smallskip}
     32  & 1.633 & \multicolumn{1}{c}{---} & 1.833 & 5.7\% \\
     64  & 2.274 & \multicolumn{1}{c}{---} & 1.885 & 3.0\% \\
     128 & 2.943 & \multicolumn{1}{c}{---} & 1.909 & 1.8\% \\
     256 & 3.620 & \multicolumn{1}{c}{---} & 1.925 & 1.0\% \\
-    \hline
-    512 & 4.308 & \multicolumn{1}{c}{---} & 1.931 & 0.67\% \\
+    512 & 4.308 & \multicolumn{1}{c}{---} & 1.931 & 0.69\% \\
+    1024 & 4.985 & \multicolumn{1}{c}{---} & 1.946 & 0.11\% \\
   \end{tabular}
   \end{ruledtabular}
 \end{table}
@@ -664,7 +666,7 @@ Setting $dC_v/dT = 0$ gives the peak location $T^* = 1/4$ with
   \frac{C_v^{\max}}{N} = \frac{4(1+\gamma)}{e^2} \approx 1.593,
   \label{eq:Cv_peak_simple}
 \end{equation}
-within $1.8\%$ of the Monte Carlo value $1.623$ for $N = 128$.
+within $1.8\%$ of the Monte Carlo value $\approx 1.625$ for $N \ge 128$.
 We note, however, that this simple MF uses $\gamma$ as an input
 parameter [through Eq.~\eqref{eq:nu_eff}], so it cannot serve as an
 independent prediction of the thermodynamics---it is inherently
@@ -769,7 +771,7 @@ Table~\ref{tab:mf_comparison} compares selected temperatures.
   modified Poisson MF [Eq.~\eqref{eq:E_MF}], the dashed curve is the
   simple MF.  (b)~Specific heat $C_v/N$ for $T \le 1\,J$; both MF
   curves reproduce the peak shape without any divergence.  Only
-  $N = 128$ and $N = 256$ MC data are shown, as these are closest to
+  the largest MC data are shown, as these are closest to
   the thermodynamic limit.}
   \label{fig:mf}
 \end{figure}
@@ -799,7 +801,7 @@ simulations with analytical mean-field theory.  Our main findings are:
   placement of queens.
 
 \item The specific heat per queen $C_v/N(T)$ converges to a universal
-  function of $T$ as $N \to \infty$.  The peak height $\approx 1.62$
+  function of $T$ as $N \to \infty$.  The peak height $\approx 1.63$
   does not diverge, ruling out a thermodynamic phase transition and
   identifying the crossover as a Schottky anomaly with effective gap
   $\Delta = J$.
@@ -809,7 +811,7 @@ simulations with analytical mean-field theory.  Our main findings are:
   agreeing with exact values at $N = 8$ and $16$ to within $0.1\%$.
   For $N \ge 32$, the extracted Simkin constant
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ converges
-  to $\gamma = 1.944001$~\cite{Nobel2023}, reaching $1.93$ at $N = 512$ ($0.67\%$
+  to $\gamma = 1.944001$~\cite{Nobel2023}, reaching $1.946$ at $N = 1024$ ($0.11\%$
   deviation).  This nontrivial self-consistency check connects
   the Simkin combinatorial formula, the Stirling approximation for
   the high-temperature entropy, and the Monte Carlo specific heat
@@ -819,7 +821,7 @@ simulations with analytical mean-field theory.  Our main findings are:
   as an independent modified Poisson variable, provides an analytical
   expression for $E/N(T)$ and $C_v/N(T)$ that reproduces the Monte
   Carlo data to within $2$--$7\%$.  The simpler entropy-weighted MF
-  [$C_v^{\max} = 4(1+\gamma)/e^2$] achieves $1.8\%$ accuracy at the
+  [$C_v^{\max} = 4(1+\gamma)/e^2 \approx 1.593$] achieves $\sim 2\%$ accuracy at the
   peak because its entropy-weighted prefactor partially absorbs
   the correlation effects.
 
@@ -833,10 +835,10 @@ interplay between combinatorial and thermodynamic quantities make
 this model a compelling testbed for ideas at the interface of
 constraint satisfaction and statistical mechanics.
 
-A natural next step is to extend the simulations to larger system
-sizes ($N \gtrsim 512$), which would yield a more precise
-thermodynamic determination of $\gamma$ and further establish the
-validity of this physical approach to combinatorial constants.
+Extending to still larger system sizes ($N \gtrsim 1024$) would
+further sharpen the thermodynamic determination of $\gamma$,
+potentially bringing the Monte Carlo estimate to sub-$0.1\%$
+accuracy and rivaling direct combinatorial methods.
 
 
 %=====================================================================

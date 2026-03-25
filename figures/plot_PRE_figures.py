@@ -71,9 +71,9 @@ def load(path):
 # ============================================================
 # Load and merge all data
 # ============================================================
-Ns = [8, 16, 32, 64, 128, 256]
-colors = ['#0072B2', '#D55E00', '#009E73', '#E69F00', '#CC79A7', '#000000']
-markers = ['o', 's', '^', 'D', 'v', 'h']
+Ns = [8, 16, 32, 64, 128, 256, 512, 1024]
+colors = ['#0072B2', '#D55E00', '#009E73', '#E69F00', '#CC79A7', '#000000', '#e41a1c', '#984ea3']
+markers = ['o', 's', '^', 'D', 'v', 'h', 'p', '*']
 
 merged = {}
 
@@ -309,10 +309,10 @@ for i, N in enumerate(Ns):
                  markeredgewidth=0.5, label=f'MC $N={N}$')
 
 # Modified Poisson MF
-ax1.plot(T_mf, E_MF, '-', color='#e41a1c', linewidth=1.5,
+ax1.plot(T_mf, E_MF, '-', color='#377eb8', linewidth=1.5,
          label='Modified Poisson MF', zorder=10)
 # Simple MF
-ax1.plot(T_simple, E_simple, '--', color='#e41a1c', linewidth=1.0,
+ax1.plot(T_simple, E_simple, '--', color='#377eb8', linewidth=1.0,
          label='Simple MF', zorder=9)
 
 ax1.set_xlabel(r'$T/J$')
@@ -338,11 +338,11 @@ for i, N in enumerate(Ns):
 
 # Modified Poisson MF Cv
 mask_cv = (T_mf >= 0.1) & (T_mf <= 1.0)
-ax2.plot(T_mf[mask_cv], Cv_MF[mask_cv], '-', color='#e41a1c', linewidth=1.5,
+ax2.plot(T_mf[mask_cv], Cv_MF[mask_cv], '-', color='#377eb8', linewidth=1.5,
          label='Modified Poisson MF', zorder=10)
 # Simple MF Cv
 mask_s = (T_simple >= 0.05) & (T_simple <= 1.0)
-ax2.plot(T_simple[mask_s], Cv_simple[mask_s], '--', color='#e41a1c', linewidth=1.0,
+ax2.plot(T_simple[mask_s], Cv_simple[mask_s], '--', color='#377eb8', linewidth=1.0,
          label='Simple MF', zorder=9)
 
 ax2.set_xlabel(r'$T/J$')
