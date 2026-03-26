@@ -233,3 +233,66 @@
 - **Section II**：删除Hamiltonian分解处对MF的引用（"and the mean-field theory (Sec. VI)"）
 - **整个Section VI (Mean-field theory)**：包括3个subsection（Simple Poisson MF、Modified Poisson MF、Comparison with MC）、所有MF方程（eq:nu_eff ~ eq:E_MF共9个）、Table IV（MF vs MC对比）、Fig 5（fig5_meanfield）
 - **Conclusions**：删除MF条目（原point 5），改写开头段（删除"with analytical mean-field theory"）和结尾段（删除MF相关描述，改为强调MC+热力学积分的物理意义）
+
+---
+
+## 回应审稿人意见（第一轮） | 2026-03-26
+
+### 审稿人意见回应
+
+**1. "循环论证"与"首次物理确定"声明（Major 1）**
+- 摘要：将"physical determination"改为"independent thermodynamic route"，强调 S(∞)/N 是"trivially exact"的均匀分布熵
+- Introduction：明确说明唯一的组合输入是平凡精确的高温熵 S(∞)/N = (1/N)ln C(N²,N)，Simkin–Nobel值仅用于"post-hoc comparison"
+- Section V（热力学积分）：补充说明 S(∞) 不依赖 Q(N) 或 Simkin 常数，Nobel值仅作为 benchmark
+- 结论：在热力学积分条目中强调"trivially exact high-temperature entropy"为唯一输入
+
+**2. 有限尺寸标度外推（Major 2）**
+- 在 Section V 中新增一段讨论：承认 FSS 外推原则上可改善估计，但指出 Q(N) 次渐近展开的函数形式在数学上未知，任何拟合形式都是 ad hoc 的，因此仅报告原始 γ_MC(N) 值，将扩大 N 作为未来工作
+
+**3. 相变判断措辞缓和（Major 3）**
+- "rules out" → "consistent with the absence of"（正文和结论两处）
+- Table II 新增 N=256, 512, 1024 数据（来自280点网格），总共9个尺寸
+- 正文新增定量论证：N=32–1024范围内 ΔCv_max/N ≲ 0.007，远小于对数发散预期的 ~0.06/倍增
+- Table II caption 更新：说明 8–128 用高精度密集取样，256–1024 用标准280点网格
+
+**4. 热力学积分误差传播（Major 4）**
+- 将 jackknife 误差通过梯形积分传播，得到 s₀^MC 和 γ_MC 的统计不确定度
+- Table III 所有数据行添加 ±σ 误差棒
+- 摘要、正文、结论中的 γ_MC 值添加误差：1.946 ± 0.003（N=1024）
+- Table III caption 新增说明误差传播方法
+- 正文新增讨论：σ(γ_MC)=0.003 远小于 0.11% 偏差，证实误差以有限尺寸修正为主
+
+**5. 平均场部分（Major 5）**
+- 已在上一轮修改中完整删除，不再适用
+
+**6. 260核心 → 280核心（Minor 6）**
+- Section II：260 → 280，与280温度点一致
+
+**7. Table II 系统尺寸完善（Minor 7）**
+- 见 Major 3 回应：新增 N=256, 512, 1024 行
+- Caption 去除"dedicated high-resolution"统称，区分说明两组数据来源
+
+**8. CSP文献联系（Minor 8）**
+- 已在导师第二轮修改中删除 CSP 段落（导师明确要求删除）
+
+**9. 修正Poisson MF独立性假设（Minor 9）**
+- 已在上一轮修改中完整删除MF部分，不再适用
+
+**10. 数据和代码可获取性（Minor 10）**
+- 新增 "Data availability" 小节，声明代码和数据将公开在 GitHub
+- 新增参考文献 github_repo
+
+**11. 高温极限归属（Minor 11）**
+- 大幅精简高温能量推导（从~55行缩至~15行），明确归功于 Polson & Sokolov (2024)
+- 仅保留关键结果公式 E/N，删除中间推导步骤（eq:line_energy, eq:pair_prob, eq:S_diag, eq:S_tot）
+- 结论中同步更新归属
+
+**12. 基态熵层级新颖性（Minor 12）**
+- 约束层级处新增限定语："implicit in the Stirling approximation and Simkin's result"
+- 结论中同步更新："admits a physical interpretation as a constraint hierarchy"
+
+### 其他修改
+
+- `$n$-queens` 格式统一：摘要"n-queens" → "$n$-queens"，Table I "N-queens" → "$N$-queens"
+- 全文 γ_MC 数值更新为含误差棒的精确值（三位小数）
+- Table I 和 Table II 浮动位置从 [b] 改为 [t]，改善排版
