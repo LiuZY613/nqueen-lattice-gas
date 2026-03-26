@@ -194,6 +194,26 @@
 
 8. **新增致谢节**：添加了 Acknowledgments，感谢 Haijun Liao, Jinguo Liu, Tao Xiang 的讨论，以及国家自然科学基金等资助信息。
 
-### 待处理
+### 我们的修改 | 2026-03-26
 
-以上批注尚未逐一回应修改，需在下一轮修订中处理。
+逐条回应导师8条批注：
+
+1. **标题 $n$-queens**（批注1）：导师已改好，保留。
+
+2. **删除"first"声称**（批注2）：摘要和正文中两处 "the first physical determination/route" → "a physical determination/route"。
+
+3. **修复"This"指代不清**（批注3）：将 "This observation motivates the present work" 改为 "The additive decomposition of entropy into constraint costs motivates a statistical-mechanical approach"，明确指代上文的约束层级分解。
+
+4. **解释queen-vacancy交换的选择**（批注4）：在Kawasaki dynamics后新增一句解释：queen-vacancy交换允许皇后大范围空间位移，而queen-queen交换仅置换已占据位置，无法有效探索不同空间结构的构型。删除 `\lw` 标记。
+
+5. **Fig 2(a) 改log y轴**（批注5）：修改 plot_fig2_convergence.py，将接受率y轴改为对数坐标（范围10⁻⁶到1），更好展示跨6个量级的变化。更新caption添加"(log scale)"说明。删除 `\lw` 标记。
+
+6. **Fig 2(b) 图例位置**（批注6）：将图例从 upper right 移至右侧中部（bbox_to_anchor），避免与峰值区域曲线重叠。删除 `\lw` 标记。
+
+7. **Conclusions术语统一**（批注7）：将 "queen lattice gas" 改为 "$n$-queens lattice gas"。删除 `\lw` 标记。
+
+8. **致谢节**（批注8）：导师已添加，保留。
+
+附加修正：Section II "all seven system sizes" → "all eight system sizes"（实际模拟了8个尺寸）。
+
+所有 `\lw{...}` 批注标记已清除。

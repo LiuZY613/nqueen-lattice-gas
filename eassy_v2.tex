@@ -44,7 +44,7 @@ Combined with the exactly known high-temperature entropy, the
 convergence of $C_v/N$ enables a thermodynamic integration of
 $C_v/T$ from $T = \infty$ to $T = 0$ that recovers the ground-state
 entropy---and hence the Simkin constant $\gamma$---purely from
-Monte Carlo data, providing the first \lw{no need to claim first} \emph{physical} determination
+Monte Carlo data, providing a \emph{physical} determination
 of this fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946$ at $N = 1024$, within $0.1\%$ of the
@@ -111,7 +111,8 @@ reduces the entropy by a well-defined constant, independent of $N$
 in the large-$N$ limit, hints at a deeper statistical-mechanical
 structure underlying the combinatorics.
 
-This \lw{it is unclear what this "is" across the paragraph} observation motivates the present work.  We embed the $N$-queens
+The additive decomposition of entropy into constraint costs motivates
+a statistical-mechanical approach.  We embed the $N$-queens
 problem in a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
 Carlo simulations.  Throughout this paper we set $k_B = 1$, so that
@@ -127,7 +128,7 @@ this convergence enables a thermodynamic integration
 \end{equation*}
 which extracts the ground-state entropy---and hence the Simkin
 constant $\gamma$---purely from Monte Carlo simulation data.
-This provides the first \emph{physical} route to $\gamma$,
+This provides a \emph{physical} route to $\gamma$,
 complementary to the combinatorial and optimization-based approaches
 that have dominated to date~\cite{Simkin2022}.  Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.946$ at
 $N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}), demonstrating
@@ -183,8 +184,13 @@ starting point for both the high-temperature calculation
 
 We work in the canonical ensemble with fixed particle number
 $N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
-(queen--vacancy exchange)  \lw{why this ? why not queen-queen exchange ?} with the Metropolis acceptance
-criterion~\cite{Metropolis1953}.  One \textit{sweep} consists of $N$
+(queen--vacancy exchange) with the Metropolis acceptance
+criterion~\cite{Metropolis1953}.  We choose queen--vacancy rather
+than queen--queen exchanges because the former moves a single queen to
+any empty site on the board, allowing large spatial displacements in
+one step, whereas queen--queen swaps merely permute occupied sites and
+cannot efficiently explore configurations with different spatial
+structure.  One \textit{sweep} consists of $N$
 attempted exchanges.  Statistical errors are estimated by jackknife
 resampling with 200 bins~\cite{Efron1982}.
 We simulate eight system sizes $N = 8, 16, 32, 64, 128, 256, 512, 1024$
@@ -198,7 +204,7 @@ points at intermediate and high temperatures up to $T = 500\,J$.
 All eight sizes share the identical temperature grid and measurement
 parameters, ensuring a self-consistent data set.
 The simulations were carried out using 260 CPU cores in parallel,
-with each core handling all seven system sizes at a single temperature
+with each core handling all eight system sizes at a single temperature
 point in serial; the total wall-clock time was approximately
 nine hours.
 We verified ergodicity by running independent simulations from
@@ -385,19 +391,17 @@ statistically consistent results.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig2_convergence.pdf}
   \caption{Convergence diagnostics for the Monte Carlo simulations.
-  (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) \lw{consider making this log y scale} moves
-  as a function of temperature for $N = 8$--$1024$.  The rate drops
-  below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises monotonically,
-  reaching $0.38$--$0.47$ at $T = 1\,J$.
+  (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) moves
+  as a function of temperature for $N = 8$--$1024$ (log scale).
+  The rate drops below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises
+  monotonically, reaching $0.38$--$0.47$ at $T = 1\,J$.
   (b)~Integrated autocorrelation time $\tau_{\rm int}$ of the energy
   in units of sweeps (log scale).  The sharp peak at
   $T \approx 0.055$--$0.10\,J$ reflects low-temperature freezing and
   lies well below the specific heat maximum $T^* \approx 0.235\,J$;
   at $T^*$ itself, $\tau_{\rm int} \approx 85$--$200$ sweeps,
   yielding more than $5 \times 10^5$ independent samples from $10^8$
-  sweeps.
-  \lw{legend (b) overlapped with curve}
-  }
+  sweeps.}
   \label{fig:convergence}
 \end{figure}
 
@@ -784,8 +788,8 @@ Table~\ref{tab:mf_comparison} compares selected temperatures.
 \label{sec:conclusions}
 %=====================================================================
 
-We have presented a statistical-mechanical investigation of the n-queens
-lattice gas  \lw{call the problem n-queens lattice gas} combining extensive Monte Carlo
+We have presented a statistical-mechanical investigation of the
+$n$-queens lattice gas combining extensive Monte Carlo
 simulations with analytical mean-field theory.  Our main findings are:
 
 \begin{enumerate}

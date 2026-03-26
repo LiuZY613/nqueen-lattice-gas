@@ -99,7 +99,8 @@ for i, N in enumerate(Ns):
 ax1.set_xlabel(r'$T/J$')
 ax1.set_ylabel('Acceptance rate')
 ax1.set_xlim(0, 1.0)
-ax1.set_ylim(bottom=0)
+ax1.set_yscale('log')
+ax1.set_ylim(bottom=1e-6, top=1.0)
 ax1.legend(loc='upper left', frameon=True, fancybox=False,
            edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
            handletextpad=0.3)
@@ -128,9 +129,9 @@ ax2.set_ylabel(r'$\tau_{\rm int}$ (sweeps)')
 ax2.set_xlim(0, 1.0)
 ax2.set_yscale('log')
 ax2.set_ylim(bottom=0.3)
-ax2.legend(loc='upper right', frameon=True, fancybox=False,
-           edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
-           handletextpad=0.3)
+ax2.legend(loc='upper right', bbox_to_anchor=(0.98, 0.75), frameon=True,
+           fancybox=False, edgecolor='0.7', framealpha=0.9, ncol=2,
+           columnspacing=0.8, handletextpad=0.3)
 ax2.text(0.03, 0.95, r'$\bf{(b)}$', transform=ax2.transAxes,
          fontsize=10, va='top')
 
