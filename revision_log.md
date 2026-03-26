@@ -217,3 +217,19 @@
 附加修正：Section II "all seven system sizes" → "all eight system sizes"（实际模拟了8个尺寸）。
 
 所有 `\lw{...}` 批注标记已清除。
+
+---
+
+## 删除平均场理论 | 2026-03-26
+
+### 修改内容
+
+完整删除论文中所有平均场（mean-field）相关内容，论文从8页缩至7页。
+
+删除的内容：
+- **标题**："Poisson mean-field theory" → "thermodynamic integration"
+- **摘要**：删除末尾MF句（"We further construct a Poisson mean-field theory..."）
+- **Introduction**：删除MF段落（"To gain analytical insight..."）和章节导引中 sec:mf 的引用
+- **Section II**：删除Hamiltonian分解处对MF的引用（"and the mean-field theory (Sec. VI)"）
+- **整个Section VI (Mean-field theory)**：包括3个subsection（Simple Poisson MF、Modified Poisson MF、Comparison with MC）、所有MF方程（eq:nu_eff ~ eq:E_MF共9个）、Table IV（MF vs MC对比）、Fig 5（fig5_meanfield）
+- **Conclusions**：删除MF条目（原point 5），改写开头段（删除"with analytical mean-field theory"）和结尾段（删除MF相关描述，改为强调MC+热力学积分的物理意义）
