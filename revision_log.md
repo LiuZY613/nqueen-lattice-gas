@@ -1,37 +1,5 @@
 # Revision Log — eassy_nqueen
 
-## 导师第三轮批注 | 2026-03-26 (commit 1730650)
-
-### 导师批注 (Lei Wang)
-
-1. **标题**: `n-queens` → `$n$-queens`（数学斜体格式修正）
-
-2. **摘要第47行** `\lw{no need to claim first}`
-   — 不要声称"first physical determination"，不需要宣称"首次"。
-
-3. **Introduction第111行** `\lw{it is unclear what this "is" across the paragraph}`
-   — "This observation motivates the present work"中的"this"指代不清，跨段落指代读起来含糊。
-
-4. **Section II第185行** `\lw{why this ? why not queen-queen exchange ?}`
-   — 为什么使用queen-vacancy交换（Kawasaki dynamics），而不是queen-queen交换？需要解释或论证选择的原因。
-
-5. **Fig 2 caption第387行** `\lw{consider making this log y scale}`
-   — 建议将Fig 2(a)接受率图的y轴改为对数坐标，因为接受率跨越多个数量级（从10⁻⁵到0.47）。
-
-6. **Fig 2 caption第400行** `\lw{legend (b) overlapped with curve}`
-   — Fig 2(b)的图例与曲线重叠，需要调整图例位置。
-
-7. **Conclusions第784行** `\lw{call the problem n-queens lattice gas}`
-   — 结论中应将模型称为"n-queens lattice gas"而非"queen lattice gas"，保持全文术语一致。
-
-8. **新增致谢节**：添加了 Acknowledgments，感谢 Haijun Liao, Jinguo Liu, Tao Xiang 的讨论，以及国家自然科学基金等资助信息。
-
-### 待处理
-
-以上批注尚未逐一回应修改，需在下一轮修订中处理。
-
----
-
 ## v2 → v2 (revised) | 2026-03-24
 
 ### 导师修改 (Lei Wang, commit a6990ff)
@@ -198,3 +166,34 @@
 
 3. **Fig 2 caption**：同步更新 τ_int 范围（85--200）和接受率范围（0.38--0.47）及 τ_int 峰温度范围（0.055--0.10）。
 
+---
+
+## 导师第三轮批注 | 2026-03-26 (commit 1730650)
+
+### 导师批注 (Lei Wang)
+
+1. **标题**: `n-queens` → `$n$-queens`（数学斜体格式修正）
+
+2. **摘要第47行** `\lw{no need to claim first}`
+   — 不要声称"first physical determination"，不需要宣称"首次"。
+
+3. **Introduction第111行** `\lw{it is unclear what this "is" across the paragraph}`
+   — "This observation motivates the present work"中的"this"指代不清，跨段落指代读起来含糊。
+
+4. **Section II第185行** `\lw{why this ? why not queen-queen exchange ?}`
+   — 为什么使用queen-vacancy交换（Kawasaki dynamics），而不是queen-queen交换？需要解释或论证选择的原因。
+
+5. **Fig 2 caption第387行** `\lw{consider making this log y scale}`
+   — 建议将Fig 2(a)接受率图的y轴改为对数坐标，因为接受率跨越多个数量级（从10⁻⁵到0.47）。
+
+6. **Fig 2 caption第400行** `\lw{legend (b) overlapped with curve}`
+   — Fig 2(b)的图例与曲线重叠，需要调整图例位置。
+
+7. **Conclusions第784行** `\lw{call the problem n-queens lattice gas}`
+   — 结论中应将模型称为"n-queens lattice gas"而非"queen lattice gas"，保持全文术语一致。
+
+8. **新增致谢节**：添加了 Acknowledgments，感谢 Haijun Liao, Jinguo Liu, Tao Xiang 的讨论，以及国家自然科学基金等资助信息。
+
+### 待处理
+
+以上批注尚未逐一回应修改，需在下一轮修订中处理。
