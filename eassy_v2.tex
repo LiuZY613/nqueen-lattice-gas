@@ -11,7 +11,7 @@
 \begin{document}
 
 \title{Statistical mechanics of the $n$-queens lattice gas:\\
-Monte Carlo simulations and Poisson mean-field theory}
+Monte Carlo simulations and thermodynamic integration}
 
 \author{Zong-Yue Liu}
 \affiliation{Department of Physics, Nanjing University, Nanjing 210093, China}
@@ -35,7 +35,7 @@ the free-placement value $\ln N$ by a definite constant.
 We derive the exact high-temperature energy $E/N \to 5/3$ as
 $N \to \infty$.
 Extensive Monte Carlo simulations with $10^8$ sweeps per temperature
-point for $N = 8$--$1024$ reveal that the specific heat per queen
+point for $N = 8$ to $1024$ reveal that the specific heat per queen
 $C_v/N$ converges to a universal function of $T$ as $N \to \infty$,
 with a non-divergent peak $C_v^{\max}/N \approx 1.63$ at
 $T^* \approx 0.235\,J$, establishing the absence of a thermodynamic
@@ -49,10 +49,6 @@ of this fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946$ at $N = 1024$, within $0.1\%$ of the
 precise combinatorial value.
-We further construct a Poisson mean-field theory based on independent
-attack-line statistics that reproduces the Monte Carlo thermodynamics
-to within a few percent, serving as an analytical self-consistency
-check.
 \end{abstract}
 
 \maketitle
@@ -134,10 +130,6 @@ $N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}), demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
 
-To gain analytical insight into the thermodynamic curves, we develop a
-Poisson mean-field theory based on independent attack-line statistics,
-reproducing the energy and specific heat to within a few percent.
-
 The paper is organized as follows.
 Section~\ref{sec:model} defines the model.
 Section~\ref{sec:analytical} presents analytical results: the
@@ -145,7 +137,6 @@ ground-state entropy and constraint hierarchy, and the exact
 high-temperature limit.
 Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
-Section~\ref{sec:mf} develops the mean-field theory.
 Section~\ref{sec:conclusions} concludes.
 
 
@@ -178,8 +169,8 @@ Hamiltonian takes the compact form
 where $\mathcal{L}$ denotes the set of all $6N - 2$ attack lines and
 $\binom{n}{2} = n(n-1)/2$ counts the number of attacking pairs on
 each line.  This decomposition into line contributions is the
-starting point for both the high-temperature calculation
-(Sec.~\ref{sec:highT}) and the mean-field theory (Sec.~\ref{sec:mf}).
+starting point for the high-temperature calculation
+(Sec.~\ref{sec:highT}).
 
 We work in the canonical ensemble with fixed particle number
 $N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
@@ -198,7 +189,7 @@ points at intermediate and high temperatures up to $T = 500\,J$.
 All eight sizes share the identical temperature grid and measurement
 parameters, ensuring a self-consistent data set.
 The simulations were carried out using 260 CPU cores in parallel,
-with each core handling all seven system sizes at a single temperature
+with each core handling all eight system sizes at a single temperature
 point in serial; the total wall-clock time was approximately
 nine hours.
 We verified ergodicity by running independent simulations from
@@ -386,7 +377,7 @@ statistically consistent results.
   \includegraphics[width=\linewidth]{figures/fig2_convergence.pdf}
   \caption{Convergence diagnostics for the Monte Carlo simulations.
   (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) \lw{consider making this log y scale} moves
-  as a function of temperature for $N = 8$--$1024$.  The rate drops
+  as a function of temperature for $N = 8$ to $1024$.  The rate drops
   below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises monotonically,
   reaching $0.38$--$0.47$ at $T = 1\,J$.
   (b)~Integrated autocorrelation time $\tau_{\rm int}$ of the energy
@@ -403,7 +394,7 @@ statistically consistent results.
 
 \subsection{Energy}
 
-Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$--$1024$.
+Figure~\ref{fig:energy} shows $E/N$ vs.\ $T$ for $N = 8$ to $1024$.
 The curves for $N \ge 32$ are nearly indistinguishable, confirming
 rapid convergence to the thermodynamic limit.  At high temperatures,
 $E/N$ approaches the exact finite-$N$ value
@@ -413,7 +404,7 @@ $N \to \infty$.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig3_energy.pdf}
   \caption{Energy per queen $E/N$ vs.\ temperature for
-  $N = 8$--$1024$.  (a)~Logarithmic temperature scale over the full
+  $N = 8$ to $1024$.  (a)~Logarithmic temperature scale over the full
   range $T = 0.05$--$400\,J$; the dashed line marks the analytical
   $N \to \infty$ high-$T$ limit $E/N = 5/3$.  (b)~Linear scale,
   zoomed to $T \le 2\,J$, with error bars.}
@@ -431,8 +422,11 @@ Table~\ref{tab:cv_peak} lists the peak values.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig4_cv.pdf}
   \caption{Specific heat per queen $C_v/N$ vs.\ $T$ for
-  $N = 8$--$1024$.
-  (a)~Peak region ($T \le 1\,J$, linear scale) with error bars.
+  $N = 8$ to $1024$.
+  (a)~Peak region ($T \le 1\,J$, linear scale) with error bars;
+  the inset enlarges the peak vicinity ($T = 0.19$--$0.23\,J$) for
+  $N \ge 64$, revealing subtle size-dependent shifts in the peak
+  height and position.
   (b)~Full temperature range on a logarithmic $T$ scale.
   The curves for $N \ge 32$ collapse onto a single function,
   confirming convergence to the thermodynamic limit.}
@@ -441,7 +435,7 @@ Table~\ref{tab:cv_peak} lists the peak values.
 
 \begin{table}[b]
   \caption{$C_v/N$ peak scaling from dedicated high-resolution simulations
-  at $N = 8$--$128$ with dense temperature sampling in $T \in (0.20,\,0.30)\,J$.
+  at $N = 8$ to $128$ with dense temperature sampling in $T \in (0.20,\,0.30)\,J$.
   The peak height saturates near $1.63$ for $N \ge 32$, ruling out a
   divergent susceptibility and hence a continuous phase transition.}
   \label{tab:cv_peak}
@@ -618,175 +612,15 @@ Simkin combinatorial formula.
 \end{table}
 
 
-%=====================================================================
-\section{Mean-field theory}
-\label{sec:mf}
-%=====================================================================
-
-The decomposition of $H$ into attack-line contributions
-[Eq.~\eqref{eq:H_lines}] suggests a mean-field approach.  We
-approximate the occupation numbers on different attack lines as
-statistically independent and derive two mean-field theories of
-increasing sophistication.
-
-\subsection{Simple Poisson mean-field}
-
-We first present a simple approximation inspired by
-Ref.~\cite{Polson2024}.  Each queen interacts along four families of
-attack lines (row, column, main diagonal, anti-diagonal), but these
-families are not equally constraining: the entropy analysis of
-Sec.~\ref{sec:entropy} shows that each row or column constraint
-removes one unit of entropy per queen, while the two diagonal
-constraints together remove $\gamma - 1 \approx 0.942$ units.
-We therefore assign an \emph{entropy-weighted} effective number
-of interaction directions,
-\begin{equation}
-  \nu_{\rm eff} = \underbrace{1 + 1}_{\text{row + column}}
-  + \underbrace{(\gamma - 1)}_{\text{two diagonals}} = 1 + \gamma
-  \approx 2.942.
-  \label{eq:nu_eff}
-\end{equation}
-Treating each effective direction independently and assigning each
-conflict a Boltzmann suppression
-$e^{-J/(2T)}$ (the factor of 2 accounts for the pairwise energy being
-shared between two queens), the mean-field energy per queen is
-\begin{equation}
-  \frac{E^{\rm MF}}{N}
-  = \frac{(1+\gamma)(N-1)}{2N}\,e^{-1/(2T)}
-  \xrightarrow{N \to \infty}
-  \frac{1+\gamma}{2}\,e^{-1/(2T)},
-  \label{eq:E_simple}
-\end{equation}
-yielding the specific heat
-\begin{equation}
-  \frac{C_v^{\rm MF}}{N} = \frac{dE/N}{dT}
-  = \frac{1+\gamma}{4T^2}\,e^{-1/(2T)}.
-  \label{eq:Cv_simple}
-\end{equation}
-Setting $dC_v/dT = 0$ gives the peak location $T^* = 1/4$ with
-\begin{equation}
-  \frac{C_v^{\max}}{N} = \frac{4(1+\gamma)}{e^2} \approx 1.593,
-  \label{eq:Cv_peak_simple}
-\end{equation}
-within $1.8\%$ of the Monte Carlo value $\approx 1.625$ for $N \ge 128$.
-We note, however, that this simple MF uses $\gamma$ as an input
-parameter [through Eq.~\eqref{eq:nu_eff}], so it cannot serve as an
-independent prediction of the thermodynamics---it is inherently
-circular if $\gamma$ is the quantity one seeks to determine.
-
-\subsection{Modified Poisson mean-field}
-
-A more systematic---and parameter-free---treatment retains the full
-decomposition into four families of attack lines (rows, columns, main
-diagonals, anti-diagonals) and accounts for the varying diagonal
-lengths, without requiring $\gamma$ as an input.
-At finite temperature, the occupation number of a line with mean
-$\mu$ (at $T = \infty$) follows the
-\textit{modified Poisson distribution}---a Poisson distribution
-reweighted by the Boltzmann factor of the intra-line interaction.
-
-For a single attack line with fugacity $\lambda$ at inverse
-temperature $\beta = 1/T$, the probability of finding $k$ queens is
-\begin{equation}
-  P(n = k) = \frac{\lambda^k}{k!}\,
-  e^{-\beta\,k(k-1)/2}\Big/\,g(\lambda, \beta),
-  \label{eq:modPoisson}
-\end{equation}
-where the normalizing partition function is
-\begin{equation}
-  g(\lambda, \beta) = \sum_{k=0}^\infty
-  \frac{\lambda^k}{k!}\,e^{-\beta k(k-1)/2}.
-  \label{eq:g_def}
-\end{equation}
-The fugacity $\lambda$ is determined self-consistently by the
-constraint $\langle n \rangle = \mu$:
-\begin{equation}
-  \mu = \frac{\lambda}{g}\,\frac{\partial g}{\partial \lambda}
-  = \sum_{k=0}^\infty k\,P(k).
-  \label{eq:mu_constraint}
-\end{equation}
-
-At $\beta = 0$ ($T \to \infty$), $P(k)$ reduces to a standard Poisson
-distribution; at $\beta \to \infty$ ($T \to 0$), only $k = 0$ and
-$k = 1$ survive, enforcing the non-attacking constraint.
-The expected collision energy per line is
-\begin{equation}
-  f(\mu, \beta) = \left\langle\binom{n}{2}\right\rangle
-  = \frac{1}{2}\sum_{k=2}^{\infty} k(k-1)\,P(k).
-  \label{eq:f_def}
-\end{equation}
-
-The per-queen energy in the thermodynamic limit is then
-\begin{equation}
-  \frac{E}{N}(T) = \underbrace{2\,f\!\left(1,\tfrac{1}{T}\right)
-  }_{\rm rows + columns}
-  + \underbrace{4\int_0^1 f\!\left(\mu,\tfrac{1}{T}\right)d\mu
-  }_{\rm diagonals},
-  \label{eq:E_MF}
-\end{equation}
-where the first term sums over $N$ rows and $N$ columns (each with
-$\mu = 1$), and the integral accounts for $2 \times (2N-1)$ diagonals
-with $\mu = \ell/N \in (0,1]$.
-
-\subsection{Comparison with Monte Carlo}
-
-Figure~\ref{fig:mf} compares both mean-field predictions with Monte
-Carlo data ($N = 128$ and $256$).  The modified Poisson MF
-systematically overestimates $E/N$ by $2$--$7\%$, an $O(1)$ bias
-from the cumulative effect of inter-line correlations.
-The simple MF achieves comparable accuracy because the
-entropy-weighted prefactor partially absorbs these correlations.
-For the specific heat peak, the simple MF gives
-$C_v^{\max}/N \approx 1.593$ ($1.8\%$ from MC), while
-the modified Poisson MF gives $1.692$ ($4.3\%$ from MC).
-Both correctly predict the Schottky shape without any divergence.
-Table~\ref{tab:mf_comparison} compares selected temperatures.
-
-\begin{table}[b]
-  \caption{Modified Poisson mean-field vs.\ Monte Carlo ($N = 128$).
-  The systematic overestimate in $E/N$ is an $O(1)$ effect of
-  inter-line correlations neglected by the independent-line
-  approximation (see text).}
-  \label{tab:mf_comparison}
-  \begin{ruledtabular}
-  \begin{tabular}{cD{.}{.}{5}D{.}{.}{5}cD{.}{.}{3}D{.}{.}{3}c}
-    $T$ & \multicolumn{1}{c}{$E_{\rm MC}/N$}
-    & \multicolumn{1}{c}{$E_{\rm MF}/N$}
-    & $\Delta E$
-    & \multicolumn{1}{c}{$C_{v,\rm MC}/N$}
-    & \multicolumn{1}{c}{$C_{v,\rm MF}/N$}
-    & $\Delta C_v$ \\
-    \hline
-    0.200 & 0.12064 & 0.12952 & 7.4\% & 1.554 & 1.646 & 5.9\% \\
-    0.225 & 0.16034 & 0.17140 & 6.9\% & 1.615 & 1.692 & 4.8\% \\
-    0.300 & 0.27974 & 0.29460 & 5.3\% & 1.520 & 1.550 & 2.0\% \\
-    0.500 & 0.52559 & 0.54263 & 3.2\% & 0.973 & 0.976 & 0.3\% \\
-    1.000 & 0.84800 & 0.86633 & 2.2\% & 0.436 & 0.439 & 0.7\% \\
-  \end{tabular}
-  \end{ruledtabular}
-\end{table}
-
-\begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig5_meanfield.pdf}
-  \caption{Mean-field theory vs.\ Monte Carlo.
-  (a)~Energy per queen $E/N$ for $T \le 2\,J$; the solid curve is the
-  modified Poisson MF [Eq.~\eqref{eq:E_MF}], the dashed curve is the
-  simple MF.  (b)~Specific heat $C_v/N$ for $T \le 1\,J$; both MF
-  curves reproduce the peak shape without any divergence.  Only
-  the largest MC data are shown, as these are closest to
-  the thermodynamic limit.}
-  \label{fig:mf}
-\end{figure}
-
 
 %=====================================================================
 \section{Conclusions}
 \label{sec:conclusions}
 %=====================================================================
 
-We have presented a statistical-mechanical investigation of the n-queens
-lattice gas  \lw{call the problem n-queens lattice gas} combining extensive Monte Carlo
-simulations with analytical mean-field theory.  Our main findings are:
+We have presented a statistical-mechanical investigation of the
+$n$-queens lattice gas \lw{call the problem n-queens lattice gas} through
+extensive Monte Carlo simulations.  Our main findings are:
 
 \begin{enumerate}
 \item The ground-state entropy $s_0 = \ln N - \gamma$ decomposes
@@ -819,23 +653,14 @@ simulations with analytical mean-field theory.  Our main findings are:
   the high-temperature entropy, and the Monte Carlo specific heat
   data across the entire temperature range.
 
-\item A modified Poisson mean-field theory, treating each attack line
-  as an independent modified Poisson variable, provides an analytical
-  expression for $E/N(T)$ and $C_v/N(T)$ that reproduces the Monte
-  Carlo data to within $2$--$7\%$.  The simpler entropy-weighted MF
-  [$C_v^{\max} = 4(1+\gamma)/e^2 \approx 1.593$] achieves $\sim 2\%$ accuracy at the
-  peak because its entropy-weighted prefactor partially absorbs
-  the correlation effects.
-
 \end{enumerate}
 
-These results establish the queen lattice gas as a model system whose
-thermodynamics can be quantitatively described by an independent
-attack-line mean-field theory.  The analytical tractability
-of the Poisson mean-field approach and the
-interplay between combinatorial and thermodynamic quantities make
-this model a compelling testbed for ideas at the interface of
-constraint satisfaction and statistical mechanics.
+These results establish the queen lattice gas as a model system
+in which the interplay between combinatorial and thermodynamic
+quantities can be exploited quantitatively: a single Monte Carlo
+campaign, combined with exactly known high-temperature entropy,
+suffices to determine a fundamental combinatorial constant through
+the laws of thermodynamics.
 
 Extending to still larger system sizes ($N \gtrsim 1024$) would
 further sharpen the thermodynamic determination of $\gamma$,
