@@ -10,7 +10,7 @@
 
 \begin{document}
 
-\title{Statistical mechanics of the n-queens lattice gas:\\
+\title{Statistical mechanics of the $n$-queens lattice gas:\\
 Monte Carlo simulations and Poisson mean-field theory}
 
 \author{Zong-Yue Liu}
@@ -44,7 +44,7 @@ Combined with the exactly known high-temperature entropy, the
 convergence of $C_v/N$ enables a thermodynamic integration of
 $C_v/T$ from $T = \infty$ to $T = 0$ that recovers the ground-state
 entropy---and hence the Simkin constant $\gamma$---purely from
-Monte Carlo data, providing the first \emph{physical} determination
+Monte Carlo data, providing the first \lw{no need to claim first} \emph{physical} determination
 of this fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946$ at $N = 1024$, within $0.1\%$ of the
@@ -111,7 +111,7 @@ reduces the entropy by a well-defined constant, independent of $N$
 in the large-$N$ limit, hints at a deeper statistical-mechanical
 structure underlying the combinatorics.
 
-This observation motivates the present work.  We embed the $N$-queens
+This \lw{it is unclear what this "is" across the paragraph} observation motivates the present work.  We embed the $N$-queens
 problem in a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
 Carlo simulations.  Throughout this paper we set $k_B = 1$, so that
@@ -183,7 +183,7 @@ starting point for both the high-temperature calculation
 
 We work in the canonical ensemble with fixed particle number
 $N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
-(queen--vacancy exchange) with the Metropolis acceptance
+(queen--vacancy exchange)  \lw{why this ? why not queen-queen exchange ?} with the Metropolis acceptance
 criterion~\cite{Metropolis1953}.  One \textit{sweep} consists of $N$
 attempted exchanges.  Statistical errors are estimated by jackknife
 resampling with 200 bins~\cite{Efron1982}.
@@ -385,7 +385,7 @@ statistically consistent results.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig2_convergence.pdf}
   \caption{Convergence diagnostics for the Monte Carlo simulations.
-  (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) moves
+  (a)~Acceptance rate of the Kawasaki (queen--vacancy exchange) \lw{consider making this log y scale} moves
   as a function of temperature for $N = 8$--$1024$.  The rate drops
   below $10^{-5}$ for $T \lesssim 0.1\,J$ and rises monotonically,
   reaching $0.38$--$0.47$ at $T = 1\,J$.
@@ -395,7 +395,9 @@ statistically consistent results.
   lies well below the specific heat maximum $T^* \approx 0.235\,J$;
   at $T^*$ itself, $\tau_{\rm int} \approx 85$--$200$ sweeps,
   yielding more than $5 \times 10^5$ independent samples from $10^8$
-  sweeps.}
+  sweeps.
+  \lw{legend (b) overlapped with curve}
+  }
   \label{fig:convergence}
 \end{figure}
 
@@ -782,8 +784,8 @@ Table~\ref{tab:mf_comparison} compares selected temperatures.
 \label{sec:conclusions}
 %=====================================================================
 
-We have presented a statistical-mechanical investigation of the queen
-lattice gas combining extensive Monte Carlo
+We have presented a statistical-mechanical investigation of the n-queens
+lattice gas  \lw{call the problem n-queens lattice gas} combining extensive Monte Carlo
 simulations with analytical mean-field theory.  Our main findings are:
 
 \begin{enumerate}
@@ -839,6 +841,11 @@ Extending to still larger system sizes ($N \gtrsim 1024$) would
 further sharpen the thermodynamic determination of $\gamma$,
 potentially bringing the Monte Carlo estimate to sub-$0.1\%$
 accuracy and rivaling direct combinatorial methods.
+
+
+\section{Acknowledgments}
+The authors acknowledge valuable discussions with Haijun Liao, Jinguo Liu, and Tao Xiang.
+This work is supported by the National Natural Science Foundation of China under Grants No. T2225018, No. 12188101, No. T2121001, the Cross-Disciplinary Key Project of Beijing Natural Science Foundation No. Z250005, the Strategic Priority Research Program of the Chinese Academy of Sciences under Grants No. XDB0500000, and the National Key Projects for Research and Development of China Grants No. 2021YFA1400400. 
 
 
 %=====================================================================
