@@ -175,6 +175,25 @@ ax1.legend(loc='upper right', frameon=True, fancybox=False,
 ax1.text(0.03, 0.95, '(a)', transform=ax1.transAxes,
          fontsize=10, fontweight='bold', va='top')
 
+# --- Inset: zoom into peak region for large N ---
+axins = ax1.inset_axes([0.42, 0.08, 0.45, 0.45])
+for i, N in enumerate(Ns):
+    if N not in merged or N < 64:
+        continue
+    d = merged[N]
+    mask = (d[:, 0] >= 0.01) & (d[:, 0] <= 1.0)
+    if np.any(mask):
+        axins.errorbar(d[mask, 0], d[mask, 3], yerr=d[mask, 4],
+                       fmt=markers[i]+'-', color=colors[i], markersize=2.0,
+                       capsize=0.8, linewidth=0.7, markerfacecolor='none',
+                       markeredgewidth=0.4)
+axins.set_xlim(0.19, 0.23)
+axins.set_ylim(1.56, 1.63)
+axins.tick_params(labelsize=6, width=0.4, length=2)
+axins.set_xticks([0.19, 0.21, 0.23])
+axins.set_yticks([1.57, 1.60, 1.63])
+ax1.indicate_inset_zoom(axins, edgecolor='0.5', linewidth=0.6, alpha=0.8)
+
 # --- Bottom panel (b): Cv/N vs T (all T, log scale) ---
 for i, N in enumerate(Ns):
     if N not in merged:
