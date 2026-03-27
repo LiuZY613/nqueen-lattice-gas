@@ -296,3 +296,54 @@
 - `$n$-queens` 格式统一：摘要"n-queens" → "$n$-queens"，Table I "N-queens" → "$N$-queens"
 - 全文 γ_MC 数值更新为含误差棒的精确值（三位小数）
 - Table I 和 Table II 浮动位置从 [b] 改为 [t]，改善排版
+
+---
+
+## 导师第四轮批注 | 2026-03-27 (commits 1e3e83c7, 673eecc2)
+
+### Teacher's Comments (Lei Wang)
+
+**Commit 1e3e83c7 ("more comments", 2026-03-27):**
+
+1. **Redundant figures** (after `\maketitle`): `\lw{Consider removing redundant figures (with both linear and logarithmic axes).}`
+   — 考虑删除冗余图（同时有线性和对数坐标的）。
+
+2. **Figure 1 coloring** (fig:schematic caption): `\lw{gray squares means something different. that is not good. use consistent coloring schemes. It is actually possible to combine (a) and (b) into a single figure with all information}`
+   — 灰色方格含义不一致，配色方案需要统一。实际上可以将(a)和(b)合并为一张图，包含所有信息。
+
+3. **Figure 1 aesthetics** (fig:schematic caption): `\lw{make this figure nicer, black dots -> queen look from above}`
+   — 改善 Fig 1 外观，黑点改为皇后的俯视图形状。
+
+4. **Table formatting** (after Table I): `\lw{red https://people.inf.ethz.ch/markusp/teaching/guides/guide-tables.pdf for nice tables}`
+   — 参考该指南改善表格排版（"red"应为"read"）。
+
+**Commit 673eecc2 ("comment", 2026-03-27):**
+
+5. **Rook problem** (permutation placement line): `\lw{this is called rook problem}`
+   — 指出排列放置问题实际上称为"车问题"（rook problem）。
+
+### 我们的修改 | 2026-03-27
+
+逐条回应导师5条批注：
+
+1. **删除冗余双面板图**（批注1）：
+   - Fig 3 (energy)：删除 panel (b)（线性低温），只保留 panel (a)（log-T 全范围 + 5/3 渐近线）。Caption 更新为单面板描述。
+   - Fig 4 (Cv)：删除 panel (b)（log-T 全范围），只保留 panel (a)（线性 T≤1 + inset 放大峰值区域）。Caption 更新为单面板描述。
+   - 修改 `plot_PRE_figures.py`：fig3 和 fig4 均改为单面板 `figsize=(3.4, 2.5)`。
+
+2. **Fig 1 配色统一 + 美化**（批注2+3）：
+   - 删除 panel (a)（攻击示意图，灰色=被攻击 vs 白色=未被攻击），只保留 panel (b)（8-queens 解）。
+   - 棋盘配色改为经典国际象棋木色（浅色 #F0D9B5 + 深色 #B58863），替代之前灰白不一致的方案。
+   - 黑色圆点改为 Unicode 皇后符号 ♛（U+265B），使用 Segoe UI Symbol 字体渲染，带白色描边确保在深浅两色格子上都清晰可见。
+   - 图片宽度从 `\linewidth` 改为 `0.75\linewidth`，避免单面板过大。
+   - 正文引用从 "The schematic of the model and the relevant length scales are shown in" 改为 "A representative ground-state configuration is shown in"。
+   - Caption 简化为："One of the Q(8)=92 non-attacking ground-state configurations on an 8×8 chessboard. No two queens share a row, column, or diagonal."
+
+3. **表格排版改善**（批注4）：
+   - 新增 `\usepackage{booktabs}`。
+   - Table I、Table II、Table III 中所有 `\hline` 和 `\noalign{\smallskip}\hline\noalign{\smallskip}` 替换为 `\midrule`（更细、间距更优雅的分隔线）。
+
+4. **Rook problem 说明**（批注5）：
+   - 在 constraint hierarchy 列表的 Permutation 条目中添加 "also known as the rook problem"，引用 Knuth [6]。
+
+5. **清理**：删除所有 `\lw{...}` 批注标记（共5处）和 `\newcommand{\lw}` 定义。

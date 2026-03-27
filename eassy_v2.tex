@@ -5,8 +5,7 @@
 \usepackage{dcolumn}
 \usepackage{hyperref}
 \usepackage{xcolor}
-
-\newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -54,8 +53,6 @@ precise combinatorial value $\gamma = 1.944001$.
 
 \maketitle
 
-\lw{Consider removing redundant figures (with both linear and logarithmic axes).}
-
 %=====================================================================
 \section{Introduction}
 \label{sec:intro}
@@ -98,8 +95,9 @@ stringency~\cite{Knuth2022}:
 \begin{itemize}
   \item \textit{Free placement} (row constraint only):
     $\Omega = N^N$, $s = \ln N$.
-  \item \textit{Permutation} (row + column):
-    $\Omega = N!$, $s \approx \ln N - 1$. \lw{this is called rook problem}
+  \item \textit{Permutation} (row + column, also known as the
+    \textit{rook problem}~\cite{Knuth2022}):
+    $\Omega = N!$, $s \approx \ln N - 1$.
   \item \textit{$N$-queens} (row + column + two diagonals):
     $\Omega \approx (N/e^\gamma)^N$, $s \approx \ln N - \gamma$.
 \end{itemize}
@@ -209,18 +207,14 @@ statistically consistent results for $E/N$ and $C_v/N$ at every
 temperature, confirming that the Kawasaki dynamics explores the
 configuration space adequately within our thermalization and
 measurement windows.
-The schematic of the model and the relevant length scales are shown in
+A representative ground-state configuration is shown in
 Fig.~\ref{fig:schematic}.
 
 \begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig1_schematic.pdf}
-  \caption{(a)~A single queen (black circle) on an $8 \times 8$
-  board.  Gray squares are attacked along the row, column, and two
-  diagonal directions; white squares are unattacked.
-  (b)~One of the $Q(8) = 92$ non-attacking ground-state
-  configurations. \lw{gray squares means something different. that is not good. 
-  use consistent coloring schemes. It is actually possible to combine (a) and (b) into a single figure with all information}
-   \lw{make this figure nicer, black dots -> queen look from above} }
+  \includegraphics[width=0.75\linewidth]{figures/fig1_schematic.pdf}
+  \caption{One of the $Q(8) = 92$ non-attacking ground-state
+  configurations on an $8 \times 8$ chessboard.  No two queens share
+  a row, column, or diagonal.}
   \label{fig:schematic}
 \end{figure}
 
@@ -278,7 +272,7 @@ to $N$---removes roughly half a unit.
   \begin{ruledtabular}
   \begin{tabular}{llcc}
     Model & Constraints & $\Omega$ & $s = \frac{1}{N}\ln\Omega$ \\
-    \hline
+    \midrule
     Free & Row only & $N^N$ & $\ln N$ \\
     Permutation & Row + column & $N!$ & $\ln N - 1$ \\
     $N$-queens & Row + col + 2 diag & $\approx (N/e^\gamma)^N$
@@ -286,9 +280,6 @@ to $N$---removes roughly half a unit.
   \end{tabular}
   \end{ruledtabular}
 \end{table}
-
-\lw{red https://people.inf.ethz.ch/markusp/teaching/guides/guide-tables.pdf 
-for nice tables}
 
 That each geometric constraint reduces the per-queen entropy by a
 constant independent of $N$ suggests that the finite-temperature
@@ -383,11 +374,10 @@ $N \to \infty$.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig3_energy.pdf}
-  \caption{Energy per queen $E/N$ vs.\ temperature for
-  $N = 8$--$1024$.  (a)~Logarithmic temperature scale over the full
-  range $T = 0.05$--$400\,J$; the dashed line marks the analytical
-  $N \to \infty$ high-$T$ limit $E/N = 5/3$.  (b)~Linear scale,
-  zoomed to $T \le 2\,J$, with error bars.}
+  \caption{Energy per queen $E/N$ vs.\ temperature (logarithmic
+  scale) for $N = 8$--$1024$ over the full range
+  $T = 0.05$--$400\,J$.  The dashed line marks the analytical
+  $N \to \infty$ high-$T$ limit $E/N = 5/3$.}
   \label{fig:energy}
 \end{figure}
 
@@ -402,9 +392,8 @@ Table~\ref{tab:cv_peak} lists the peak values.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig4_cv.pdf}
   \caption{Specific heat per queen $C_v/N$ vs.\ $T$ for
-  $N = 8$--$1024$.
-  (a)~Peak region ($T \le 1\,J$, linear scale) with error bars.
-  (b)~Full temperature range on a logarithmic $T$ scale.
+  $N = 8$--$1024$ in the peak region ($T \le 1\,J$, linear scale)
+  with error bars.  Inset: zoom into the peak for $N \ge 64$.
   The curves for $N \ge 32$ collapse onto a single function,
   confirming convergence to the thermodynamic limit.}
   \label{fig:cv}
@@ -423,14 +412,14 @@ Table~\ref{tab:cv_peak} lists the peak values.
     $N$ & \multicolumn{1}{c}{$T_{\rm peak}$}
     & \multicolumn{1}{c}{$C_v^{\max}/N$}
     & \multicolumn{1}{c}{error} \\
-    \hline
+    \midrule
     8   & 0.281 & 1.6915 & 0.0002 \\
     16  & 0.227 & 1.6783 & 0.0006 \\
     32  & 0.231 & 1.6288 & 0.0005 \\
     64  & 0.237 & 1.6216 & 0.0004 \\
     100 & 0.237 & 1.6229 & 0.0004 \\
     128 & 0.237 & 1.6225 & 0.0004 \\
-    \noalign{\smallskip}\hline\noalign{\smallskip}
+    \midrule
     256  & 0.2450 & 1.6238 & 0.0020 \\
     512  & 0.2400 & 1.6287 & 0.0023 \\
     1024 & 0.2325 & 1.6251 & 0.0024 \\
@@ -606,10 +595,10 @@ Simkin combinatorial formula.
     & $s_0^{\rm exact}$
     & $\gamma_{\rm MC}$
     & Deviation \\
-    \hline
+    \midrule
     8   & $0.566 \pm 0.000$ & 0.565 & --- & 0.1\% \\
     16  & $1.031 \pm 0.001$ & 1.032 & --- & 0.1\% \\
-    \noalign{\smallskip}\hline\noalign{\smallskip}
+    \midrule
     32  & $1.633 \pm 0.001$ & --- & $1.833 \pm 0.001$ & 5.7\% \\
     64  & $2.274 \pm 0.002$ & --- & $1.885 \pm 0.002$ & 3.0\% \\
     128 & $2.943 \pm 0.002$ & --- & $1.909 \pm 0.002$ & 1.8\% \\

@@ -93,11 +93,10 @@ print()
 
 
 # ============================================================
-# Fig 3: E/N vs T — vertical layout
+# Fig 3: E/N vs T — single panel, log scale
 # ============================================================
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(COL_WIDTH, 2 * PANEL_HEIGHT))
+fig, ax1 = plt.subplots(1, 1, figsize=(COL_WIDTH, PANEL_HEIGHT))
 
-# --- Top panel (a): E/N vs T (log scale), full range ---
 for i, N in enumerate(Ns):
     if N not in merged:
         continue
@@ -118,29 +117,8 @@ ax1.set_ylabel(r'$E/N$')
 ax1.legend(loc='lower right', frameon=True, fancybox=False,
            edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
            handletextpad=0.3)
-ax1.text(0.03, 0.95, '(a)', transform=ax1.transAxes,
-         fontsize=10, fontweight='bold', va='top')
 
-# --- Bottom panel (b): low-T E/N, linear axes ---
-for i, N in enumerate(Ns):
-    if N not in merged:
-        continue
-    d = merged[N]
-    mask = d[:, 0] <= 2.0
-    ax2.errorbar(d[mask, 0], d[mask, 1], yerr=d[mask, 2],
-                 fmt=markers[i]+'-', color=colors[i], markersize=2.5,
-                 capsize=1, linewidth=0.8, markerfacecolor='none',
-                 markeredgewidth=0.5, label=f'$N={N}$')
-
-ax2.set_xlabel(r'$T/J$')
-ax2.set_ylabel(r'$E/N$')
-ax2.legend(loc='lower right', frameon=True, fancybox=False,
-           edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
-           handletextpad=0.3)
-ax2.text(0.03, 0.95, '(b)', transform=ax2.transAxes,
-         fontsize=10, fontweight='bold', va='top')
-
-plt.tight_layout(h_pad=0.5)
+plt.tight_layout()
 fig.savefig(os.path.join(BASE, 'fig3_energy.pdf'), dpi=300)
 fig.savefig(os.path.join(BASE, 'fig3_energy.png'), dpi=300)
 plt.close()
@@ -148,13 +126,10 @@ print("Saved fig3_energy.pdf/png")
 
 
 # ============================================================
-# Fig 4: Cv/N vs T — vertical layout
+# Fig 4: Cv/N vs T — single panel with inset
 # ============================================================
-gamma_val = 1.942
+fig, ax1 = plt.subplots(1, 1, figsize=(COL_WIDTH, PANEL_HEIGHT))
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(COL_WIDTH, 2 * PANEL_HEIGHT))
-
-# --- Top panel (a): Cv/N vs T, T=0 to 1 ---
 for i, N in enumerate(Ns):
     if N not in merged:
         continue
@@ -172,8 +147,6 @@ ax1.set_xlim(0, 1.0)
 ax1.legend(loc='upper right', frameon=True, fancybox=False,
            edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
            handletextpad=0.3)
-ax1.text(0.03, 0.95, '(a)', transform=ax1.transAxes,
-         fontsize=10, fontweight='bold', va='top')
 
 # --- Inset: zoom into peak region for large N ---
 axins = ax1.inset_axes([0.42, 0.08, 0.45, 0.45])
@@ -194,33 +167,7 @@ axins.set_xticks([0.19, 0.21, 0.23])
 axins.set_yticks([1.57, 1.60, 1.63])
 ax1.indicate_inset_zoom(axins, edgecolor='0.5', linewidth=0.6, alpha=0.8)
 
-# --- Bottom panel (b): Cv/N vs T (all T, log scale) ---
-for i, N in enumerate(Ns):
-    if N not in merged:
-        continue
-    d = merged[N]
-    mask = d[:, 3] > 1e-8
-    if np.any(mask):
-        T_cv = d[mask, 0]
-        Cv_cv = d[mask, 3]
-        ax2.plot(T_cv, Cv_cv, '-', color=colors[i], linewidth=0.8, alpha=0.9)
-        logT = np.log10(T_cv)
-        target = np.linspace(logT[0], logT[-1], 12)
-        mk_idx = sorted(set([np.argmin(np.abs(logT - t)) for t in target]))
-        ax2.plot(T_cv[mk_idx], Cv_cv[mk_idx], markers[i],
-                 color=colors[i], markersize=3, markerfacecolor='none',
-                 markeredgewidth=0.6, label=f'$N={N}$')
-
-ax2.set_xscale('log')
-ax2.set_xlabel(r'$T/J$')
-ax2.set_ylabel(r'$C_v/N$')
-ax2.legend(loc='upper right', frameon=True, fancybox=False,
-           edgecolor='0.7', framealpha=0.9, ncol=2, columnspacing=0.8,
-           handletextpad=0.3)
-ax2.text(0.03, 0.95, '(b)', transform=ax2.transAxes,
-         fontsize=10, fontweight='bold', va='top')
-
-plt.tight_layout(h_pad=0.5)
+plt.tight_layout()
 fig.savefig(os.path.join(BASE, 'fig4_cv.pdf'), dpi=300)
 fig.savefig(os.path.join(BASE, 'fig4_cv.png'), dpi=300)
 plt.close()
@@ -229,7 +176,9 @@ print("Saved fig4_cv.pdf/png")
 
 # ============================================================
 # Fig 5: Mean-field vs Monte Carlo — vertical layout
+# (no longer used in the paper; kept for reference)
 # ============================================================
+gamma_val = 1.942
 
 # Modified Poisson mean-field calculation
 from scipy.optimize import brentq
