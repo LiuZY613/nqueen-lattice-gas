@@ -49,6 +49,9 @@ to this fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946 \pm 0.003$ at $N = 1024$, within $0.1\%$ of the
 precise combinatorial value $\gamma = 1.944001$.
+We further present a tensor network formulation that encodes the
+non-attacking constraints into a rank-9 site tensor with 17 nonzero
+elements, providing a complementary exact-enumeration route.
 \end{abstract}
 
 \maketitle
@@ -141,6 +144,8 @@ ground-state entropy and constraint hierarchy, and the exact
 high-temperature limit.
 Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
+Section~\ref{sec:tensor} presents a tensor network formulation that
+provides an alternative exact-enumeration route.
 Section~\ref{sec:conclusions} concludes.
 
 
@@ -611,6 +616,64 @@ Simkin combinatorial formula.
 
 
 %=====================================================================
+\section{Outlook: Exact enumeration via tensor networks}
+\label{sec:tensor}
+%=====================================================================
+
+The Monte Carlo thermodynamic integration developed above provides a
+powerful route to the Simkin constant, but is inherently limited by
+statistical noise and finite-size corrections---as seen in
+Table~\ref{tab:entropy_check}, the extracted $\gamma_{\rm MC}$
+approaches the exact value only as $N \to \infty$.
+Tensor network methods offer a complementary, deterministic route
+to the exact solution count $Q(N)$ by reformulating the constraint
+satisfaction problem as a tensor network
+contraction~\cite{Liu2021,Pan2022}.
+
+The construction places a rank-9 tensor $B$ at each lattice site
+$(i,j)$.  Eight of its indices carry binary attack signals along the
+four cardinal and four diagonal directions; a ninth physical index
+$p \in \{0,1\}$ encodes the occupation state.  The tensor has exactly
+17 nonzero elements (Fig.~\ref{fig:tensor}): for an empty site
+($p = 0$), the four independent attack channels---column, row, and
+two diagonal families---can each independently pass through or block
+an incoming signal, yielding $2^4 = 16$ allowed local states; for an
+occupied site ($p = 1$), the unique nonzero element requires all
+incoming signals to be absent (no prior queen attacks this square)
+and all outgoing signals to be present (the queen attacks along every
+direction).  Summing over $p$ at every site and contracting the full
+network yields the exact count $Q(N)$.
+
+The diagonal connections render the raw network non-planar.  To
+restore a planar square-lattice topology amenable to matrix product
+operator (MPO) contraction, auxiliary SWAP tensors encode the two
+diagonal signals into the horizontal and vertical bond
+indices~\cite{Liu2021}.  The resulting network can be contracted row
+by row using standard MPS--MPO algorithms, with a computational cost
+that grows exponentially in $N$ through the bond dimension but
+involves no statistical sampling.  This tensor network formulation
+thus complements the Monte Carlo approach: while the latter accesses
+arbitrarily large $N$ with controlled statistical errors, the former
+provides exact results for moderate $N$ and can serve as a benchmark
+for the Monte Carlo data.
+
+\begin{figure}[t]
+  \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
+  \caption{The 17 nonzero elements of the site tensor $B$.
+  Each diagram shows a lattice site with eight directional indices
+  carrying binary attack signals ($0$: absent, $1$: present);
+  red arrows mark the directions carrying an active signal.
+  The first 16 elements correspond to empty sites ($p = 0$) with
+  all $2^4$ combinations of pass-through signals along four
+  independent attack channels (column, row, and two diagonal
+  families).  The 17th element (bottom right) represents an
+  occupied site ($p = 1$): all incoming signals are $0$ and all
+  outgoing signals are $1$.}
+  \label{fig:tensor}
+\end{figure}
+
+
+%=====================================================================
 \section{Conclusions}
 \label{sec:conclusions}
 %=====================================================================
@@ -644,6 +707,13 @@ combinatorial and thermodynamic information are connected
 quantitatively: a single Monte Carlo campaign suffices to determine
 a fundamental combinatorial constant through the laws of
 thermodynamics.
+Looking ahead, the tensor network formulation presented in
+Sec.~\ref{sec:tensor} offers an exact-enumeration route that
+complements the Monte Carlo approach.  Combining exact tensor
+network benchmarks at moderate $N$ with Monte Carlo data at large
+$N$ could further sharpen the thermodynamic extraction of the Simkin
+constant and probe the finite-size corrections to the asymptotic
+formula.
 
 
 \section{Data availability}
@@ -719,6 +789,17 @@ B.~Efron,
 K.~Binder and D.~W.~Heermann,
 \textit{Monte Carlo Simulation in Statistical Physics}
 (Springer, Berlin, 5th ed., 2010).
+
+\bibitem{Liu2021}
+J.-G.~Liu, L.~Wang, and P.~Zhang,
+Tropical tensor network for ground states of spin glasses,
+Phys.\ Rev.\ Lett.\ \textbf{126}, 090506 (2021).
+
+\bibitem{Pan2022}
+F.~Pan and P.~Zhang,
+Simulation of quantum circuits using the big-batch tensor network
+method,
+Phys.\ Rev.\ Lett.\ \textbf{128}, 030501 (2022).
 
 \bibitem{github_repo}
 Z.-Y.~Liu and L.~Wang,
