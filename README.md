@@ -43,6 +43,11 @@ analysis/               Python scripts for data analysis and figure generation
   merge_data.py         Merge raw simulation outputs into data files
   compute_gamma.py      Compute Simkin constant via thermodynamic integration
   calc_entropy.py       Calculate entropy from Cv data
+
+tensor/                 Tensor network / transfer matrix exact solvers
+  nqueens_transfer_matrix.py  Row-by-row bitmask transfer matrix solver
+  nqueens_mps.py              MPS/MPO solver with SVD compression
+  nqueens_mps_vs_bitmask.md   Comparison analysis: MPS vs bitmask approach
 ```
 
 ## Building
@@ -120,6 +125,18 @@ python plot_fig1_schematic.py    # Fig. 1 (schematic)
 ```
 
 Requires Python 3 with NumPy and Matplotlib.
+
+## Tensor Network Solvers
+
+The `tensor/` directory contains exact solvers based on transfer matrix methods:
+
+```bash
+cd tensor
+python nqueens_transfer_matrix.py   # Bitmask transfer matrix (exact, efficient)
+python nqueens_mps.py               # MPS/MPO solver (exact with full bond dim)
+```
+
+The bitmask solver enumerates valid constraint states (column, SE/NE diagonals) row by row and is efficient up to N ~ 25. The MPS solver represents the boundary state as a Matrix Product State and applies MPO operators per row, with optional SVD compression. See `nqueens_mps_vs_bitmask.md` for a detailed comparison showing that bitmask is more efficient due to the high entanglement structure of diagonal constraints.
 
 ## Computing the Simkin Constant
 
