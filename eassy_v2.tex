@@ -49,9 +49,10 @@ to this fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946 \pm 0.003$ at $N = 1024$, within $0.1\%$ of the
 precise combinatorial value $\gamma = 1.944001$.
-We further present a tensor network formulation that encodes the
-non-attacking constraints into a rank-9 site tensor with 17 nonzero
-elements, providing a complementary exact-enumeration route.
+We further present a transfer-matrix-based tensor network formulation
+that encodes the non-attacking constraints into a rank-9 site tensor
+with 17 nonzero elements, providing a complementary exact-enumeration
+route.
 \end{abstract}
 
 \maketitle
@@ -616,56 +617,72 @@ Simkin combinatorial formula.
 
 
 %=====================================================================
-\section{Outlook: Exact enumeration via tensor networks}
+\section{Tensor network formulation}
 \label{sec:tensor}
 %=====================================================================
 
-The Monte Carlo thermodynamic integration developed above provides a
-powerful route to the Simkin constant, but is inherently limited by
-statistical noise and finite-size corrections---as seen in
-Table~\ref{tab:entropy_check}, the extracted $\gamma_{\rm MC}$
-approaches the exact value only as $N \to \infty$.
-Tensor network methods offer a complementary, deterministic route
-to the exact solution count $Q(N)$ by reformulating the constraint
-satisfaction problem as a tensor network
-contraction~\cite{Liu2021,Pan2022}.
+The constraint hierarchy of Sec.~\ref{sec:entropy}---row, column,
+and diagonal constraints each reducing the entropy by a definite
+amount---can be encoded exactly in a transfer-matrix
+formalism~\cite{Liu2021,Pan2022}.
+Define a $2\times 2$ transfer matrix whose entries are projection
+operators on the site occupation $\sigma\in\{0,1\}$:
+\begin{equation}
+  A = \begin{pmatrix} \hat{n}_0 & \hat{n}_1 \\[2pt]
+  0 & \hat{n}_0 \end{pmatrix},
+  \label{eq:Amat}
+\end{equation}
+where $\hat{n}_0 = |0\rangle\langle 0|$ and
+$\hat{n}_1 = |1\rangle\langle 1|$.
+As a rank-3 tensor $A_{\alpha\beta}(\sigma)$, the nonzero elements
+are $A_{00}(0) = A_{11}(0) = 1$ (empty site: signal pass-through)
+and $A_{01}(1) = 1$ (occupied site: emit attack signal).
+For a constraint line of $L$ sites with boundary vectors
+$\bm{v}_0 = (1,0)$ and $\bm{v}_{\rm end}$, the chain product
+$\bm{v}_0 \cdot A(\sigma_1)\cdots A(\sigma_L)\cdot
+\bm{v}_{\rm end}^{\,T}$
+equals~1 if the constraint is satisfied and~0 otherwise: choosing
+$\bm{v}_{\rm end} = \bm{v}_1 \equiv (0,1)$ enforces \emph{exactly
+one} queen (rows and columns), while
+$\bm{v}_{\rm end} = \bm{v}_2 \equiv (1,1)$ enforces \emph{at most
+one} (diagonals).
 
-The construction places a rank-9 tensor $B$ at each lattice site
-$(i,j)$.  Eight of its indices carry binary attack signals along the
-four cardinal and four diagonal directions; a ninth physical index
-$p \in \{0,1\}$ encodes the occupation state.  The tensor has exactly
-17 nonzero elements (Fig.~\ref{fig:tensor}): for an empty site
-($p = 0$), the four independent attack channels---column, row, and
-two diagonal families---can each independently pass through or block
-an incoming signal, yielding $2^4 = 16$ allowed local states; for an
-occupied site ($p = 1$), the unique nonzero element requires all
-incoming signals to be absent (no prior queen attacks this square)
-and all outgoing signals to be present (the queen attacks along every
-direction).  Summing over $p$ at every site and contracting the full
-network yields the exact count $Q(N)$.
-
-The diagonal connections render the raw network non-planar.  To
-restore a planar square-lattice topology amenable to matrix product
-operator (MPO) contraction, auxiliary SWAP tensors encode the two
-diagonal signals into the horizontal and vertical bond
-indices~\cite{Liu2021}.  The resulting network can be contracted row
-by row using standard MPS--MPO algorithms, with a computational cost
-that grows exponentially in $N$ through the bond dimension but
-involves no statistical sampling.  This tensor network formulation
-thus complements the Monte Carlo approach: while the latter accesses
-arbitrarily large $N$ with controlled statistical errors, the former
-provides exact results for moderate $N$ and can serve as a benchmark
-for the Monte Carlo data.
+Each site $(i,j)$ lies at the intersection of four constraint lines.
+The rank-9 site tensor is the product of $A$-matrix elements along
+these four directions:
+\begin{equation}
+  T_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}(p)
+  = A_{ud}(p)\;A_{lr}(p)\;A_{\bar{u}\bar{d}}(p)\;
+    A_{\bar{l}\bar{r}}(p),
+  \label{eq:Ttensor}
+\end{equation}
+where $(u,d)$, $(l,r)$, $(\bar{u},\bar{d})$, $(\bar{l},\bar{r})$
+carry binary signals along the column, row, $\searrow$-diagonal, and
+$\nearrow$-diagonal directions, and $p\in\{0,1\}$ is the physical
+index.  Because the four factors contribute independently, $T$ has
+exactly 17 nonzero elements (Fig.~\ref{fig:tensor}): $2^4 = 16$ for
+an empty site, where each channel independently passes or blocks a
+signal, and one for an occupied site, which requires all incoming
+signals to vanish and emits on all outgoing channels.
+Contracting the full $N\times N$ network---with $\bm{v}_0$ at each
+constraint-line origin and $\bm{v}_1$ or $\bm{v}_2$ at each
+terminus---and summing over all physical indices yields the exact
+solution count $Q(N)$.  This contraction can be performed row by row
+using matrix product operator methods~\cite{Liu2021,Pan2022}, with a
+computational cost that grows exponentially in $N$ through the bond
+dimension but is free of statistical noise, providing exact
+benchmarks that complement the Monte Carlo results at moderate~$N$.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
-  \caption{The 17 nonzero elements of the site tensor $B$.
-  Each diagram shows a lattice site with eight directional indices
+  \caption{The 17 nonzero elements of the site tensor $T$
+  [Eq.~\eqref{eq:Ttensor}].
+  Each diagram shows a lattice site with eight bond indices
   carrying binary attack signals ($0$: absent, $1$: present);
-  red arrows mark the directions carrying an active signal.
+  red arrows mark active signals.
   The first 16 elements correspond to empty sites ($p = 0$) with
-  all $2^4$ combinations of pass-through signals along four
-  independent attack channels (column, row, and two diagonal
+  all $2^4$ combinations of independent pass-through signals along
+  the four constraint channels (column, row, and two diagonal
   families).  The 17th element (bottom right) represents an
   occupied site ($p = 1$): all incoming signals are $0$ and all
   outgoing signals are $1$.}
