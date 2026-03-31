@@ -1,0 +1,65 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}引言}{3}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}$N$ 皇后问题}{3}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}为什么用张量网络？}{3}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}问题的数学表述}{4}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}二值变量与约束}{4}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}计数问题作为"配分函数"}{4}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}约束的张量网络编码}{5}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}"恰好一个"约束的 MPS 表示}{5}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}"至多一个"约束的 MPS 表示}{6}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}约束的图形表示}{6}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 三类约束的 MPS 表示：蓝色为行约束（恰好一个），绿色为列约束（恰好一个），红色为对角线约束（至多一个）。键维度均为 2。}}{7}{figure.caption.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}完整张量网络的构造}{7}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}多个约束在同一格点上的"汇聚"}{7}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}显式计算格点张量}{8}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}网络拓扑结构}{8}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces $4 \times 4$ 棋盘上的完整张量网络。每个节点是一个格点张量 $\mathcal  {T}$，四种颜色的连线分别对应四类约束。$N$ 皇后解的总数 $Z_N$ 就是这个网络的完全收缩值。}}{8}{figure.caption.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}边界条件}{9}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}转移矩阵视角}{9}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}逐行处理的思路}{9}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}为什么最近邻转移矩阵不够}{9}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}完整转移矩阵：增广状态空间}{10}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}状态的定义}{10}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}状态更新规则}{10}{subsubsection.5.3.2}\protected@file@percent }
+\newlabel{eq:col_update}{{17}{10}{状态更新规则}{equation.17}{}}
+\newlabel{eq:rdiag_update}{{18}{10}{状态更新规则}{equation.18}{}}
+\newlabel{eq:ldiag_update}{{19}{10}{状态更新规则}{equation.19}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}配分函数的转移矩阵表达}{11}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}转移矩阵的 MPO 分解}{11}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}状态空间的张量积分解}{11}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}MPO 结构}{12}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}MPO 局部张量的显式形式}{12}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}张量网络的收缩}{13}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}精确收缩：MPS-MPO 方法}{13}{subsection.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces $Z_N$ 的 MPS-MPO 收缩结构：初始 MPS（绿色）经过 $N$ 层 MPO（橙色）后与末态 MPS 收缩。}}{14}{figure.caption.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}键维度的增长}{14}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}近似收缩：MPS 截断}{14}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}具体计算示例：$N = 4$}{15}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}$4 \times 4$ 棋盘的两个解}{15}{subsection.8.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces $N=4$ 的两个解：$(q_1,q_2,q_3,q_4) = (2,4,1,3)$ 和 $(3,1,4,2)$。}}{15}{figure.caption.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}逐行追踪状态}{15}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}状态演化的张量网络图}{18}{subsection.8.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 解 $(2,4,1,3)$ 对应的张量网络状态演化。红色标记的格点放置了皇后，绿色纵向键携带列/对角线约束信息，蓝色横向键携带行约束信息。右侧标注了各行之后的列占据状态。}}{18}{figure.caption.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}计数验证}{19}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}键维度与计算复杂度分析}{19}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}精确 MPS 键维度的增长}{19}{subsection.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}与其他方法的复杂度对比}{20}{subsection.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}推广：皇后格点气体模型}{20}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}模型定义}{20}{subsection.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}张量网络表示}{21}{subsection.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.3}相变行为}{21}{subsection.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}讨论与展望}{22}{section.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}方法总结}{22}{subsection.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}张量网络 vs. 传统算法}{22}{subsection.11.2}\protected@file@percent }
+\bibcite{Orus2014}{1}
+\bibcite{Schollwock2011}{2}
+\bibcite{Murg2005}{3}
+\bibcite{Kourtis2019}{4}
+\bibcite{GarciaMartin2021}{5}
+\bibcite{Zhao2010}{6}
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3}进一步的方向}{23}{subsection.11.3}\protected@file@percent }
+\gdef \@abspage@last{23}

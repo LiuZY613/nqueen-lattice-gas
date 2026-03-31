@@ -1,0 +1,76 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}从零开始：什么是张量？}{4}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}标量、向量、矩阵、张量}{4}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}张量的图形表示}{4}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}张量缩并：最核心的运算}{5}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}什么是缩并}{5}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}图形上的缩并：连线 = 求和}{6}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}N 皇后问题：从棋盘到张量网络}{6}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}N 皇后问题回顾}{6}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}关键思想：把约束变成张量}{6}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}核心张量 B 的 9 个指标}{7}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}B 张量非零元素的完整解读}{7}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}情况一：格子为空（$p=1$），无皇后经过}{7}{subsubsection.3.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}情况二：格子为空（$p=1$），有信号"透传"}{8}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.3}情况三：格子有皇后（$p=2$）}{9}{subsubsection.3.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.4}为什么只有 16 个非零元素}{9}{subsubsection.3.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}一个极简例子：$2\times 2$ 的情况}{10}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}从 9 阶张量到 2D 网络张量：辅助张量的作用}{10}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}问题：对角线指标如何处理？}{10}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}解决方案概述：用 UE、DE、V0 把对角线变成上下左右}{10}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}UE 张量详解：对角线信号的编码器}{11}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}第一步：4 维 SWAP 张量}{11}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}第二步：Reshape 为 $[2, 2, 4]$}{11}{subsubsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.3}UE 的作用方式}{12}{subsubsection.4.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}DE 张量详解：对角线信号的解码器}{13}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}从单位矩阵出发}{13}{subsubsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}DE 的作用方式}{14}{subsubsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}V0 张量：对占据状态求和}{15}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}UE 与 DE 的协作：对角线信号的完整路由}{15}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}Reshape 后的键维度解读}{16}{subsection.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}完整数值推导：$T_{1,1}$ 的每一个元素}{17}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}第一步：原始 9 阶张量（2 个非零元素）}{17}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}第二步：与 UE 缩并（$dr$ 信号编码）}{17}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}逐项计算}{18}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}第三步：Reshape 为 $[8, 4]$ 矩阵}{19}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}$T_{1,1}$ 的完整 $8 \times 4$ 矩阵}{19}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}行指标和列指标的完整含义}{20}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.5.1}行指标 $I$（垂直键，维度 8）= 向下传递的信息}{20}{subsubsection.5.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.5.2}列指标 $J$（水平键，维度 4）= 向右传递的信息}{21}{subsubsection.5.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}4 个非零元素的物理解读}{21}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}验证：用 MATLAB 计算}{22}{subsection.5.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}MPS：矩阵乘积态}{23}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}什么是 MPS}{23}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}第 1 行作为 uMPS}{24}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}第 4 行作为 dMPS}{24}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}MPO：矩阵乘积算符}{24}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}什么是 MPO}{24}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}第 2、3 行作为 MPO}{25}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}核心操作：MPO 作用于 MPS}{25}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}概览}{26}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}逐格点详解：uMPS 吸收第 2 行 MPO}{26}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.1}格点 $j=1$（左端点）}{26}{subsubsection.8.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.2}格点 $j=2$（中间点）}{27}{subsubsection.8.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.3}格点 $j=3$（同 $j=2$）}{27}{subsubsection.8.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.2.4}格点 $j=4$（右端点）}{28}{subsubsection.8.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}吸收后的 uMPS 全貌}{28}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}下方 MPS 吸收 MPO（反方向）}{28}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}dMPS 吸收第 3 行}{28}{subsection.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}最终缩并：两个 MPS 的内积}{29}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}全局图景}{29}{subsection.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}拉拉链式缩并}{29}{subsection.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.1}第 1 列}{30}{subsubsection.10.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.2}第 2 列}{30}{subsubsection.10.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.3}第 3 列：同第 2 列}{30}{subsubsection.10.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {10.2.4}第 4 列（最后一列）}{30}{subsubsection.10.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}完整流程总结}{31}{section.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}计算复杂度}{31}{subsection.11.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}如何拓展到更大的 N？}{32}{subsection.11.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}附录：所有张量的详细形状一览}{32}{section.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.1}$4 \times 4$ 所有格点张量}{32}{subsection.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2}缩并过程中的 MPS 形状变化}{33}{subsection.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {13}直觉总结}{33}{section.13}\protected@file@percent }
+\gdef \@abspage@last{34}
