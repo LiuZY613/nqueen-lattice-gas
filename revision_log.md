@@ -347,3 +347,30 @@
    - 在 constraint hierarchy 列表的 Permutation 条目中添加 "also known as the rook problem"，引用 Knuth [6]。
 
 5. **清理**：删除所有 `\lw{...}` 批注标记（共5处）和 `\newcommand{\lw}` 定义。
+
+---
+
+## 导师第五轮批注 & Sec. VI 重写 | 2026-03-31
+
+### 导师批注 (Lei Wang, commit 7121ae7)
+
+1. **标题**: `\lw{title should be more general}` — 标题应更通用。
+2. **新增作者**: 廖海军 (Hai-Jun Liao)，物理所。
+
+### 我们的修改
+
+1. **标题简化**（批注1）："Statistical mechanics of the $n$-queens lattice gas: Monte Carlo simulations and thermodynamic integration" → "Statistical mechanics of the $n$-queens problem"。
+
+2. **Sec. VI 重写**：将 "Outlook: Exact enumeration via tensor networks" 改为 "Tensor network formulation"。用转移矩阵 $A$ 构造法替代旧的手动枚举描述：
+   - 新增 Eq. (13)：$2\times 2$ 转移矩阵 $A$ 的定义
+   - 新增 Eq. (14)：site tensor $T$ 的构造公式（四个 $A$ 矩阵元的乘积）
+   - 引入边界向量 $\bm{v}_0, \bm{v}_1, \bm{v}_2$ 编码"恰好1个"和"至多1个"约束
+   - 从约束层级（Sec. III A）自然引入，不再是独立的 "Outlook"
+   - 删除 SWAP tensor 讨论
+   - 图 caption：$B \to T$，增加对 Eq. (14) 的引用
+
+3. **Abstract 微调**：新增 "transfer-matrix-based" 修饰词。
+
+4. **作者**：添加 Hai-Jun Liao（在 Lei Wang 之前），物理所。
+
+5. **清理**：删除 `\lw{title should be more general}` 批注和 `\newcommand{\lw}` 宏定义。
