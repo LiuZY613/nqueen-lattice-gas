@@ -7,6 +7,8 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 
+\newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
+
 \begin{document}
 
 \title{Statistical mechanics of the $n$-queens problem}
@@ -676,6 +678,9 @@ computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
 
+
+\lw{comment on infinite tensor network contraction , implications of super-extensive entropy and its effect on the convergence }
+
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
   \caption{The 17 nonzero elements of the site tensor $T$
@@ -741,7 +746,7 @@ The simulation data and analysis code are publicly available on
 GitHub~\cite{github_repo}.
 
 \section{Acknowledgments}
-The authors acknowledge valuable discussions with Haijun Liao, Jinguo Liu, and Tao Xiang.
+The authors acknowledge valuable discussions with Jinguo Liu and Tao Xiang.
 This work is supported by the National Natural Science Foundation of China under Grants No. T2225018, No. 12188101, No. T2121001, the Cross-Disciplinary Key Project of Beijing Natural Science Foundation No. Z250005, the Strategic Priority Research Program of the Chinese Academy of Sciences under Grants No. XDB0500000, and the National Key Projects for Research and Development of China Grants No. 2021YFA1400400. 
 
 
