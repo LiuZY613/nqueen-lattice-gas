@@ -635,7 +635,7 @@ Simkin combinatorial formula.
 The constraint hierarchy of Sec.~\ref{sec:entropy}---row, column,
 and diagonal constraints each reducing the entropy by a definite
 amount---can be encoded exactly in a transfer-matrix
-formalism~\cite{Liu2021}. \lw{is the right reference here ?}
+formalism.
 Define a $2\times 2$ transfer matrix whose entries are projection
 operators on the site occupation $\sigma\in\{0,1\}$:
 \begin{equation}
@@ -645,12 +645,12 @@ operators on the site occupation $\sigma\in\{0,1\}$:
 \end{equation}
 where $\hat{n}_0 = |0\rangle\langle 0|$ and
 $\hat{n}_1 = |1\rangle\langle 1|$.
-As a rank-3 tensor $A_{\alpha\beta}(\sigma)$, the nonzero elements
-are $A_{00}(0) = A_{11}(0) = 1$  \lw{use superscripts rather than () } (empty site: signal pass-through)
-and $A_{01}(1) = 1$ (occupied site: emit attack signal).
+As a rank-3 tensor $A_{\alpha\beta}^{\sigma}$, the nonzero elements
+are $A_{00}^{0} = A_{11}^{0} = 1$ (empty site: signal pass-through)
+and $A_{01}^{1} = 1$ (occupied site: emit attack signal).
 For a constraint line of $L$ sites with boundary vectors
 $\bm{v}_0 = (1,0)$ and $\bm{v}_{\rm end}$, the chain product
-$\bm{v}_0 \cdot A(\sigma_1)\cdots A(\sigma_L)\cdot
+$\bm{v}_0 \cdot A^{\sigma_1}\cdots A^{\sigma_L}\cdot
 \bm{v}_{\rm end}^{\,T}$
 equals~1 if the constraint is satisfied and~0 otherwise: choosing
 $\bm{v}_{\rm end} = \bm{v}_1 \equiv (0,1)$ enforces \emph{exactly
@@ -662,9 +662,9 @@ Each site $(i,j)$ lies at the intersection of four constraint lines.
 The rank-9 site tensor is the product of $A$-matrix elements along
 these four directions:
 \begin{equation}
-  T_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}(p)
-  = A_{ud}(p)\;A_{lr}(p)\;A_{\bar{u}\bar{d}}(p)\;
-    A_{\bar{l}\bar{r}}(p),
+  T_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,p}
+  = A_{ud}^{p}\;A_{lr}^{p}\;A_{\bar{u}\bar{d}}^{p}\;
+    A_{\bar{l}\bar{r}}^{p},
   \label{eq:Ttensor}
 \end{equation}
 where $(u,d)$, $(l,r)$, $(\bar{u},\bar{d})$, $(\bar{l},\bar{r})$
@@ -683,15 +683,33 @@ provides a powerful framework for exact counting in constraint
 satisfaction problems~\cite{Kourtis2019}, of which the $N$-queens
 problem is a natural instance.
 The contraction can be performed row by row
-using matrix product operator methods~\cite{Liu2021} \lw{may not be the right 
-ref, cite Tao Xiang's book} 
-, with a
+using matrix product operator methods~\cite{Xiang2024}, with a
 computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
 
-\lw{draw a schematic figure to illustrative the contraction of tensor network 
-for counting (indicate the boundary conditions)} 
+Figure~\ref{fig:tn_network} illustrates the complete tensor network
+for a $4\times 4$ board.
+
+\begin{figure}[t]
+  \includegraphics[width=\linewidth]{figures/fig7_tn_schematic.pdf}
+  \caption{Tensor network for exact counting of $N$-queens solutions,
+  shown for $N = 4$.  Each node represents the rank-9 site tensor~$T$
+  [Eq.~\eqref{eq:Ttensor}] with a physical index~$p$ (gray stubs,
+  summed over $\{0,1\}$).  Solid red lines are row bonds and solid
+  blue lines are column bonds; dashed green lines carry
+  $\searrow$-diagonal signals and dotted purple lines carry
+  $\nearrow$-diagonal signals.  Boundary vectors are attached at
+  every constraint-line terminus: $\mathbf{v}_0 = (1,0)$ initializes
+  each line (no queen seen yet), $\mathbf{v}_1 = (0,1)$ terminates
+  rows and columns (exactly one queen required), and
+  $\mathbf{v}_2 = (1,1)$ terminates diagonals (at most one queen
+  allowed).  Contracting the full network---summing over all bond and
+  physical indices---yields the exact solution count $Q(N)$.  The
+  arrow indicates the row-by-row contraction order used in the matrix
+  product operator approach.}
+  \label{fig:tn_network}
+\end{figure}
 
 A key feature of the $N$-queens problem is the super-extensive
 ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
@@ -855,15 +873,15 @@ K.~Binder and D.~W.~Heermann,
 \textit{Monte Carlo Simulation in Statistical Physics}
 (Springer, Berlin, 5th ed., 2010).
 
-\bibitem{Liu2021}
-J.-G.~Liu, L.~Wang, and P.~Zhang,
-Tropical tensor network for ground states of spin glasses,
-Phys.\ Rev.\ Lett.\ \textbf{126}, 090506 (2021).
-
 \bibitem{Kourtis2019}
 N.~Kourtis, C.~Chamon, E.~R.~Mucciolo, and A.~E.~Ruckenstein,
 Fast counting with tensor networks,
 SciPost Phys.\ \textbf{7}, 060 (2019).
+
+\bibitem{Xiang2024}
+T.~Xiang,
+\textit{Density Matrix and Tensor Network Renormalization}
+(Cambridge University Press, Cambridge, 2024).
 
 \bibitem{Nishino1996}
 T.~Nishino and K.~Okunishi,

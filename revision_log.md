@@ -444,3 +444,59 @@
 6. **补充结论节导引**（批注 a0dc0ee0-2）：第162行 "Section VII concludes." → "Section VII concludes with a discussion of the implications for connecting combinatorial and thermodynamic information, and possible extensions via tensor network methods."
 
 7. **清理**：删除所有 `\lw{...}` 批注标记。
+
+---
+
+## 导师第七轮批注 | 2026-04-01 (commit 81a122b)
+
+### 导师批注 (Lei Wang)
+
+1. **转移矩阵引用是否正确** (Sec. VI, 约第638行): `\lw{is the right reference here ?}`
+   — 质疑 `\cite{Liu2021}`（Tropical tensor network）是否是"transfer-matrix formalism"的正确引用。
+
+   **Transfer-matrix reference** (Sec. VI, ~line 638): `\lw{is the right reference here ?}`
+   — Questioning whether `\cite{Liu2021}` (Tropical tensor network) is the right reference for the transfer-matrix formalism.
+
+2. **张量元素用上标而非括号** (Sec. VI, 约第649行): `\lw{use superscripts rather than () }`
+   — 张量元素 $A_{00}(0)$, $A_{11}(0)$, $A_{01}(1)$ 应改为上标记法，而非括号标记物理指标。
+
+   **Tensor element notation** (Sec. VI, ~line 649): `\lw{use superscripts rather than () }`
+   — Tensor elements $A_{00}(0)$, $A_{11}(0)$, $A_{01}(1)$ should use superscript notation instead of parentheses for the physical index.
+
+3. **MPO方法引用不对，应引向陶翔的书** (Sec. VI, 约第686行): `\lw{may not be the right ref, cite Tao Xiang's book}`
+   — `\cite{Liu2021}` 不适合作为"matrix product operator methods"的引用，应引用向涛的张量网络教科书。
+
+   **MPO reference** (Sec. VI, ~line 686): `\lw{may not be the right ref, cite Tao Xiang's book}`
+   — `\cite{Liu2021}` is not the right reference for "matrix product operator methods"; should cite Tao Xiang's tensor network textbook instead.
+
+4. **新增张量网络收缩示意图** (Sec. VI, 约第693行): `\lw{draw a schematic figure to illustrative the contraction of tensor network for counting (indicate the boundary conditions)}`
+   — 需要画一张示意图，展示张量网络收缩过程及边界条件。
+
+   **Schematic figure needed** (Sec. VI, ~line 693): `\lw{draw a schematic figure to illustrative the contraction of tensor network for counting (indicate the boundary conditions)}`
+   — Draw a schematic figure illustrating the tensor network contraction for counting, indicating the boundary conditions.
+
+---
+
+### 我们的修改 | 2026-04-01
+
+针对导师第七轮4条批注，逐条处理：
+
+1. **删除转移矩阵处错误引用** (Sec. VI, line 638)
+   — 删除 `\cite{Liu2021}`（Tropical TN，与transfer-matrix无关）。转移矩阵方法是标准方法，无需特定引用。
+   
+   Removed `\cite{Liu2021}` (Tropical TN, unrelated to transfer-matrix formalism). The transfer-matrix approach is standard and needs no specific citation.
+
+2. **张量元素改为上标记法** (Sec. VI, lines 648–667)
+   — 所有张量元素从括号 $A_{\alpha\beta}(\sigma)$ 改为上标 $A_{\alpha\beta}^{\sigma}$，包括Eq.(11)中的T张量公式。
+   
+   Changed all tensor element notation from parenthesis $A_{\alpha\beta}(\sigma)$ to superscript $A_{\alpha\beta}^{\sigma}$, including the T-tensor formula in Eq.(11).
+
+3. **MPO方法引用替换为向涛教科书** (Sec. VI, line 686)
+   — `\cite{Liu2021}` → `\cite{Xiang2024}`（T. Xiang, *Density Matrix and Tensor Network Renormalization*, Cambridge UP, 2024）。同时删除Liu2021的bibitem，新增Xiang2024的bibitem。总参考文献数不变（18篇）。
+   
+   Replaced `\cite{Liu2021}` with `\cite{Xiang2024}` (T. Xiang, *Density Matrix and Tensor Network Renormalization*, Cambridge UP, 2024). Removed Liu2021 bibitem and added Xiang2024 bibitem; total reference count unchanged (18).
+
+4. **新增张量网络收缩示意图** (Sec. VI, Fig. 7)
+   — 新增 `fig7_tn_schematic.pdf`，展示4×4棋盘上的完整张量网络结构。图中用四种颜色/线型区分行键(红实线)、列键(蓝实线)、↘对角线键(绿虚线)、↗对角线键(紫点线)。边界向量 $\mathbf{v}_0$, $\mathbf{v}_1$, $\mathbf{v}_2$ 以方向性stub标注在网格边缘，左侧箭头标示逐行收缩方向。
+   
+   Added `fig7_tn_schematic.pdf` (new Fig. 7): complete tensor network for a 4×4 board. Four bond families are distinguished by color and line style: row (red solid), column (blue solid), SE-diagonal (green dashed), NE-diagonal (purple dotted). Boundary vectors $\mathbf{v}_0$, $\mathbf{v}_1$, $\mathbf{v}_2$ are shown as directional stubs at the grid edges; a left-margin arrow indicates the row-by-row contraction direction.
