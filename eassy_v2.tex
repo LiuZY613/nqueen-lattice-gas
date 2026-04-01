@@ -7,8 +7,6 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 
-\newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
-
 \begin{document}
 
 \title{Statistical mechanics of the $n$-queens problem}
@@ -678,8 +676,25 @@ computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
 
-
-\lw{comment on infinite tensor network contraction , implications of super-extensive entropy and its effect on the convergence }
+A key feature of the $n$-queens problem is the super-extensive
+ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
+grows faster than linearly in~$N$.  This reflects the vanishing queen
+density $N/N^2 = 1/N$: each queen's configurational freedom grows as
+$\ln N$, unbounded in the thermodynamic limit.  The super-extensive
+scaling has direct implications for tensor network contraction.  The
+row-by-row contraction requires tracking $O(N)$ binary bond indices
+(columns and diagonals) across each horizontal cut, giving an exact
+bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional
+models---such as the Ising or Potts models---the free energy per site
+converges to a finite limit, and infinite tensor network methods like
+the corner transfer matrix renormalization group (CTMRG) can
+approximate this limit at moderate bond dimension.  For the
+$n$-queens lattice gas, however, the board size~$N$ simultaneously
+determines the particle number, so the entropy per queen
+$s_0 = \ln N - \gamma$ diverges rather than converging to a fixed
+value.  This precludes a straightforward infinite-size tensor network
+contraction and makes finite-$N$ exact contraction the natural
+framework for benchmarking the Monte Carlo results.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig6_tensor.png}

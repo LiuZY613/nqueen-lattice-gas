@@ -374,3 +374,15 @@
 4. **作者**：添加 Hai-Jun Liao（在 Lei Wang 之前），物理所。
 
 5. **清理**：删除 `\lw{title should be more general}` 批注和 `\newcommand{\lw}` 宏定义。
+
+---
+
+## 导师第五轮追加批注 | 2026-03-31 (commit 32e0a7d)
+
+### Teacher's Comments (Lei Wang)
+
+1. **张量网络部分** (Sec. VI, tensor network 段落后): `\lw{comment on infinite tensor network contraction, implications of super-extensive entropy and its effect on the convergence}`
+   — 需要讨论无限张量网络收缩方法、超广延熵 (super-extensive entropy) 的物理含义，以及超广延熵对收缩收敛性的影响。
+
+2. **致谢修改**: 从 Acknowledgments 中移除 "Haijun Liao"（已在之前的 commit 中添加为共同作者，不应同时出现在致谢中）。
+   — "The authors acknowledge valuable discussions with Haijun Liao, Jinguo Liu, and Tao Xiang." → "The authors acknowledge valuable discussions with Jinguo Liu and Tao Xiang."
