@@ -410,3 +410,37 @@
 
    **Acknowledgments updated**: Added Yijia Wang and Pan Zhang to the acknowledgments.
    — "...valuable discussions with Jinguo Liu and Tao Xiang." → "...valuable discussions with Jinguo Liu, Yijia Wang, Pan Zhang and Tao Xiang."
+
+### 导师追加批注 (Lei Wang, commit a0dc0ee0, 2026-04-01 12:32)
+
+1. **Introduction "ground-state entropy" 处** (约第98行): `\lw{why ground state ? you have not make physical connection yet}`
+   — 质疑此处为什么称"基态熵"，因为此时尚未建立物理联系（还未引入格点气体模型）。
+
+   **Why "ground-state entropy"?** (Introduction, ~line 98): `\lw{why ground state ? you have not make physical connection yet}`
+   — Questioning why this is called "ground-state entropy" before the physical connection (lattice gas model) has been introduced.
+
+2. **Introduction 章节导引末尾** (约第162行): `\lw{with discussions on ...}`
+   — "Section VII concludes" 后应补充结论节讨论的内容，不能只写"concludes"。
+
+   **Conclusions outline** (Introduction, ~line 162): `\lw{with discussions on ...}`
+   — The outline should expand what the conclusions section discusses, not just say "concludes."
+
+3. **`.gitignore` 更新**：排除 `eassy_v2.pdf`，从仓库中移除PDF二进制文件。
+
+### 我们的修改 | 2026-04-01
+
+根据导师第六轮批注，对比 PDF 与 tex 引用列表后进行以下修改：
+
+1. **CTMRG 补充引用**（批注1）：在 Sec. VI 提到 CTMRG 处添加 `\cite{Nishino1996}`，引用 T. Nishino and K. Okunishi, J. Phys. Soc. Jpn. **65**, 891–894 (1996)。新增 `\bibitem{Nishino1996}` 至参考文献列表。
+
+2. **删除 Pan2022 引用**：PDF 中不包含 Pan & Zhang (2022) 的引用，但 tex 中 `\bibitem{Pan2022}` 存在且在正文两处被引用（行639、687）。将两处 `\cite{Liu2021,Pan2022}` 改为 `\cite{Liu2021}`，并将 `\bibitem{Pan2022}` 替换为 `\bibitem{Nishino1996}`。
+
+3. **引用列表现与 PDF 完全一致**：18条参考文献，[14]=Liu2021, [15]=Kourtis2019, [16]=Nishino1996 (CTMRG), [17]=Vanderstraeten2018, [18]=GitHub repo。
+
+4. **修正引用顺序**：交换 bibitem 中 Kourtis2019 和 Nishino1996 的位置，使编号顺序与正文首次引用顺序一致（Kourtis [15] 在行684首次出现，Nishino [16] 在行703首次出现）。
+
+5. **删除 "ground-state" 术语**（批注 a0dc0ee0-1）：Introduction 第98行 "ground-state entropy" → "entropy per queen"，第102行 "The form of the ground-state entropy" → "The form of this entropy"。此时尚未引入格点气体模型，不应使用物理术语"ground state"。
+
+6. **补充结论节导引**（批注 a0dc0ee0-2）：第162行 "Section VII concludes." → "Section VII concludes with a discussion of the implications for connecting combinatorial and thermodynamic information, and possible extensions via tensor network methods."
+
+7. **清理**：删除所有 `\lw{...}` 批注标记。

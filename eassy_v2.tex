@@ -95,11 +95,10 @@ backtracking search has been pushed to $N = 27$ using massively
 parallel GPU computation~\cite{Yao2025}, highlighting the
 combinatorial explosion that limits direct counting to moderate board
 sizes.
-All of these determinations are purely combinatorial.  Equation~\eqref{eq:QN} yields a ground-state \lw{why ground state ? you have not make physical connection yet} entropy
-per queen
+All of these determinations are purely combinatorial.  Equation~\eqref{eq:QN} yields an entropy per queen
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
-The form of the ground-state entropy is suggestive.  On an
+The form of this entropy is suggestive.  On an
 $N \times N$ lattice, a single particle placed freely in one row has
 $\ln N$ units of entropy---the maximal combinatorial freedom per
 particle.  The $N$-queens entropy $s_0 = \ln N - \gamma$ can
@@ -159,7 +158,7 @@ Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
 Section~\ref{sec:tensor} presents a tensor network formulation that
 provides an alternative exact-enumeration route.
-Section~\ref{sec:conclusions} concludes. \lw{with discussions on ...}
+Section~\ref{sec:conclusions} concludes with a discussion of the implications for connecting combinatorial and thermodynamic information, and possible extensions via tensor network methods.
 
 
 %=====================================================================
@@ -636,7 +635,7 @@ Simkin combinatorial formula.
 The constraint hierarchy of Sec.~\ref{sec:entropy}---row, column,
 and diagonal constraints each reducing the entropy by a definite
 amount---can be encoded exactly in a transfer-matrix
-formalism~\cite{Liu2021,Pan2022}.
+formalism~\cite{Liu2021}.
 Define a $2\times 2$ transfer matrix whose entries are projection
 operators on the site occupation $\sigma\in\{0,1\}$:
 \begin{equation}
@@ -684,7 +683,7 @@ provides a powerful framework for exact counting in constraint
 satisfaction problems~\cite{Kourtis2019}, of which the $N$-queens
 problem is a natural instance.
 The contraction can be performed row by row
-using matrix product operator methods~\cite{Liu2021,Pan2022}, with a
+using matrix product operator methods~\cite{Liu2021}, with a
 computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
@@ -700,7 +699,7 @@ row-by-row contraction requires tracking $O(N)$ binary bond indices
 bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional
 models---such as the Ising or Potts models---the free energy per site
 converges to a finite limit, and infinite tensor network methods like
-the corner transfer matrix renormalization group (CTMRG) can
+the corner transfer matrix renormalization group (CTMRG)~\cite{Nishino1996} can
 approximate this limit at moderate bond dimension; such methods have
 been successfully applied to compute residual entropies in
 three-dimensional classical systems with extensive ground-state
@@ -856,16 +855,15 @@ J.-G.~Liu, L.~Wang, and P.~Zhang,
 Tropical tensor network for ground states of spin glasses,
 Phys.\ Rev.\ Lett.\ \textbf{126}, 090506 (2021).
 
-\bibitem{Pan2022}
-F.~Pan and P.~Zhang,
-Simulation of quantum circuits using the big-batch tensor network
-method,
-Phys.\ Rev.\ Lett.\ \textbf{128}, 030501 (2022).
-
 \bibitem{Kourtis2019}
 N.~Kourtis, C.~Chamon, E.~R.~Mucciolo, and A.~E.~Ruckenstein,
 Fast counting with tensor networks,
 SciPost Phys.\ \textbf{7}, 060 (2019).
+
+\bibitem{Nishino1996}
+T.~Nishino and K.~Okunishi,
+Corner transfer matrix renormalization group method,
+J.~Phys.\ Soc.\ Jpn.\ \textbf{65}, 891--894 (1996).
 
 \bibitem{Vanderstraeten2018}
 L.~Vanderstraeten, B.~Vanhecke, and F.~Verstraete,
