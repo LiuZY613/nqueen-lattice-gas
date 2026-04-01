@@ -7,6 +7,9 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 
+\newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
+
+
 \begin{document}
 
 \title{Statistical mechanics of the $n$-queens problem}
@@ -687,9 +690,9 @@ row-by-row contraction requires tracking $O(N)$ binary bond indices
 bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional
 models---such as the Ising or Potts models---the free energy per site
 converges to a finite limit, and infinite tensor network methods like
-the corner transfer matrix renormalization group (CTMRG) can
+the corner transfer matrix renormalization group (CTMRG) \lw{cite} can
 approximate this limit at moderate bond dimension.  For the
-$n$-queens lattice gas, however, the board size~$N$ simultaneously
+$n$-queens \lw{use consistent N or n, makebe just capital $N$ throughout} lattice gas, however, the board size~$N$ simultaneously
 determines the particle number, so the entropy per queen
 $s_0 = \ln N - \gamma$ diverges rather than converging to a fixed
 value.  This precludes a straightforward infinite-size tensor network
@@ -761,8 +764,7 @@ The simulation data and analysis code are publicly available on
 GitHub~\cite{github_repo}.
 
 \section{Acknowledgments}
-The authors acknowledge valuable discussions with Jinguo Liu and Tao Xiang.
-This work is supported by the National Natural Science Foundation of China under Grants No. T2225018, No. 12188101, No. T2121001, the Cross-Disciplinary Key Project of Beijing Natural Science Foundation No. Z250005, the Strategic Priority Research Program of the Chinese Academy of Sciences under Grants No. XDB0500000, and the National Key Projects for Research and Development of China Grants No. 2021YFA1400400. 
+The authors acknowledge valuable discussions with Jinguo Liu, Yijia Wang, Pan Zhang and Tao Xiang. This work is supported by the National Natural Science Foundation of China under Grants No. T2225018, No. 12188101, No. T2121001, the Cross-Disciplinary Key Project of Beijing Natural Science Foundation No. Z250005, the Strategic Priority Research Program of the Chinese Academy of Sciences under Grants No. XDB0500000, and the National Key Projects for Research and Development of China Grants No. 2021YFA1400400. 
 
 
 %=====================================================================
