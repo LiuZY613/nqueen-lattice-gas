@@ -635,7 +635,7 @@ Simkin combinatorial formula.
 The constraint hierarchy of Sec.~\ref{sec:entropy}---row, column,
 and diagonal constraints each reducing the entropy by a definite
 amount---can be encoded exactly in a transfer-matrix
-formalism~\cite{Liu2021}.
+formalism~\cite{Liu2021}. \lw{is the right reference here ?}
 Define a $2\times 2$ transfer matrix whose entries are projection
 operators on the site occupation $\sigma\in\{0,1\}$:
 \begin{equation}
@@ -646,7 +646,7 @@ operators on the site occupation $\sigma\in\{0,1\}$:
 where $\hat{n}_0 = |0\rangle\langle 0|$ and
 $\hat{n}_1 = |1\rangle\langle 1|$.
 As a rank-3 tensor $A_{\alpha\beta}(\sigma)$, the nonzero elements
-are $A_{00}(0) = A_{11}(0) = 1$ (empty site: signal pass-through)
+are $A_{00}(0) = A_{11}(0) = 1$  \lw{use superscripts rather than () } (empty site: signal pass-through)
 and $A_{01}(1) = 1$ (occupied site: emit attack signal).
 For a constraint line of $L$ sites with boundary vectors
 $\bm{v}_0 = (1,0)$ and $\bm{v}_{\rm end}$, the chain product
@@ -683,10 +683,15 @@ provides a powerful framework for exact counting in constraint
 satisfaction problems~\cite{Kourtis2019}, of which the $N$-queens
 problem is a natural instance.
 The contraction can be performed row by row
-using matrix product operator methods~\cite{Liu2021}, with a
+using matrix product operator methods~\cite{Liu2021} \lw{may not be the right 
+ref, cite Tao Xiang's book} 
+, with a
 computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
+
+\lw{draw a schematic figure to illustrative the contraction of tensor network 
+for counting (indicate the boundary conditions)} 
 
 A key feature of the $N$-queens problem is the super-extensive
 ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
