@@ -25,3 +25,5 @@ eassy_v2.pdf
 # 保留 tensor 文件夹
 !tensor/
 !tensor/**
+
+eassy_v2.pdf
