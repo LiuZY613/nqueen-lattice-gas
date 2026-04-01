@@ -386,3 +386,27 @@
 
 2. **致谢修改**: 从 Acknowledgments 中移除 "Haijun Liao"（已在之前的 commit 中添加为共同作者，不应同时出现在致谢中）。
    — "The authors acknowledge valuable discussions with Haijun Liao, Jinguo Liu, and Tao Xiang." → "The authors acknowledge valuable discussions with Jinguo Liu and Tao Xiang."
+
+---
+
+## 导师第六轮批注 | 2026-04-01 (commit 847688c)
+
+### Teacher's Comments (Lei Wang)
+
+1. **CTMRG处需要加引用** (Sec. VI, 超广延熵段落): `\lw{cite}`
+   — 在提到 CTMRG 的地方需要补充参考文献引用。
+
+   **CTMRG needs citation** (Sec. VI, super-extensive entropy paragraph): `\lw{cite}`
+   — Add reference citation(s) where CTMRG is mentioned.
+
+2. **统一使用大写 $N$-queens** (Sec. VI, 超广延熵段落): `\lw{use consistent N or n, makebe just capital $N$ throughout}`
+   — 全文应统一使用大写 $N$-queens 还是小写 $n$-queens，导师建议统一用大写 $N$。
+
+   **Use consistent capitalization for N-queens** (Sec. VI, super-extensive entropy paragraph): `\lw{use consistent N or n, makebe just capital $N$ throughout}`
+   — The paper should use consistent capitalization; advisor suggests using capital $N$ throughout.
+
+3. **致谢新增人名** (Acknowledgments): 新增致谢 Yijia Wang 和 Pan Zhang。
+   — "...valuable discussions with Jinguo Liu and Tao Xiang." → "...valuable discussions with Jinguo Liu, Yijia Wang, Pan Zhang and Tao Xiang."
+
+   **Acknowledgments updated**: Added Yijia Wang and Pan Zhang to the acknowledgments.
+   — "...valuable discussions with Jinguo Liu and Tao Xiang." → "...valuable discussions with Jinguo Liu, Yijia Wang, Pan Zhang and Tao Xiang."

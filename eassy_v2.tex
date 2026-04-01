@@ -13,7 +13,7 @@
 
 \begin{document}
 
-\title{Statistical mechanics of the $n$-queens problem}
+\title{Statistical mechanics of the $N$-queens problem}
 
 \author{Zong-Yue Liu}
 \affiliation{Kuang Yaming Honors School, Nanjing University, Nanjing 210093, China}
@@ -27,7 +27,7 @@
 \date{\today}
 
 \begin{abstract}
-We investigate the $n$-queens problem as a lattice gas---a model in which $N$ queens
+We investigate the $N$-queens problem as a lattice gas---a model in which $N$ queens
 are placed on an $N \times N$ chessboard with pairwise repulsive
 interactions along shared rows, columns, and diagonals---from the
 perspective of statistical mechanics.  The
@@ -90,6 +90,11 @@ algorithm, yielding $\gamma \in [1.939,\, 1.945]$.
 Nobel, Agrawal, and Boyd~\cite{Nobel2023} subsequently refined these
 bounds to $\gamma = 1.944001$ (precision $\sim 10^{-7}$) by solving
 Simkin's convex programs with large-scale Newton methods.
+On the computational side, exact enumeration of $Q(N)$ by exhaustive
+backtracking search has been pushed to $N = 27$ using massively
+parallel GPU computation~\cite{Yao2025}, highlighting the
+combinatorial explosion that limits direct counting to moderate board
+sizes.
 All of these determinations are purely combinatorial.  Equation~\eqref{eq:QN} yields a ground-state entropy
 per queen
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
@@ -674,13 +679,17 @@ signals to vanish and emits on all outgoing channels.
 Contracting the full $N\times N$ network---with $\bm{v}_0$ at each
 constraint-line origin and $\bm{v}_1$ or $\bm{v}_2$ at each
 terminus---and summing over all physical indices yields the exact
-solution count $Q(N)$.  This contraction can be performed row by row
+solution count $Q(N)$.  More generally, tensor network contraction
+provides a powerful framework for exact counting in constraint
+satisfaction problems~\cite{Kourtis2019}, of which the $N$-queens
+problem is a natural instance.
+The contraction can be performed row by row
 using matrix product operator methods~\cite{Liu2021,Pan2022}, with a
 computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
 
-A key feature of the $n$-queens problem is the super-extensive
+A key feature of the $N$-queens problem is the super-extensive
 ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
 grows faster than linearly in~$N$.  This reflects the vanishing queen
 density $N/N^2 = 1/N$: each queen's configurational freedom grows as
@@ -691,9 +700,12 @@ row-by-row contraction requires tracking $O(N)$ binary bond indices
 bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional
 models---such as the Ising or Potts models---the free energy per site
 converges to a finite limit, and infinite tensor network methods like
-the corner transfer matrix renormalization group (CTMRG) \lw{cite} can
-approximate this limit at moderate bond dimension.  For the
-$n$-queens \lw{use consistent N or n, makebe just capital $N$ throughout} lattice gas, however, the board size~$N$ simultaneously
+the corner transfer matrix renormalization group (CTMRG) can
+approximate this limit at moderate bond dimension; such methods have
+been successfully applied to compute residual entropies in
+three-dimensional classical systems with extensive ground-state
+degeneracy~\cite{Vanderstraeten2018}.  For the
+$N$-queens lattice gas, however, the board size~$N$ simultaneously
 determines the particle number, so the entropy per queen
 $s_0 = \ln N - \gamma$ diverges rather than converging to a fixed
 value.  This precludes a straightforward infinite-size tensor network
@@ -724,7 +736,7 @@ framework for benchmarking the Monte Carlo results.
 
 We have demonstrated that the Simkin constant $\gamma$---a
 fundamental quantity in combinatorics---can be determined through
-an independent thermodynamic route.  By formulating the $n$-queens
+an independent thermodynamic route.  By formulating the $N$-queens
 problem as a lattice gas and performing extensive Monte Carlo
 simulations ($N = 8$--$1024$, $10^8$ sweeps per temperature point),
 we map out the specific heat $C_v/N$ over the entire temperature
@@ -746,7 +758,7 @@ is dominated by finite-size corrections to the Simkin formula rather
 than statistical noise, and extending to still larger system sizes
 would further sharpen the estimate.
 
-These results establish the $n$-queens lattice gas as a setting where
+These results establish the $N$-queens lattice gas as a setting where
 combinatorial and thermodynamic information are connected
 quantitatively: a single Monte Carlo campaign suffices to determine
 a fundamental combinatorial constant through the laws of
@@ -794,6 +806,12 @@ arXiv:2105.11431 (2021).
 P.~Nobel, A.~Agrawal, and S.~Boyd,
 Computing tighter bounds on the $n$-queens constant via Newton's method,
 Optim.\ Lett.\ \textbf{17}, 1229--1240 (2023).
+
+\bibitem{Yao2025}
+G.~Yao and Y.~Li,
+High-performance $N$-queens solver on GPU: iterative DFS with zero
+bank conflicts,
+arXiv:2511.12009 (2025).
 
 \bibitem{Knuth2022}
 D.~E.~Knuth,
@@ -844,9 +862,20 @@ Simulation of quantum circuits using the big-batch tensor network
 method,
 Phys.\ Rev.\ Lett.\ \textbf{128}, 030501 (2022).
 
+\bibitem{Kourtis2019}
+N.~Kourtis, C.~Chamon, E.~R.~Mucciolo, and A.~E.~Ruckenstein,
+Fast counting with tensor networks,
+SciPost Phys.\ \textbf{7}, 060 (2019).
+
+\bibitem{Vanderstraeten2018}
+L.~Vanderstraeten, B.~Vanhecke, and F.~Verstraete,
+Residual entropies for three-dimensional frustrated spin systems with
+tensor networks,
+Phys.\ Rev.\ E \textbf{98}, 042145 (2018).
+
 \bibitem{github_repo}
-Z.-Y.~Liu and L.~Wang,
-Simulation code and data for the $n$-queens lattice gas,
+Z.-Y.~Liu, H.-J.~Liao, and L.~Wang,
+Simulation code and data for the $N$-queens lattice gas,
 \url{https://github.com/LiuZY613/nqueen-lattice-gas}.
 
 \end{thebibliography}
