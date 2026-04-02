@@ -32,29 +32,30 @@ are placed on an $N \times N$ chessboard with pairwise repulsive
 interactions along shared rows, columns, and diagonals---from the
 perspective of statistical mechanics.  The
 ground states are exactly the $Q(N)$ solutions of the classical
-$N$-queens problem, whose entropy per queen
-$s_0 \approx \ln N - \gamma$ ($\gamma \approx 1.944$) exhibits a
-characteristic constraint hierarchy: each successive geometric
-constraint---columns, then diagonals---reduces the entropy from
-the free-placement value $\ln N$ by a definite constant.
+$N$-queens problem, with entropy per queen
+$s_0 \approx \ln N - \gamma$ ($\gamma \approx 1.944$).
+This entropy reflects a characteristic constraint hierarchy:
+each successive geometric constraint---columns, then
+diagonals---reduces the entropy from the free-placement value
+$\ln N$ by a definite constant.
 We derive the exact high-temperature energy $E/N \to 5/3$ as
 $N \to \infty$.
 Extensive Monte Carlo simulations with $10^8$ sweeps per temperature
 point for $N = 8$--$1024$ reveal that the specific heat per queen
-$C_v/N$ converges to a universal function of $T$ as $N \to \infty$,
-with a non-divergent peak $C_v^{\max}/N \approx 1.63$ at
-$T^* \approx 0.235\,J$, establishing the absence of a thermodynamic
-phase transition.
+$C_v/N$ converges to a universal function of $T$ as $N \to \infty$.
+The converged curve features a non-divergent peak
+$C_v^{\max}/N \approx 1.63$ at $T^* \approx 0.235\,J$, establishing
+the absence of a thermodynamic phase transition.
 Combined with the trivially exact high-temperature entropy
 $S(\infty)/N = \frac{1}{N}\ln\binom{N^2}{N}$, the
 convergence of $C_v/N$ enables a thermodynamic integration of
 $C_v/T$ from $T = \infty$ to $T = 0$ that recovers the ground-state
 entropy---and hence the Simkin constant $\gamma$---purely from
-Monte Carlo data, providing an independent \emph{thermodynamic} route
-to this fundamental combinatorial constant.
+Monte Carlo data.  This provides an independent
+\emph{thermodynamic} route to a fundamental combinatorial constant.
 Thermodynamic integration yields
 $\gamma_{\rm MC} = 1.946 \pm 0.003$ at $N = 1024$, within $0.1\%$ of the
-precise combinatorial value $\gamma = 1.944001$.
+precise combinatorial value $\gamma = 1.94400(1)$.
 We further present a transfer-matrix-based tensor network formulation
 that encodes the non-attacking constraints into a rank-9 site tensor
 with 17 nonzero elements, providing a complementary exact-enumeration
@@ -75,11 +76,8 @@ problems in mathematics, dating back to the work of Bezzel in
 1848~\cite{Bezzel1848}.  Despite its long history, the asymptotic
 enumeration of solutions was resolved only recently.  Simkin~\cite{Simkin2022}
 proved that the number of solutions $Q(N)$ satisfies
-\begin{equation}
-  Q(N) \sim \left(\frac{N}{e^{\gamma}} \right)^N,
-  \label{eq:QN}
-\end{equation}
-building on the breakthrough of Bowtell and
+$Q(N) \sim (N/e^{\gamma})^N$.
+This result builds on the breakthrough of Bowtell and
 Keevash~\cite{Bowtell2023} and earlier bounds by Luria and
 Simkin~\cite{Luria2021}.  Simkin's proof introduces \emph{queenons}---limit
 objects defined as probability measures on the unit square---and
@@ -88,14 +86,17 @@ problem over this space; the upper bound employs the entropy method
 while the lower bound is established by a randomized construction
 algorithm, yielding $\gamma \in [1.939,\, 1.945]$.
 Nobel, Agrawal, and Boyd~\cite{Nobel2023} subsequently refined these
-bounds to $\gamma = 1.944001$ (precision $\sim 10^{-7}$) by solving
+bounds to $\gamma = 1.94400(1)$ by solving
 Simkin's convex programs with large-scale Newton methods.
 On the computational side, exact enumeration of $Q(N)$ by exhaustive
 backtracking search has been pushed to $N = 27$ using massively
 parallel GPU computation~\cite{Yao2025}, highlighting the
 combinatorial explosion that limits direct counting to moderate board
 sizes.
-All of these determinations are purely combinatorial.  Equation~\eqref{eq:QN} yields an entropy per queen
+All of these determinations are purely combinatorial.
+In this work, we pursue an independent, thermodynamic route.
+The starting point is the entropy per queen implied by the
+asymptotic formula $Q(N) \sim (N/e^\gamma)^N$:
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
 The form of this entropy is suggestive.  On an
@@ -104,26 +105,17 @@ $\ln N$ units of entropy---the maximal combinatorial freedom per
 particle.  The $N$-queens entropy $s_0 = \ln N - \gamma$ can
 therefore be read as: each queen retains the full lattice entropy
 $\ln N$, reduced by a constant $\gamma$ that encodes the cumulative
-cost of geometric constraints.  This constant decomposes naturally
-through a hierarchy of constraints with increasing
-stringency~\cite{Knuth2022}:
-\begin{itemize}
-  \item \textit{Free placement} (row constraint only):
-    $\Omega = N^N$, $s = \ln N$.
-  \item \textit{Permutation} (row + column, also known as the
-    \textit{rook problem}~\cite{Knuth2022}):
-    $\Omega = N!$, $s \approx \ln N - 1$.
-  \item \textit{$N$-queens} (row + column + two diagonals):
-    $\Omega \approx (N/e^\gamma)^N$, $s \approx \ln N - \gamma$.
-\end{itemize}
-The column constraint costs exactly one unit of entropy (the
-Stirling correction); the two diagonal constraints together cost
-$\gamma - 1 \approx 0.94$ units.  That each geometric constraint
-reduces the entropy by a well-defined constant, independent of $N$
-in the large-$N$ limit, hints at a deeper statistical-mechanical
-structure underlying the combinatorics.
+cost of geometric constraints.  This constant $\gamma$ decomposes
+through a hierarchy of increasingly stringent geometric
+constraints~\cite{Knuth2022}---column non-repetition costs one unit
+of entropy (the Stirling correction), and the two diagonal constraints
+cost a further $\gamma - 1 \approx 0.94$ units
+(see Sec.~\ref{sec:entropy} for details).
+That each constraint reduces the per-queen entropy by a well-defined
+constant, independent of $N$ in the large-$N$ limit, hints at a
+deeper statistical-mechanical structure underlying the combinatorics.
 
-The additive decomposition of entropy into constraint costs motivates
+This additive decomposition of entropy into constraint costs motivates
 a statistical-mechanical approach.  We embed the $N$-queens
 problem in a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
@@ -194,7 +186,8 @@ starting point for the high-temperature calculation
 (Sec.~\ref{sec:highT}).
 
 We work in the canonical ensemble with fixed particle number
-$N$ and use Kawasaki dynamics~\cite{Kawasaki1966}
+$N$---the natural choice since each valid $N$-queens configuration
+places exactly $N$ queens---and use Kawasaki dynamics~\cite{Kawasaki1966}
 (queen--vacancy exchange) with the Metropolis acceptance
 criterion~\cite{Metropolis1953}.  We choose queen--vacancy rather
 than queen--queen exchanges because the former moves a single queen to
@@ -212,7 +205,7 @@ thermalization sweeps at every temperature point.  The grid places
 in steps of $0.0025\,J$), 11 points in the low-temperature region
 ($T = 0.050$--$0.100\,J$, step $0.005\,J$), and the remaining 109
 points at intermediate and high temperatures up to $T = 500\,J$.
-All eight sizes share the identical temperature grid and measurement
+All eight sizes use the same temperature grid and measurement
 parameters, ensuring a self-consistent data set.
 The simulations were carried out using 280 CPU cores in parallel,
 with each core handling all eight system sizes at a single temperature
@@ -245,11 +238,11 @@ Fig.~\ref{fig:schematic}.
 \label{sec:entropy}
 
 For $N$ queens, the ground states ($E = 0$) correspond to the
-$Q(N)$ non-attacking configurations.  Using
-Eq.~\eqref{eq:QN}, the entropy per queen is
+$Q(N)$ non-attacking configurations.  Since
+$Q(N) \sim (N/e^\gamma)^N$, the entropy per queen is
 \begin{equation}
   s_0 = \lim_{N\to\infty}\frac{\ln Q(N)}{N}
-  = \ln N - \gamma, \quad \gamma \approx 1.94400.
+  = \ln N - \gamma, \quad \gamma = 1.94400(1).
   \label{eq:s0}
 \end{equation}
 
@@ -268,8 +261,8 @@ $\ln N! = N\ln N - N + O(\ln N)$, so the entropy per queen is
   \label{eq:s_perm}
 \end{equation}
 Thus the column constraint costs exactly one unit of entropy---the
-Stirling correction arising from the indistinguishability of column
-assignments.
+Stirling correction arising from the non-repetition constraint on
+column assignments.
 
 The two diagonal constraints further reduce the entropy to
 $s_0 = \ln N - \gamma$, costing an additional $\gamma - 1 \approx
@@ -454,7 +447,12 @@ This behavior is consistent with the absence of a thermodynamic phase
 transition and identifies the crossover as a
 Schottky-type anomaly~\cite{Binder2010}---a broad peak in $C_v$
 arising from thermal excitation across a finite energy gap, without
-any symmetry breaking.  The peak temperature $T^* \approx 0.235\,J$
+any symmetry breaking.  Physically, the peak reflects thermal
+excitation from the non-attacking ground states ($E = 0$) to
+configurations with a small number of attacking pairs
+($E \sim O(1)$); the finite energy gap between these two regimes
+produces the characteristic broad maximum without critical
+fluctuations.  The peak temperature $T^* \approx 0.235\,J$
 stabilizes for $N \ge 64$.
 
 The convergence of $C_v/N$ to a definite limiting function has a
@@ -481,7 +479,7 @@ are equally probable, so the entropy per queen is
   = \frac{1}{N}\ln\binom{N^2}{N}.
   \label{eq:Sinf_def}
 \end{equation}
-For $N \ll N^2$, applying the Stirling approximation
+For $N \gg 1$, applying the Stirling approximation
 $\ln n! = n\ln n - n + \tfrac{1}{2}\ln(2\pi n) + O(n^{-1})$:
 \begin{align}
   \ln\binom{N^2}{N}
@@ -518,10 +516,10 @@ and substituting the results above:
   = 1 + \gamma + O\!\left(\frac{\ln N}{N}\right).
   \label{eq:DS}
 \end{equation}
-This is a remarkable relation: the left side involves $C_v(T)$ measured
-by simulation over the entire temperature range, while the right side
-involves only the \emph{combinatorial} constants 1 (from the Stirling
-correction) and $\gamma$ (from the Simkin asymptotic formula).
+This relation connects a purely thermodynamic quantity---the
+integrated specific heat on the left---with purely combinatorial
+constants on the right: the Stirling correction (contributing unity)
+and the Simkin constant $\gamma$.
 
 Rearranging Eq.~\eqref{eq:DS}, we can extract the ground-state
 entropy per queen directly from the Monte Carlo data:
@@ -536,7 +534,7 @@ configurations---requiring no knowledge of the ground-state count
 $Q(N)$ or the Simkin constant.
 This provides a purely thermodynamic determination of the
 ground-state degeneracy without direct enumeration; the Simkin--Nobel
-value $\gamma = 1.944001$ enters only as a benchmark for comparison.
+value $\gamma = 1.94400(1)$ enters only as a benchmark for comparison.
 
 The numerical integration uses 280 temperature grid points
 spanning from $T = 0.05\,J$ to $400\,J$; the low-$T$
@@ -558,7 +556,7 @@ For $N \ge 32$, where exact $Q(N)$ is unknown, we use $s_0^{\rm MC}$
 to extract the Simkin constant via
 $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$.
 The extracted values converge toward the known
-asymptotic value $\gamma = 1.944001$~\cite{Nobel2023}:
+asymptotic value $\gamma = 1.94400(1)$~\cite{Nobel2023}:
 $\gamma_{\rm MC} = 1.833 \pm 0.001$ ($N = 32$), $1.885 \pm 0.002$ ($N = 64$),
 $1.909 \pm 0.002$ ($N = 128$), $1.925 \pm 0.002$ ($N = 256$),
 $1.931 \pm 0.003$ ($N = 512$), and $1.946 \pm 0.003$ ($N = 1024$), with the deviation
@@ -586,8 +584,8 @@ report the raw $\gamma_{\rm MC}(N)$ values without extrapolation
 and note that extending the simulations to larger $N$ would
 further narrow the gap.
 
-The monotonic convergence of $\gamma_{\rm MC}$ toward $\gamma = 1.944001$ with
-increasing $N$---reaching $0.11\%$ accuracy at $N = 1024$---confirms
+The monotonic convergence of $\gamma_{\rm MC}$ toward $\gamma = 1.94400(1)$ with
+increasing $N$---reaching $0.11\%$ accuracy at $N = 1024$---supports
 the mutual consistency of the Monte Carlo
 thermodynamics, the Stirling approximation for $S(\infty)$, and the
 Simkin combinatorial formula.
@@ -602,7 +600,7 @@ Simkin combinatorial formula.
   ground-state entropy $s_0^{\rm exact} = \ln Q(N)/N$.
   For $N \ge 32$, we extract
   $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ and compare with the
-  precise value $\gamma = 1.944001$~\cite{Nobel2023}.
+  precise value $\gamma = 1.94400(1)$~\cite{Nobel2023}.
   All data use a 280-point temperature grid with $10^8$
   measurement sweeps per point.}
   \label{tab:entropy_check}
@@ -632,9 +630,9 @@ Simkin combinatorial formula.
 \label{sec:tensor}
 %=====================================================================
 
-The constraint hierarchy of Sec.~\ref{sec:entropy}---row, column,
-and diagonal constraints each reducing the entropy by a definite
-amount---can be encoded exactly in a transfer-matrix
+The geometric constraints of the $N$-queens problem---row, column,
+and diagonal non-repetition---are each local along their respective
+lines and can therefore be encoded exactly in a transfer-matrix
 formalism.
 Define a $2\times 2$ transfer matrix whose entries are projection
 operators on the site occupation $\sigma\in\{0,1\}$:
@@ -687,30 +685,23 @@ using matrix product operator methods~\cite{Xiang2024}, with a
 computational cost that grows exponentially in $N$ through the bond
 dimension but is free of statistical noise, providing exact
 benchmarks that complement the Monte Carlo results at moderate~$N$.
-
-\lw{swap the order of the following two figures}
-
 Figure~\ref{fig:tn_network} illustrates the complete tensor network
-for a $4\times 4$ board. \lw{this is a paragraph with a standalone sentences}
+for a $4\times 4$ board.
 
 \begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig7_tn_schematic.pdf}
-  \caption{Tensor network for exact counting of $N$-queens solutions,
-  shown for $N = 4$.  Each node represents the rank-9 site tensor~$T$
-  [Eq.~\eqref{eq:Ttensor}] with a physical index~$p$ (gray stubs,
-  summed over $\{0,1\}$).  Solid red lines are row bonds and solid
-  blue lines are column bonds; dashed green lines carry
-  $\searrow$-diagonal signals and dotted purple lines carry
-  $\nearrow$-diagonal signals.  Boundary vectors are attached at
-  every constraint-line terminus: $\mathbf{v}_0 = (1,0)$ initializes
-  each line (no queen seen yet), $\mathbf{v}_1 = (0,1)$ terminates
-  rows and columns (exactly one queen required), and
-  $\mathbf{v}_2 = (1,1)$ terminates diagonals (at most one queen
-  allowed).  Contracting the full network---summing over all bond and
-  physical indices---yields the exact solution count $Q(N)$.  The
-  arrow indicates the row-by-row contraction order used in the matrix
-  product operator approach. \lw{what happens to the physical indices ?}}
-  \label{fig:tn_network}
+  \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
+  \caption{The 17 nonzero elements of the site tensor $T$
+  [Eq.~\eqref{eq:Ttensor}].
+  Each diagram shows a lattice site with eight bond indices
+  carrying binary attack signals ($0$: absent, $1$: present);
+  red arrows mark active signals.
+  The first 16 elements correspond to empty sites ($p = 0$) with
+  all $2^4$ combinations of independent pass-through signals along
+  the four constraint channels (column, row, and two diagonal
+  families).  The 17th element (bottom right) represents an
+  occupied site ($p = 1$): all incoming signals are $0$ and all
+  outgoing signals are $1$.}
+  \label{fig:tensor}
 \end{figure}
 
 A key feature of the $N$-queens problem is the super-extensive
@@ -737,19 +728,26 @@ contraction and makes finite-$N$ exact contraction the natural
 framework for benchmarking the Monte Carlo results.
 
 \begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
-  \caption{The 17 nonzero elements of the site tensor $T$
-  [Eq.~\eqref{eq:Ttensor}].
-  Each diagram shows a lattice site with eight bond indices
-  carrying binary attack signals ($0$: absent, $1$: present);
-  red arrows mark active signals.
-  The first 16 elements correspond to empty sites ($p = 0$) with
-  all $2^4$ combinations of independent pass-through signals along
-  the four constraint channels (column, row, and two diagonal
-  families).  The 17th element (bottom right) represents an
-  occupied site ($p = 1$): all incoming signals are $0$ and all
-  outgoing signals are $1$.}
-  \label{fig:tensor}
+  \includegraphics[width=\linewidth]{figures/fig7_tn_schematic.pdf}
+  \caption{Tensor network for exact counting of $N$-queens solutions,
+  shown for $N = 4$.  Each node represents the rank-9 site tensor~$T$
+  [Eq.~\eqref{eq:Ttensor}] with a physical index~$p$ (gray stubs).
+  Solid red lines are row bonds and solid
+  blue lines are column bonds; dashed green lines carry
+  $\searrow$-diagonal signals and dotted purple lines carry
+  $\nearrow$-diagonal signals.  Boundary vectors are attached at
+  every constraint-line terminus: $\mathbf{v}_0 = (1,0)$ initializes
+  each line (no queen seen yet), $\mathbf{v}_1 = (0,1)$ terminates
+  rows and columns (exactly one queen required), and
+  $\mathbf{v}_2 = (1,1)$ terminates diagonals (at most one queen
+  allowed).  Contracting the full network involves summing over all
+  bond indices and all physical indices; the latter summation is
+  equivalent to contracting each physical leg with the vector
+  $(1,1)^T = |0\rangle + |1\rangle$, which enumerates all $2^{N^2}$
+  occupation configurations.  The result is the exact solution count
+  $Q(N)$.  The arrow indicates the row-by-row contraction order used
+  in the matrix product operator approach.}
+  \label{fig:tn_network}
 \end{figure}
 
 
@@ -777,16 +775,15 @@ as $\gamma_{\rm MC} = \ln N - S(\infty)/N + \int_0^\infty
 exact solution counts are known (agreement within $0.1\%$), and for
 larger $N$ produces $\gamma_{\rm MC} = 1.946 \pm 0.003$ at
 $N = 1024$, within $0.11\%$ of the precise combinatorial
-value $\gamma = 1.944001$~\cite{Nobel2023}.  The remaining deviation
+value $\gamma = 1.94400(1)$~\cite{Nobel2023}.  The remaining deviation
 is dominated by finite-size corrections to the Simkin formula rather
 than statistical noise, and extending to still larger system sizes
 would further sharpen the estimate.
 
-These results establish the $N$-queens lattice gas as a setting where
-combinatorial and thermodynamic information are connected
-quantitatively: a single Monte Carlo campaign suffices to determine
-a fundamental combinatorial constant through the laws of
-thermodynamics.
+These results establish the $N$-queens lattice gas as a bridge
+between combinatorics and statistical mechanics: a single Monte Carlo
+campaign can determine a fundamental combinatorial constant---the
+Simkin constant $\gamma$---through the laws of thermodynamics.
 Looking ahead, the tensor network formulation presented in
 Sec.~\ref{sec:tensor} offers an exact-enumeration route that
 complements the Monte Carlo approach.  Combining exact tensor
@@ -798,8 +795,7 @@ formula.
 
 \section{Data availability}
 The simulation data and analysis code are publicly available on
-GitHub~\cite{github_repo}. \lw{this is fine: Z.-Y. Liu, Simulation code and
-data for the N-queens lattice gas (we did not made contribution to the simulation code,.)}
+GitHub~\cite{github_repo}.
 
 \section{Acknowledgments}
 The authors acknowledge valuable discussions with Jinguo Liu, Yijia Wang, Pan Zhang and Tao Xiang. This work is supported by the National Natural Science Foundation of China under Grants No. T2225018, No. 12188101, No. T2121001, the Cross-Disciplinary Key Project of Beijing Natural Science Foundation No. Z250005, the Strategic Priority Research Program of the Chinese Academy of Sciences under Grants No. XDB0500000, and the National Key Projects for Research and Development of China Grants No. 2021YFA1400400. 
@@ -898,7 +894,7 @@ tensor networks,
 Phys.\ Rev.\ E \textbf{98}, 042145 (2018).
 
 \bibitem{github_repo}
-Z.-Y.~Liu, H.-J.~Liao, and L.~Wang,
+Z.-Y.~Liu,
 Simulation code and data for the $N$-queens lattice gas,
 \url{https://github.com/LiuZY613/nqueen-lattice-gas}.
 

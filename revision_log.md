@@ -500,3 +500,55 @@
    — 新增 `fig7_tn_schematic.pdf`，展示4×4棋盘上的完整张量网络结构。图中用四种颜色/线型区分行键(红实线)、列键(蓝实线)、↘对角线键(绿虚线)、↗对角线键(紫点线)。边界向量 $\mathbf{v}_0$, $\mathbf{v}_1$, $\mathbf{v}_2$ 以方向性stub标注在网格边缘，左侧箭头标示逐行收缩方向。
    
    Added `fig7_tn_schematic.pdf` (new Fig. 7): complete tensor network for a 4×4 board. Four bond families are distinguished by color and line style: row (red solid), column (blue solid), SE-diagonal (green dashed), NE-diagonal (purple dotted). Boundary vectors $\mathbf{v}_0$, $\mathbf{v}_1$, $\mathbf{v}_2$ are shown as directional stubs at the grid edges; a left-margin arrow indicates the row-by-row contraction direction.
+
+---
+
+## 第八轮导师批注 | 2026-04-02
+
+### 导师修改 (Lei Wang, commit 88a9a3a)
+
+1. **交换Fig.7和Fig.8的顺序** (Sec. VI, line 690附近)
+   — `\lw{swap the order of the following two figures}` — 要求交换张量网络示意图(Fig.7)和收缩结果图(Fig.8)的前后顺序。
+   
+   Swap the order of the two figures (TN schematic and contraction results) in Sec. VI.
+
+2. **独立句子不应单独成段** (Sec. VI, line 691)
+   — `\lw{this is a paragraph with a standalone sentences}` — 指出"Figure~\ref{fig:tn_network} illustrates the complete tensor network for a $4\times 4$ board."这句话不应独立成段，需要融入上下文。
+   
+   The sentence introducing Fig. TN network should not stand alone as a paragraph; integrate it into the surrounding text.
+
+3. **Fig.7 caption中需说明物理指标的处理** (Fig.7 caption)
+   — `\lw{what happens to the physical indices ?}` — 要求在caption中解释收缩时物理指标如何处理（求和/取遍所有构型）。
+   
+   The caption of the TN schematic figure should explain what happens to the physical indices during contraction.
+
+4. **Data availability中的引用说明** (Data availability section)
+   — `\lw{this is fine: Z.-Y. Liu, Simulation code and data for the N-queens lattice gas (we did not made contribution to the simulation code,.)}` — 导师确认GitHub引用格式可以，并注明导师未参与模拟代码贡献。
+   
+   Advisor confirms the GitHub citation format is acceptable and notes that the advisor did not contribute to the simulation code.
+
+---
+
+## 第八轮修改落实 | 2026-04-02
+
+### 修改内容
+
+1. **交换Fig.7和Fig.8的顺序** ✅
+   — 将17个非零元素图(fig6_tensor.png, label: fig:tensor)移至前面，张量网络示意图(fig7_tn_schematic.pdf, label: fig:tn_network)移至后面。由于正文通过 `\ref` 引用label，交叉引用自动更新。
+   
+   Swapped the two figure environments: the 17-element diagram (fig:tensor) now appears before the TN schematic (fig:tn_network). Cross-references update automatically via labels.
+
+2. **独立句子融入上下文** ✅
+   — 将"Figure~\ref{fig:tn_network} illustrates the complete tensor network for a $4\times 4$ board."从独立段落合并到前一段末尾（MPO方法讨论段）。同时删除了 `\lw{swap...}` 和 `\lw{this is a paragraph...}` 两个批注。
+   
+   Merged the standalone sentence into the end of the preceding paragraph (MPO discussion). Removed the two `\lw{...}` annotations.
+
+3. **Fig caption中补充物理指标说明** ✅
+   — 在fig:tn_network的caption中，将原来的"summing over all bond and physical indices"扩展为详细说明：物理指标的求和等价于对每个物理leg收缩向量 $(1,1)^T = |0\rangle + |1\rangle$，遍历所有 $2^{N^2}$ 种占据构型。参考 `tensor/nqueen_new_construction.tex` 中Sec.完整的配分函数的描述。删除了 `\lw{what happens to the physical indices ?}` 批注。
+   
+   Expanded the fig:tn_network caption to explain that summing over physical indices is equivalent to contracting each physical leg with $(1,1)^T = |0\rangle + |1\rangle$, enumerating all $2^{N^2}$ occupation configurations. Reference: `tensor/nqueen_new_construction.tex`. Removed the `\lw{...}` annotation.
+
+4. **GitHub引用中删除两位导师署名** ✅
+   — bibitem `github_repo` 的作者从 "Z.-Y.~Liu, H.-J.~Liao, and L.~Wang" 改为 "Z.-Y.~Liu"。同时删除了Data availability段的 `\lw{...}` 批注。
+   
+   Changed the `github_repo` bibitem author from "Z.-Y. Liu, H.-J. Liao, and L. Wang" to "Z.-Y. Liu". Removed the `\lw{...}` annotation from the Data availability section.
