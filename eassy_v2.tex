@@ -646,13 +646,13 @@ $\hat{n}_1 = |1\rangle\langle 1|$.
 As a rank-3 tensor $A_{\alpha\beta}^{\sigma}$, the nonzero elements
 are $A_{00}^{0} = A_{11}^{0} = 1$ (empty site: signal pass-through)
 and $A_{01}^{1} = 1$ (occupied site: emit attack signal).
-For a constraint line of $L$ sites with boundary vectors
-$\bm{v}_0 = (1,0)$ and $\bm{v}_{\rm end}$, the chain product
+For a constraint line of $L$ sites, define boundary vectors
+$\bm{v}_0 = (1,0)$ and $\bm{v}_{\rm end}$.  The chain product
 $\bm{v}_0 \cdot A^{\sigma_1}\cdots A^{\sigma_L}\cdot
 \bm{v}_{\rm end}^{\,T}$
-equals~1 if the constraint is satisfied and~0 otherwise: choosing
-$\bm{v}_{\rm end} = \bm{v}_1 \equiv (0,1)$ enforces \emph{exactly
-one} queen (rows and columns), while
+equals~1 if the constraint is satisfied and~0 otherwise.
+Choosing $\bm{v}_{\rm end} = \bm{v}_1 \equiv (0,1)$ enforces
+\emph{exactly one} queen (rows and columns), while
 $\bm{v}_{\rm end} = \bm{v}_2 \equiv (1,1)$ enforces \emph{at most
 one} (diagonals).
 
@@ -669,17 +669,18 @@ where $(u,d)$, $(l,r)$, $(\bar{u},\bar{d})$, $(\bar{l},\bar{r})$
 carry binary signals along the column, row, $\searrow$-diagonal, and
 $\nearrow$-diagonal directions, and $p\in\{0,1\}$ is the physical
 index.  Because the four factors contribute independently, $T$ has
-exactly 17 nonzero elements (Fig.~\ref{fig:tensor}): $2^4 = 16$ for
-an empty site, where each channel independently passes or blocks a
-signal, and one for an occupied site, which requires all incoming
-signals to vanish and emits on all outgoing channels.
-Contracting the full $N\times N$ network---with $\bm{v}_0$ at each
-constraint-line origin and $\bm{v}_1$ or $\bm{v}_2$ at each
-terminus---and summing over all physical indices yields the exact
-solution count $Q(N)$.  More generally, tensor network contraction
-provides a powerful framework for exact counting in constraint
-satisfaction problems~\cite{Kourtis2019}, of which the $N$-queens
-problem is a natural instance.
+exactly 17 nonzero elements (Fig.~\ref{fig:tensor}).
+For an empty site ($p = 0$), each of the four channels independently
+passes or blocks its signal, giving $2^4 = 16$ elements.
+For an occupied site ($p = 1$), all incoming signals must vanish and
+all outgoing signals are emitted, giving one additional element.
+Attaching boundary vectors $\bm{v}_0$ at each constraint-line origin
+and $\bm{v}_1$ or $\bm{v}_2$ at each terminus, and summing over all
+physical indices, yields the exact solution count $Q(N)$.
+More generally, tensor network contraction provides a powerful
+framework for exact counting in constraint satisfaction
+problems~\cite{Kourtis2019}, of which the $N$-queens problem is a
+natural instance.
 The contraction can be performed row by row
 using matrix product operator methods~\cite{Xiang2024}, with a
 computational cost that grows exponentially in $N$ through the bond
@@ -712,12 +713,12 @@ $\ln N$, unbounded in the thermodynamic limit.  The super-extensive
 scaling has direct implications for tensor network contraction.  The
 row-by-row contraction requires tracking $O(N)$ binary bond indices
 (columns and diagonals) across each horizontal cut, giving an exact
-bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional
-models---such as the Ising or Potts models---the free energy per site
-converges to a finite limit, and infinite tensor network methods like
-the corner transfer matrix renormalization group (CTMRG)~\cite{Nishino1996} can
-approximate this limit at moderate bond dimension; such methods have
-been successfully applied to compute residual entropies in
+bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional models---such as the Ising or Potts
+models---the free energy per site converges to a finite limit.
+Infinite tensor network methods like the corner transfer matrix
+renormalization group (CTMRG)~\cite{Nishino1996} can then approximate
+this limit at moderate bond dimension.  Such methods have been
+successfully applied to compute residual entropies in
 three-dimensional classical systems with extensive ground-state
 degeneracy~\cite{Vanderstraeten2018}.  For the
 $N$-queens lattice gas, however, the board size~$N$ simultaneously
