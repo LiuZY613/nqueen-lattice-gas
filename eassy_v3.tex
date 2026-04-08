@@ -822,25 +822,16 @@ Simkin constant $\gamma = -\rm{ln}(-E_0)$.
 % framework for benchmarking the Monte Carlo results.
 
 \begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig7_tn_schematic.pdf}
-  \caption{Tensor network for exact counting of $N$-queens solutions,
-  shown for $N = 4$.  Each node represents the rank-9 site tensor~$T$
-  [Eq.~\eqref{eq:Ttensor}] with a physical index~$p$ (gray stubs).
-  Solid red lines are row bonds and solid
-  blue lines are column bonds; dashed green lines carry
-  $\searrow$-diagonal signals and dotted purple lines carry
-  $\nearrow$-diagonal signals.  Boundary vectors are attached at
-  every constraint-line terminus: $\mathbf{v}_0 = (1,0)$ initializes
-  each line (no queen seen yet), $\mathbf{v}_1 = (0,1)$ terminates
-  rows and columns (exactly one queen required), and
-  $\mathbf{v}_2 = (1,1)$ terminates diagonals (at most one queen
-  allowed).  Contracting the full network involves summing over all
-  bond indices and all physical indices; the latter summation is
-  equivalent to contracting each physical leg with the vector
-  $(1,1)^T = |0\rangle + |1\rangle$, which enumerates all $2^{N^2}$
-  occupation configurations.  The result is the exact solution count
-  $Q(N)$.  The arrow indicates the row-by-row contraction order used
-  in the matrix product operator approach.}
+  \includegraphics[width=\linewidth]{figures/fig6_tn_schematic.pdf}
+  \caption{Tensor network for exact counting of $N$-queens solutions
+  ($N = 4$).  Each node is the rank-9 site tensor~$T$
+  [Eq.~\eqref{eq:Ttensor}].
+  Arrows on each bond indicate the signal propagation direction:
+  red (row), blue (column), green ($\searrow$-diagonal),
+  purple ($\nearrow$-diagonal).
+  Boundary vectors $\mathbf{v}_0 = (1,0)$, $\mathbf{v}_1 = (0,1)$,
+  and $\mathbf{v}_2 = (1,1)$ are labeled at every line terminus,
+  enforcing the queen constraints on each row, column, and diagonal.}
   \label{fig:tn_network}
 \end{figure}
 
