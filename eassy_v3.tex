@@ -774,11 +774,13 @@ methods, the result will converge to a trivial value
 $\alpha = 0$ in the $N \to \infty$ limit.
 
 However, the fact that $\lambda_1 \sim O(N)$ suggests that the
-$N$-queens problem is more akin to a ground-state problem with
+$N$-queens problem is more akin to a ground-state problem with a Hamiltonian
 $H = -\mathcal{T}$ and , rather than a
 conventional partition function problem. Therefore, we can use 
 standard ground-state algorithms such as DMRG or VUMPS to 
-compute the ground-state energy $E_0 = -e^{-\gamma}$ of $H = -\mathcal{T}$.
+compute the ground-state energy $E_0 = -e^{-\gamma}$ of the 
+Hamiltonian $H = -\mathcal{T}$. Eventually, we can obtain the 
+Simkin constant $\gamma = -\rm{ln}(-E_0)$.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
@@ -796,28 +798,28 @@ compute the ground-state energy $E_0 = -e^{-\gamma}$ of $H = -\mathcal{T}$.
   \label{fig:tensor}
 \end{figure}
 
-A key feature of the $N$-queens problem is the super-extensive
-ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
-grows faster than linearly in~$N$.  This reflects the vanishing queen
-density $N/N^2 = 1/N$: each queen's configurational freedom grows as
-$\ln N$, unbounded in the thermodynamic limit.  The super-extensive
-scaling has direct implications for tensor network contraction.  The
-row-by-row contraction requires tracking $O(N)$ binary bond indices
-(columns and diagonals) across each horizontal cut, giving an exact
-bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional models---such as the Ising or Potts
-models---the free energy per site converges to a finite limit.
-Infinite tensor network methods like the corner transfer matrix
-renormalization group (CTMRG)~\cite{Nishino1996} can then approximate
-this limit at moderate bond dimension.  Such methods have been
-successfully applied to compute residual entropies in
-three-dimensional classical systems with extensive ground-state
-degeneracy~\cite{Vanderstraeten2018}.  For the
-$N$-queens lattice gas, however, the board size~$N$ simultaneously
-determines the particle number, so the entropy per queen
-$s_0 = \ln N - \gamma$ diverges rather than converging to a fixed
-value.  This precludes a straightforward infinite-size tensor network
-contraction and makes finite-$N$ exact contraction the natural
-framework for benchmarking the Monte Carlo results.
+% A key feature of the $N$-queens problem is the super-extensive
+% ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
+% grows faster than linearly in~$N$.  This reflects the vanishing queen
+% density $N/N^2 = 1/N$: each queen's configurational freedom grows as
+% $\ln N$, unbounded in the thermodynamic limit.  The super-extensive
+% scaling has direct implications for tensor network contraction.  The
+% row-by-row contraction requires tracking $O(N)$ binary bond indices
+% (columns and diagonals) across each horizontal cut, giving an exact
+% bond dimension $\chi = 2^{O(N)}$.  In conventional two-dimensional models---such as the Ising or Potts
+% models---the free energy per site converges to a finite limit.
+% Infinite tensor network methods like the corner transfer matrix
+% renormalization group (CTMRG)~\cite{Nishino1996} can then approximate
+% this limit at moderate bond dimension.  Such methods have been
+% successfully applied to compute residual entropies in
+% three-dimensional classical systems with extensive ground-state
+% degeneracy~\cite{Vanderstraeten2018}.  For the
+% $N$-queens lattice gas, however, the board size~$N$ simultaneously
+% determines the particle number, so the entropy per queen
+% $s_0 = \ln N - \gamma$ diverges rather than converging to a fixed
+% value.  This precludes a straightforward infinite-size tensor network
+% contraction and makes finite-$N$ exact contraction the natural
+% framework for benchmarking the Monte Carlo results.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig7_tn_schematic.pdf}
