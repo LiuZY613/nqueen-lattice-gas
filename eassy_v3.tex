@@ -703,13 +703,14 @@ and diagonals, we obtain the ground state wavefunction
 that contains every solution configuration of the $N$-queens problem.
 Since each site $(i,j)$ lies at the intersection of four constraint lines,
 the ground state wavefunction $|\Psi \rangle$ can be written as a tensor network state with
-a rank-9 local tensor $T$ at each site, namely,
-\begin{equation}
-  T_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha}
-  = \sum_{\alpha'\beta'\beta\sigma} A_{ud}^{\alpha\alpha'}\;A_{lr}^{\alpha'\beta'}\;A_{\bar{u}\bar{d}}^{\beta'\beta}\;
-    A_{\bar{l}\bar{r}}^{\beta\sigma} |\sigma \rangle,
-  \label{eq:Ttensor}
-\end{equation}
+a rank-9 local tensor $B$ at each site, namely,
+\begin{align}
+ B_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha}
+  & = \sum_{\alpha'\beta'\beta\sigma} A_{ud}^{\alpha\alpha'}\;A_{lr}^{\alpha'\beta'}\;A_{\bar{u}\bar{d}}^{\beta'\beta}\;
+    A_{\bar{l}\bar{r}}^{\beta\sigma} |\sigma \rangle, \nonumber \\
+  & = A_{ud}^{\alpha\alpha}\;A_{lr}^{\alpha\alpha}\;A_{\bar{u}\bar{d}}^{\alpha\alpha}\;A_{\bar{l}\bar{r}}^{\alpha\alpha},
+  \label{eq:Btensor}
+\end{align}
 where $(u,d)$, $(l,r)$, $(\bar{u},\bar{d})$, $(\bar{l},\bar{r})$ are the virtual indices that
 carry binary signals along the column, row, $\searrow$-diagonal, and
 $\nearrow$-diagonal directions, and $\alpha,\alpha',\beta',\beta,\sigma \in\{0,1\}$ are the physical
@@ -732,9 +733,15 @@ where $(|0 \rangle +  |1 \rangle)^{\otimes N^2}$ enumerates all possible
 occupation configurations. Since $(|0 \rangle +  |1 \rangle)^{\otimes N^2}$ 
 is a product state, it is equivalent to contracting each physical index with 
 the vector $(1,1)^T = |0\rangle + |1\rangle$. As a result, the exact number
-of solutions $Q(N)$ can be obtained by contracting a tensor network with $D=2$ 
-bond dimension. Figure~\ref{fig:tn_network} illustrates the complete tensor network
-for a $4\times 4$ board.
+of solutions $Q(N)$ can be obtained by contracting a tensor network with a 
+bond dimension $D=2$ local tensor $C$ at each site, namely,
+\begin{equation}
+  C_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}} = \sum_{\alpha} B_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha},
+   \label{eq:Ctensor}
+  \end{equation}
+ which also has 17 nonzero elements (as shown in Fig.~\ref{fig:tensor}~(b)).
+Figure~\ref{fig:tn_network} illustrates the complete tensor network for 
+the 4-queens problem.
 
 More generally, tensor network contraction provides a powerful
 framework for exact counting in constraint satisfaction
@@ -783,9 +790,10 @@ Hamiltonian $H = -\mathcal{T}$. Eventually, we can obtain the
 Simkin constant $\gamma = -\rm{ln}(-E_0)$.
 
 \begin{figure}[t]
-  \includegraphics[width=\linewidth]{figures/fig6_tensor.png}
+  %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
+  \includegraphics[width=\linewidth]{figures/localTensor.pdf}
   \caption{The 17 nonzero elements of the site tensor $T$
-  [Eq.~\eqref{eq:Ttensor}].
+  [Eq.~\eqref{eq:Btensor}].
   Each diagram shows a lattice site with eight bond indices
   carrying binary attack signals ($0$: absent, $1$: present);
   red arrows mark active signals.
