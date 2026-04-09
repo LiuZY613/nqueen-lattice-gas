@@ -552,3 +552,42 @@
    — bibitem `github_repo` 的作者从 "Z.-Y.~Liu, H.-J.~Liao, and L.~Wang" 改为 "Z.-Y.~Liu"。同时删除了Data availability段的 `\lw{...}` 批注。
    
    Changed the `github_repo` bibitem author from "Z.-Y. Liu, H.-J. Liao, and L. Wang" to "Z.-Y. Liu". Removed the `\lw{...}` annotation from the Data availability section.
+
+---
+
+## 第九轮修改 | 2026-04-09
+
+### 修改内容
+
+1. **删除DMRG/VUMPS段落** ✅
+   — 删除"However, the fact that λ₁ ~ O(N) suggests..."整段（原建议用DMRG/VUMPS计算基态能量）。改写transfer matrix讨论的结尾，以"anomalous scaling"自然收束，强调finite-N exact contraction是正确框架。
+
+2. **张量命名统一** ✅
+   — 公式重命名后正文和caption中残留的旧名$T$全部更新：第719行 local tensor $T$ → $B$；Fig.5 caption site tensor $T$ → $B$；Fig.6 caption site tensor $T$ [Eq. Ttensor] → $C$ [Eq. Ctensor]，rank-9 → rank-8。
+
+3. **公式(eq:Btensor)第二行补$|\alpha\rangle$** ✅
+   — 第一行含$|\sigma\rangle$，收缩后$\sigma=\alpha$，第二行应有$|\alpha\rangle$，原稿遗漏。
+
+4. **修正指标描述** ✅
+   — 原文称$\alpha,\alpha',\beta',\beta,\sigma$均为"physical indices"，实际只有$\alpha$是物理指标，其余为内部求和指标。改写为准确描述。
+
+5. **Introduction加入tensor network动机段** ✅
+   — 在thermodynamic integration讨论之后、论文结构之前，新增4句话介绍TN方法的动机：互补方法、MPO编码、局部张量结构、精确无噪声基准。
+
+6. **Introduction论文结构描述更新** ✅
+   — "possible extensions via tensor network methods" → "how the Monte Carlo and tensor network approaches complement each other"，匹配Conclusion实际内容。
+
+7. **Conclusion语气调整** ✅
+   — "Looking ahead, the tensor network formulation offers..."改为总结性表述，TN作为已有贡献，finite-size corrections才是展望。
+
+8. **Boundary MPS长句拆分** ✅
+   — 原一句话拆为三句，各承担一个要点（方法、代价、互补价值），消除bond dimension $D$与局部张量$D=2$的混淆。
+
+9. **语法修正** ✅
+   — "of MPO" → "of the MPO"（3处）；"a MPO" → "an MPO"（1处）；Unicode em-dash → LaTeX `---`（1处）。
+
+10. **Transfer matrix特征值下标** ✅
+    — $\lambda_1 > \lambda_2 \geq \dots \geq \lambda_N$ → $\lambda_1 > \lambda_2 \geq \dots$，因transfer matrix维度为$2^{O(N)}$而非$N$。
+
+11. **Scaling argument中$N \times N$ → $N^2$** ✅
+    — partition function scaling讨论中$\alpha^{N \times N}$和$N \times N \ln\alpha$改为$\alpha^{N^2}$和$N^2 \ln\alpha$。棋盘尺寸处保持$N \times N$不变。

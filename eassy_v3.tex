@@ -141,6 +141,14 @@ $N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}), demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
 
+We also present a complementary exact approach based on tensor
+networks.  Each non-attacking constraint---row, column, or
+diagonal---is encoded as a matrix product operator with bond
+dimension $D = 2$.  Their intersection at every lattice site produces
+a rank-9 local tensor with only 17 nonzero elements.  Exact
+contraction of the resulting network yields $Q(N)$ without
+statistical noise, providing independent benchmarks at moderate~$N$.
+
 The paper is organized as follows.
 Section~\ref{sec:model} defines the model.
 Section~\ref{sec:analytical} presents analytical results: the
@@ -150,7 +158,7 @@ Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
 Section~\ref{sec:tensor} presents a tensor network formulation that
 provides an alternative exact-enumeration route.
-Section~\ref{sec:conclusions} concludes with a discussion of the implications for connecting combinatorial and thermodynamic information, and possible extensions via tensor network methods.
+Section~\ref{sec:conclusions} concludes with a discussion of how the Monte Carlo and tensor network approaches complement each other.
 
 
 %=====================================================================
@@ -629,8 +637,8 @@ Simkin combinatorial formula.
 \section{Tensor network formulation}
 \label{sec:tensor}
 %=====================================================================
-The geometric constraints of the $N$-queens problem—specifically,
-the requirement that no two queens share the same row, column, or diagonal—can be
+The geometric constraints of the $N$-queens problem---specifically,
+the requirement that no two queens share the same row, column, or diagonal---can be
 precisely encoded using the matrix product operator (MPO) formalism.
 Consider, for instance, a single row with 3 sites. Without imposing any constraints,
 the row admits $2^3$ possible configurations, corresponding to
@@ -645,7 +653,7 @@ To enforce the condition that each row contains exactly one queen, we construct 
 \end{align}
 where the operator $\hat{n}_0 = |0\rangle\langle 0|$ projects onto
 the empty state (no queen), and $\hat{n}_1 = |1\rangle\langle 1|$
-projects onto the occupied state (one queen). The local tensor $A$ of MPO is
+projects onto the occupied state (one queen). The local tensor $A$ of the MPO is
 \begin{equation}
   A = \begin{pmatrix}
     \hat{n}_0 & \hat{n}_1 \\
@@ -661,7 +669,7 @@ configurations in which each row contains exactly one queen, i.e.,
 |\Psi \rangle =  (\bm{v}_0 * A * A * A * \bm{v}_1^T) (|0\rangle + |1\rangle)^{\otimes 3}.
 \end{equation}
 Similarly, the constraint that there is \emph{at most one} queen along
-any (anti-)diagonal can also be encoded as a MPO
+any (anti-)diagonal can also be encoded as an MPO
 \begin{align}
   &\,\,\,\,\,\,\,\, \hat{n}_1 \otimes \hat{n}_0 \otimes \hat{n}_0 
    + \hat{n}_0 \otimes \hat{n}_1 \otimes \hat{n}_0 
@@ -708,15 +716,16 @@ a rank-9 local tensor $B$ at each site, namely,
  B_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha}
   & = \sum_{\alpha'\beta'\beta\sigma} A_{ud}^{\alpha\alpha'}\;A_{lr}^{\alpha'\beta'}\;A_{\bar{u}\bar{d}}^{\beta'\beta}\;
     A_{\bar{l}\bar{r}}^{\beta\sigma} |\sigma \rangle, \nonumber \\
-  & = A_{ud}^{\alpha\alpha}\;A_{lr}^{\alpha\alpha}\;A_{\bar{u}\bar{d}}^{\alpha\alpha}\;A_{\bar{l}\bar{r}}^{\alpha\alpha},
+  & = A_{ud}^{\alpha\alpha}\;A_{lr}^{\alpha\alpha}\;A_{\bar{u}\bar{d}}^{\alpha\alpha}\;A_{\bar{l}\bar{r}}^{\alpha\alpha}\,|\alpha\rangle,
   \label{eq:Btensor}
 \end{align}
 where $(u,d)$, $(l,r)$, $(\bar{u},\bar{d})$, $(\bar{l},\bar{r})$ are the virtual indices that
 carry binary signals along the column, row, $\searrow$-diagonal, and
-$\nearrow$-diagonal directions, and $\alpha,\alpha',\beta',\beta,\sigma \in\{0,1\}$ are the physical
-indices.  Since the local tensor $A_{ij}^{\sigma\sigma'}$ of MPO has only three nonzero elements, namely,
+$\nearrow$-diagonal directions, $\alpha \in \{0,1\}$ is the physical index labeling the site occupation,
+and $\alpha',\beta',\beta,\sigma \in\{0,1\}$ are internal summation indices
+that collapse to $\alpha$ because $A$ is diagonal in the physical space.  Since the local tensor $A_{ij}^{\sigma\sigma'}$ of the MPO has only three nonzero elements, namely,
 $A_{00}^{00} = A_{11}^{00} = 1$ (empty site: signal pass-through)
-and $A_{01}^{11} = 1$ (occupied site: emit attack signal), the local tensor $T$ of the ground state 
+and $A_{01}^{11} = 1$ (occupied site: emit attack signal), the local tensor $B$ of the ground state
 wavefunction $|\Psi \rangle$ has exactly 17 nonzero elements (see Fig.~\ref{fig:tensor}).
 For an empty site ($\alpha = 0$), each of the four channels independently
 passes or blocks its signal, giving $2^4 = 16$ elements.
@@ -747,10 +756,12 @@ More generally, tensor network contraction provides a powerful
 framework for exact counting in constraint satisfaction
 problems~\cite{Kourtis2019}, of which the $N$-queens problem is a
 natural instance.
-The tensor network can be exactly contracted row by row using boundary matrix product state methods~\cite{Xiang2024}, with a
-computational cost that grows exponentially in $N$ through the bond
-dimension $D$ but is free of statistical noise, providing exact
-benchmarks that complement the Monte Carlo results at moderate~$N$.
+The tensor network can be exactly contracted row by row using
+boundary matrix product state methods~\cite{Xiang2024}.  The bond
+dimension of the boundary MPS grows exponentially with~$N$, so the
+computational cost is exponential, but the results are free of
+statistical noise.  This makes exact contraction a natural source of
+benchmarks that complement the Monte Carlo data at moderate~$N$.
 
 Another perspective on the tensor network contraction problem is to 
 formulate it as a row-by-row transfer matrix $\mathcal{T}$ raised to 
@@ -759,7 +770,7 @@ the $N$-th power. This yields
   Q(N) = \mathrm{tr}\big(\mathcal{T}^N\big) = \sum_n \lambda_n^N,
 \end{equation}
 where $\lambda_n$ are the eigenvalues of the transfer matrix 
-$\mathcal{T}$ and satisfy $\lambda_1 > \lambda_2 \geq \dots \geq \lambda_N$. 
+$\mathcal{T}$ and satisfy $\lambda_1 > \lambda_2 \geq \dots$. 
 When $N$ is sufficiently large and the leading eigenvalue is unique, 
 the number of solutions is dominated by the leading term:
 $Q(N) \sim \lambda_1^N$.
@@ -767,32 +778,22 @@ For classical statistical models such as the two-dimensional Ising
 model, the partition function can also be written as a tensor network, 
 and the largest eigenvalue $\lambda_1$ of its transfer matrix is unique 
 and scales as $\alpha^N$ for some constant $\alpha$. Thus, the partition 
-function $Z \sim (\alpha^N)^N = \alpha^{N \times N}$, and the free 
-energy $F \sim \ln Z \sim N \times N \ln \alpha$, demonstrating that 
+function $Z \sim (\alpha^N)^N = \alpha^{N^2}$, and the free 
+energy $F \sim \ln Z \sim N^2 \ln \alpha$, demonstrating that 
 it is an extensive quantity. For the $N$-queens problem, as established 
 above, $Q(N) \sim (N/e^{\gamma})^N$, so the leading eigenvalue scales as 
 $\lambda_1 \sim O(N)$, rather than the typical $O(\alpha^N)$ in standard 
-statistical models. This means that, compared to usual classical
-statistical models, the growth rate of the largest eigenvalue of
-the transfer matrix for the $N$-queens problem is much slower.
-Therefore, if one uses standard contraction techniques for the 
-tensor network of the $N$-queens problem, such as CTMRG or boundary MPS 
-methods, the result will converge to a trivial value
-$\alpha = 0$ in the $N \to \infty$ limit.
-
-However, the fact that $\lambda_1 \sim O(N)$ suggests that the
-$N$-queens problem is more akin to a ground-state problem with a Hamiltonian
-$H = -\mathcal{T}$ and , rather than a
-conventional partition function problem. Therefore, we can use 
-standard ground-state algorithms such as DMRG or VUMPS to 
-compute the ground-state energy $E_0 = -e^{-\gamma}$ of the 
-Hamiltonian $H = -\mathcal{T}$. Eventually, we can obtain the 
-Simkin constant $\gamma = -\rm{ln}(-E_0)$.
+statistical models. This anomalous scaling distinguishes the $N$-queens counting problem
+from conventional partition functions: standard infinite-size
+contraction techniques such as CTMRG or boundary MPS methods would
+yield a trivial value $\alpha = 0$ in the $N \to \infty$ limit.
+Consequently, finite-$N$ exact contraction remains the natural
+framework for obtaining tensor network benchmarks, as described above.
 
 \begin{figure}[t]
   %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
   \includegraphics[width=\linewidth]{figures/localTensor.pdf}
-  \caption{The 17 nonzero elements of the site tensor $T$
+  \caption{The 17 nonzero elements of the site tensor $B$
   [Eq.~\eqref{eq:Btensor}].
   Each diagram shows a lattice site with eight bond indices
   carrying binary attack signals ($0$: absent, $1$: present);
@@ -832,8 +833,8 @@ Simkin constant $\gamma = -\rm{ln}(-E_0)$.
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig6_tn_schematic.pdf}
   \caption{Tensor network for exact counting of $N$-queens solutions
-  ($N = 4$).  Each node is the rank-9 site tensor~$T$
-  [Eq.~\eqref{eq:Ttensor}].
+  ($N = 4$).  Each node is the rank-8 site tensor~$C$
+  [Eq.~\eqref{eq:Ctensor}].
   Arrows on each bond indicate the signal propagation direction:
   red (row), blue (column), green ($\searrow$-diagonal),
   purple ($\nearrow$-diagonal).
@@ -877,13 +878,14 @@ These results establish the $N$-queens lattice gas as a bridge
 between combinatorics and statistical mechanics: a single Monte Carlo
 campaign can determine a fundamental combinatorial constant---the
 Simkin constant $\gamma$---through the laws of thermodynamics.
-Looking ahead, the tensor network formulation presented in
-Sec.~\ref{sec:tensor} offers an exact-enumeration route that
-complements the Monte Carlo approach.  Combining exact tensor
-network benchmarks at moderate $N$ with Monte Carlo data at large
-$N$ could further sharpen the thermodynamic extraction of the Simkin
-constant and probe the finite-size corrections to the asymptotic
-formula.
+The tensor network formulation presented in Sec.~\ref{sec:tensor}
+provides a complementary exact-enumeration route: it yields $Q(N)$
+without statistical noise at moderate~$N$, while the Monte Carlo
+approach reaches much larger system sizes.  Together, the two methods
+cover complementary regimes of~$N$.  An open direction is to
+exploit this synergy to probe the finite-size corrections to
+the Simkin formula and further sharpen the infinite-$N$ extrapolation
+of~$\gamma$.
 
 
 \section{Data availability}
