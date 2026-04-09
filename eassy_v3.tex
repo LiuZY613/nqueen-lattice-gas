@@ -754,7 +754,7 @@ the 4-queens problem.
 
 More generally, tensor network contraction provides a powerful
 framework for exact counting in constraint satisfaction
-problems~\cite{Kourtis2019}, of which the $N$-queens problem is a
+problems~\cite{Kourtis2019,Vanderstraeten2018}, of which the $N$-queens problem is a
 natural instance.
 The tensor network can be exactly contracted row by row using
 boundary matrix product state methods~\cite{Xiang2024}.  The bond
@@ -785,7 +785,7 @@ above, $Q(N) \sim (N/e^{\gamma})^N$, so the leading eigenvalue scales as
 $\lambda_1 \sim O(N)$, rather than the typical $O(\alpha^N)$ in standard 
 statistical models. This anomalous scaling distinguishes the $N$-queens counting problem
 from conventional partition functions: standard infinite-size
-contraction techniques such as CTMRG or boundary MPS methods would
+contraction techniques such as CTMRG~\cite{Nishino1996} or boundary MPS methods would
 yield a trivial value $\alpha = 0$ in the $N \to \infty$ limit.
 Consequently, finite-$N$ exact contraction remains the natural
 framework for obtaining tensor network benchmarks, as described above.
