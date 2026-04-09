@@ -763,32 +763,37 @@ computational cost is exponential, but the results are free of
 statistical noise.  This makes exact contraction a natural source of
 benchmarks that complement the Monte Carlo data at moderate~$N$.
 
-Another perspective on the tensor network contraction problem is to 
-formulate it as a row-by-row transfer matrix $\mathcal{T}$ raised to 
-the $N$-th power. This yields 
+Another perspective on the tensor network contraction is the
+row-by-row transfer matrix $\mathcal{T}$.  Contracting the network
+row by row with appropriate boundary vectors $|v_0\rangle$ and
+$\langle v_f|$ gives
 \begin{equation}
-  Q(N) = \mathrm{tr}\big(\mathcal{T}^N\big) = \sum_n \lambda_n^N,
+  Q(N) = \langle v_f |\,\mathcal{T}^N\,| v_0 \rangle,
 \end{equation}
-where $\lambda_n$ are the eigenvalues of the transfer matrix 
-$\mathcal{T}$ and satisfy $\lambda_1 > \lambda_2 \geq \dots$. 
-When $N$ is sufficiently large and the leading eigenvalue is unique, 
-the number of solutions is dominated by the leading term:
-$Q(N) \sim \lambda_1^N$.
-For classical statistical models such as the two-dimensional Ising 
-model, the partition function can also be written as a tensor network, 
-and the largest eigenvalue $\lambda_1$ of its transfer matrix is unique 
-and scales as $\alpha^N$ for some constant $\alpha$. Thus, the partition 
-function $Z \sim (\alpha^N)^N = \alpha^{N^2}$, and the free 
-energy $F \sim \ln Z \sim N^2 \ln \alpha$, demonstrating that 
-it is an extensive quantity. For the $N$-queens problem, as established 
-above, $Q(N) \sim (N/e^{\gamma})^N$, so the leading eigenvalue scales as 
-$\lambda_1 \sim O(N)$, rather than the typical $O(\alpha^N)$ in standard 
-statistical models. This anomalous scaling distinguishes the $N$-queens counting problem
-from conventional partition functions: standard infinite-size
-contraction techniques such as CTMRG~\cite{Nishino1996} or boundary MPS methods would
-yield a trivial value $\alpha = 0$ in the $N \to \infty$ limit.
-Consequently, finite-$N$ exact contraction remains the natural
-framework for obtaining tensor network benchmarks, as described above.
+where $|v_0\rangle$ encodes the initial (no queen seen) boundary
+condition and $\langle v_f|$ projects onto the state in which every
+column is occupied exactly once.
+A crucial property of $\mathcal{T}$ is that it is
+\emph{nilpotent}: $\mathcal{T}^{N+1} = 0$.
+This follows from the column constraint.  Each application of
+$\mathcal{T}$ processes one row and can only increase the number of
+occupied columns; since there are at most $N$ columns, after $N+1$
+applications all states are annihilated.  Consequently, every
+eigenvalue of $\mathcal{T}$ is exactly zero.
+
+This nilpotent structure stands in sharp contrast to conventional
+statistical-mechanical models.  For the two-dimensional Ising model,
+for instance, the transfer matrix has a unique largest eigenvalue
+$\lambda_1 \sim \alpha^N$ for some constant $\alpha$, and the
+partition function $Z \sim \lambda_1^N \sim \alpha^{N^2}$ is
+controlled by this eigenvalue.  Standard infinite-size contraction
+techniques such as CTMRG~\cite{Nishino1996} exploit precisely this
+spectral dominance.  For the $N$-queens transfer matrix, however,
+there is no nonzero eigenvalue to target: the solution count
+$Q(N)$ resides entirely in the matrix elements of $\mathcal{T}^N$,
+not in its spectrum.  This rules out spectral methods (DMRG, VUMPS,
+CTMRG) and makes finite-$N$ exact contraction the natural framework,
+as described above.
 
 \begin{figure}[t]
   %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
