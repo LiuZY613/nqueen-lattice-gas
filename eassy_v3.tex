@@ -100,7 +100,7 @@ asymptotic formula $Q(N) \sim (N/e^\gamma)^N$:
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
 The form of this entropy is suggestive.  On an
-$N \times N$ lattice, a single particle placed freely in one row has
+$N \times N$ lattice, a single particle placed freely in one row \lw{what does this mean ? what is the constraint here ?} has
 $\ln N$ units of entropy---the maximal combinatorial freedom per
 particle.  The $N$-queens entropy $s_0 = \ln N - \gamma$ can
 therefore be read as: each queen retains the full lattice entropy
@@ -116,7 +116,7 @@ constant, independent of $N$ in the large-$N$ limit, hints at a
 deeper statistical-mechanical structure underlying the combinatorics.
 
 This additive decomposition of entropy into constraint costs motivates
-a statistical-mechanical approach.  We embed the $N$-queens
+a statistical-mechanical approach.  We embed \lw{embed of map ?} the $N$-queens
 problem in a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
 Carlo simulations.  Throughout this paper we set $k_B = 1$, so that
@@ -137,12 +137,12 @@ the only combinatorial input is the trivially exact high-temperature
 entropy $S(\infty)/N = \frac{1}{N}\ln\binom{N^2}{N}$, while the
 Simkin--Nobel value is used solely for post-hoc comparison.
 Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.946 \pm 0.003$ at
-$N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}), demonstrating
+$N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}) \lw{try finite size scaling}, demonstrating
 that a single Monte Carlo campaign can determine a fundamental
 combinatorial constant through the laws of thermodynamics.
 
-We also present a complementary exact approach based on tensor
-networks.  Each non-attacking constraint---row, column, or
+We also present a complementary exact counting approach based on tensor
+network contractions.  Each non-attacking constraint---row, column, or
 diagonal---is encoded as a matrix product operator with bond
 dimension $D = 2$.  Their intersection at every lattice site produces
 a rank-9 local tensor with only 17 nonzero elements.  Exact
@@ -158,7 +158,7 @@ Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
 Section~\ref{sec:tensor} presents a tensor network formulation that
 provides an alternative exact-enumeration route.
-Section~\ref{sec:conclusions} concludes with a discussion of how the Monte Carlo and tensor network approaches complement each other.
+Section~\ref{sec:conclusions} concludes with a discussion \lw{limitations of} the Monte Carlo and tensor network approaches and the open problems.
 
 
 %=====================================================================
@@ -472,7 +472,7 @@ difference.  We exploit this in the next section.
 
 %=====================================================================
 \section{Thermodynamic integration and entropy self-consistency}
-\label{sec:thermo_int}
+\label{sec:thermo_int} \lw{what does self-consistency mean here ?}
 %=====================================================================
 
 The convergence of $C_v/N$ to a universal function enables a powerful
