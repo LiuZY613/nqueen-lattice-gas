@@ -591,3 +591,78 @@
 
 11. **Scaling argument中$N \times N$ → $N^2$** ✅
     — partition function scaling讨论中$\alpha^{N \times N}$和$N \times N \ln\alpha$改为$\alpha^{N^2}$和$N^2 \ln\alpha$。棋盘尺寸处保持$N \times N$不变。
+
+---
+
+## v3 导师审阅 | 2026-04-12 ~ 2026-04-13
+
+### 导师修改 (Lei Wang, commits 0476986 → a715d16, 共5次提交)
+
+王磊老师对 eassy_v3.tex 进行了审阅，主要以 `\lw{...}` 评论形式提出修改意见和疑问，同时做了部分直接修改。
+
+#### 一、直接修改
+
+1. **Conclusion 重写** (7e70b09)
+   — 将结论段落从"建立了N-queens lattice gas作为组合学和统计力学之间桥梁"的强宣称，改为更审慎的表述："an interesting problem from the statistical mechanics perspective"。
+   — 删除了"a single Monte Carlo campaign can determine a fundamental combinatorial constant"的说法。
+   — 展望改为："exploit whether the tools in computational quantum and statistical mechanics will offer new results in this ancient problem in combinatorics"。
+
+2. **致谢增加作者** (7e70b09)
+   — 致谢中新增 Youjin Deng（邓友金）。
+
+3. **引用格式修正** (f872124)
+   — "Nobel, Agrawal, and Boyd~\cite{Nobel2023}" → "Nobel et al~\cite{Nobel2023}"。
+
+4. **张量元素数量** (7956744)
+   — 移除了之前 `\lw{there are 18 tensors}` 的疑问标注（确认17个是正确的）。
+   — 移除了图7中 $\mathbf{v}_{0,1,2}$ 与 $v_{0,f}$ 关系的疑问（已在上方公式处重新提出）。
+
+#### 二、评论/疑问（待回应）
+
+1. **Introduction — 粒子放置的约束** (a715d16)
+   — `\lw{what does this mean ? what is the constraint here ?}` — 对"a single particle placed freely in one row has $\ln N$ entropy"这句话提出疑问，认为表述不清楚约束条件。
+
+2. **embed还是map** (a715d16)
+   — `\lw{embed or map ?}` — 对"We embed the N-queens problem in a lattice gas"中embed一词的选择提出疑问。
+
+3. **有限尺度标度** (a715d16, f872124)
+   — `\lw{try finite size scaling}` — 要求尝试做 finite size scaling。
+   — `\lw{try to carry out finite size scaling analysis, or at least make a gamma versus N plot, indicate the Nobel, A. Agrawal, and S. Boyd value there}` — 更具体的要求：做 $\gamma$ vs $N$ 图，标出 Nobel 等人的精确值。
+
+4. **self-consistency含义** (a715d16)
+   — `\lw{what does self-consistency mean here ?}` — 对 Section "Thermodynamic integration and entropy self-consistency" 标题中 self-consistency 的含义提出疑问。
+
+5. **是否需要图(b)** (0476986)
+   — `\lw{do you need to show (b) ?}` — 对 Fig.6 中局部张量图的(b)部分是否必要提出疑问。
+
+6. **$v_{0,f}$ 与 $\mathbf{v}_{0,1,2}$ 的关系** (0476986 → 7956744)
+   — `\lw{that is the relation of $v_{0,f}$ and $\mathbf{v}_{0,1,2}$ ?}` — 要求澄清 transfer matrix 公式中边界向量与张量网络图中标注的边界向量之间的关系。
+
+7. **Conclusion结构修改建议** (a715d16)
+   — 将"concludes with a discussion of how..."改为"concludes with a discussion of limitations of the Monte Carlo and tensor network approaches and the open problems"。
+
+---
+
+## 我们的修改（回应v3导师审阅）| 2026-04-15
+
+逐条回应导师7条批注（评论5关于Fig.6(b)暂未处理）：
+
+1. **修正"粒子放置"表述**（批注1）：将"a single particle placed freely in one row has $\ln N$ entropy"改为明确说明约束条件的表述："On an $N \times N$ board with one queen per row---the row constraint being enforced by construction---each queen can occupy any of the $N$ columns, giving $\ln N$ units of entropy per queen."
+
+2. **embed → map**（批注2）：将"We embed the N-queens problem in a lattice gas"改为"We map the N-queens problem to a lattice gas"。
+
+3. **新增 $\gamma_{\rm MC}$ vs $N$ 图**（批注3）：将 Fig 4 从单面板改为双面板：(a) 原 $C_v/N$ vs $T$；(b) 新增 $\gamma_{\rm MC}$ vs $N$ 图，标出 Nobel 精确值 $\gamma = 1.94400(1)$ 水平虚线。修改 `plot_PRE_figures.py` 生成双面板图。同步更新：
+   - Fig 4 caption：添加 (b) 面板描述
+   - 正文引用 Fig 4 处加 "(a)" 限定（Sec. IV.B）
+   - Introduction 中删除 `\lw{try finite size scaling}`，改为引用 Fig 4(b)
+   - Section V 有限尺度标度段落末尾删除 `\lw{...}`，添加 Fig 4(b) 引用
+
+4. **Section V 标题简化**（批注4）："Thermodynamic integration and entropy self-consistency" → "Thermodynamic integration"。正文中 "thermodynamic self-consistency check" → "consistency check"。
+
+5. **Conclusion结构导引**（批注7）：Introduction 中 Section VII 的描述改为"concludes with a discussion of the limitations of the Monte Carlo and tensor network approaches and open problems"。
+
+6. **$v_{0,f}$ 与 $\mathbf{v}_{0,1,2}$ 关系澄清**（批注6）：在 transfer matrix 公式后展开解释：$|v_0\rangle = \mathbf{v}_0^{\otimes N} \otimes \mathbf{v}_0^{\otimes (2N-1)} \otimes \mathbf{v}_0^{\otimes (2N-1)}$，$\langle v_f|$ 对列投影到 $\mathbf{v}_1 = (0,1)$（恰好一个皇后），对对角线投影到 $\mathbf{v}_2 = (1,1)$（至多一个皇后）。
+
+7. **Typo 修正**：Conclusion 中 "estimate the the" → "estimate the"；"acient" → "ancient"。
+
+8. **清理**：删除所有 `\lw{...}` 批注标记（共7处）。保留 `\newcommand{\lw}` 宏定义。

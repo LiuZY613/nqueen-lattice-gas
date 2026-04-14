@@ -126,10 +126,11 @@ print("Saved fig3_energy.pdf/png")
 
 
 # ============================================================
-# Fig 4: Cv/N vs T — single panel with inset
+# Fig 4: (a) Cv/N vs T with inset; (b) gamma_MC vs N
 # ============================================================
-fig, ax1 = plt.subplots(1, 1, figsize=(COL_WIDTH, PANEL_HEIGHT))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(COL_WIDTH, 2 * PANEL_HEIGHT))
 
+# --- Panel (a): Cv/N vs T ---
 for i, N in enumerate(Ns):
     if N not in merged:
         continue
@@ -166,12 +167,54 @@ axins.tick_params(labelsize=6, width=0.4, length=2)
 axins.set_xticks([0.19, 0.21, 0.23])
 axins.set_yticks([1.57, 1.60, 1.63])
 ax1.indicate_inset_zoom(axins, edgecolor='0.5', linewidth=0.6, alpha=0.8)
+ax1.text(0.03, 0.95, '(a)', transform=ax1.transAxes,
+         fontsize=10, fontweight='bold', va='top')
 
-plt.tight_layout()
+# --- Panel (b): gamma_MC vs N ---
+# Data from Table III (N >= 32)
+N_gamma = np.array([32, 64, 128, 256, 512, 1024])
+gamma_MC = np.array([1.833, 1.885, 1.909, 1.925, 1.931, 1.946])
+gamma_err = np.array([0.001, 0.002, 0.002, 0.002, 0.003, 0.003])
+gamma_exact = 1.94400  # Nobel et al.
+
+ax2.errorbar(N_gamma, gamma_MC, yerr=gamma_err,
+             fmt='s', color='#0072B2', markersize=4.5,
+             capsize=2.5, linewidth=1.0, markerfacecolor='#0072B2',
+             markeredgewidth=0.6, label=r'$\gamma_{\rm MC}$', zorder=5)
+
+# Finite-size scaling fit: gamma(N) = gamma_inf + a * N^{-alpha}
+from scipy.optimize import curve_fit
+def model_power(N, gamma_inf, a, alpha):
+    return gamma_inf + a * N**(-alpha)
+popt, _ = curve_fit(model_power, N_gamma.astype(float), gamma_MC,
+                    sigma=gamma_err, absolute_sigma=True,
+                    p0=[1.944, -1.0, 0.5], maxfev=10000)
+N_fit = np.linspace(N_gamma[0]*0.8, N_gamma[-1]*3, 200)
+fit_label = r'$\gamma_\infty + a\,N^{-\alpha}$' + '\n' + r'$\gamma_\infty = %.3f$' % popt[0]
+ax2.plot(N_fit, model_power(N_fit, *popt), '-', color='#009E73',
+         linewidth=1.0, label=fit_label, zorder=3)
+
+ax2.axhline(y=gamma_exact, color='#D55E00', linestyle='--', linewidth=1.0,
+            label=r'$\gamma = 1.94400(1)$' + '\n[Nobel et al.]', zorder=0)
+
+ax2.set_xscale('log', base=2)
+ax2.set_xticks(N_gamma)
+ax2.set_xticklabels([str(n) for n in N_gamma])
+ax2.set_xlabel(r'$N$')
+ax2.set_ylabel(r'$\gamma_{\rm MC}$')
+ax2.set_xlim(N_gamma[0]*0.7, N_gamma[-1]*1.3)
+ax2.set_ylim(1.80, 1.97)
+ax2.legend(loc='lower right', frameon=True, fancybox=False,
+           edgecolor='0.7', framealpha=0.9, handletextpad=0.3,
+           fontsize=7)
+ax2.text(0.03, 0.95, '(b)', transform=ax2.transAxes,
+         fontsize=10, fontweight='bold', va='top')
+
+plt.tight_layout(h_pad=0.5)
 fig.savefig(os.path.join(BASE, 'fig4_cv.pdf'), dpi=300)
 fig.savefig(os.path.join(BASE, 'fig4_cv.png'), dpi=300)
 plt.close()
-print("Saved fig4_cv.pdf/png")
+print("Saved fig4_cv.pdf/png (two panels)")
 
 
 # ============================================================

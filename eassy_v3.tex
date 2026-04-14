@@ -100,9 +100,9 @@ asymptotic formula $Q(N) \sim (N/e^\gamma)^N$:
 $s_0 = \lim_{N \to \infty} \ln Q(N)/N = \ln N - \gamma$.
 
 The form of this entropy is suggestive.  On an
-$N \times N$ lattice, a single particle placed freely in one row \lw{what does this mean ? what is the constraint here ?} has
-$\ln N$ units of entropy---the maximal combinatorial freedom per
-particle.  The $N$-queens entropy $s_0 = \ln N - \gamma$ can
+$N \times N$ board with one queen per row---the row constraint being
+enforced by construction---each queen can occupy any of the $N$
+columns, giving $\ln N$ units of entropy per queen.  The $N$-queens entropy $s_0 = \ln N - \gamma$ can
 therefore be read as: each queen retains the full lattice entropy
 $\ln N$, reduced by a constant $\gamma$ that encodes the cumulative
 cost of geometric constraints.  This constant $\gamma$ decomposes
@@ -116,8 +116,8 @@ constant, independent of $N$ in the large-$N$ limit, hints at a
 deeper statistical-mechanical structure underlying the combinatorics.
 
 This additive decomposition of entropy into constraint costs motivates
-a statistical-mechanical approach.  We embed \lw{embed of map ?} the $N$-queens
-problem in a lattice gas with tunable
+a statistical-mechanical approach.  We map the $N$-queens
+problem to a lattice gas with tunable
 temperature~\cite{Zhang2009,Polson2024} and perform extensive Monte
 Carlo simulations.  Throughout this paper we set $k_B = 1$, so that
 entropy is dimensionless and temperature has units of energy.
@@ -137,9 +137,9 @@ the only combinatorial input is the trivially exact high-temperature
 entropy $S(\infty)/N = \frac{1}{N}\ln\binom{N^2}{N}$, while the
 Simkin--Nobel value is used solely for post-hoc comparison.
 Our thermodynamic extraction yields $\gamma_{\rm MC} = 1.946 \pm 0.003$ at
-$N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023}) \lw{try finite size scaling}, demonstrating
-that a single Monte Carlo campaign can determine a fundamental
-combinatorial constant through the laws of thermodynamics.
+$N = 1024$ (within $0.1\%$ of the precise value~\cite{Nobel2023});
+the monotonic convergence of $\gamma_{\rm MC}$ toward the asymptotic
+value with increasing $N$ is shown in Fig.~\ref{fig:cv}(b).
 
 We also present a complementary exact counting approach based on tensor
 network contractions.  Each non-attacking constraint---row, column, or
@@ -158,7 +158,7 @@ Section~\ref{sec:mc} presents Monte Carlo results.
 Section~\ref{sec:thermo_int} carries out the thermodynamic integration.
 Section~\ref{sec:tensor} presents a tensor network formulation that
 provides an alternative exact-enumeration route.
-Section~\ref{sec:conclusions} concludes with a discussion \lw{limitations of} the Monte Carlo and tensor network approaches and the open problems.
+Section~\ref{sec:conclusions} concludes with a discussion of the limitations of the Monte Carlo and tensor network approaches and open problems.
 
 
 %=====================================================================
@@ -402,18 +402,25 @@ $N \to \infty$.
 \subsection{Specific heat convergence}
 
 The specific heat per queen $C_v/N = (\langle E^2\rangle - \langle
-E\rangle^2)/(T^2 N)$ is shown in Fig.~\ref{fig:cv}.  For $N \ge 32$,
+E\rangle^2)/(T^2 N)$ is shown in Fig.~\ref{fig:cv}(a).  For $N \ge 32$,
 the $C_v/N$ curves collapse onto a single function of $T$, indicating
 that the thermodynamic limit has been reached.
 Table~\ref{tab:cv_peak} lists the peak values.
 
 \begin{figure}[t]
   \includegraphics[width=\linewidth]{figures/fig4_cv.pdf}
-  \caption{Specific heat per queen $C_v/N$ vs.\ $T$ for
+  \caption{(a)~Specific heat per queen $C_v/N$ vs.\ $T$ for
   $N = 8$--$1024$ in the peak region ($T \le 1\,J$, linear scale)
   with error bars.  Inset: zoom into the peak for $N \ge 64$.
   The curves for $N \ge 32$ collapse onto a single function,
-  confirming convergence to the thermodynamic limit.}
+  confirming convergence to the thermodynamic limit.
+  (b)~Extracted Simkin constant
+  $\gamma_{\rm MC} = \ln N - s_0^{\rm MC}$ vs.\ $N$ for
+  $N = 32$--$1024$.  The dashed line marks the precise combinatorial
+  value $\gamma = 1.94400(1)$~\cite{Nobel2023}.  The solid curve is
+  an ad hoc finite-size scaling fit
+  $\gamma_{\rm MC}(N) = \gamma_\infty + a\,N^{-\alpha}$, yielding
+  $\gamma_\infty = 1.947 \pm 0.004$.}
   \label{fig:cv}
 \end{figure}
 
@@ -471,12 +478,12 @@ difference.  We exploit this in the next section.
 
 
 %=====================================================================
-\section{Thermodynamic integration and entropy self-consistency}
-\label{sec:thermo_int} \lw{what does self-consistency mean here ?}
+\section{Thermodynamic integration}
+\label{sec:thermo_int}
 %=====================================================================
 
 The convergence of $C_v/N$ to a universal function enables a powerful
-thermodynamic self-consistency check.  We compute the entropy
+consistency check.  We compute the entropy
 difference between $T = \infty$ and $T = 0$ in two independent ways
 and verify that they agree.
 
@@ -584,14 +591,15 @@ source of error is the finite-size correction to the Simkin formula
 rather than statistical noise.
 
 A finite-size scaling extrapolation
-(e.g., $\gamma_{\rm MC}(N) = \gamma + a\,N^{-\alpha}$) could in
-principle improve the infinite-$N$ estimate.  However, the functional
-form of the subleading corrections to $Q(N)$ is not known
-analytically, making any assumed fitting form ad hoc.  We therefore
-report the raw $\gamma_{\rm MC}(N)$ values without extrapolation
-and note that extending the simulations to larger $N$ would
-further narrow the gap. \lw{try to carry out finite size scaling analysis, 
-or at least make a gamma versus N plot, indicate the Nobel, A. Agrawal, and S. Boyd value there}
+(e.g., $\gamma_{\rm MC}(N) = \gamma_\infty + a\,N^{-\alpha}$) could in
+principle improve the infinite-$N$ estimate.  Fitting the six data
+points $N = 32$--$1024$ to this three-parameter form yields
+$\gamma_\infty = 1.947 \pm 0.004$ with $\alpha \approx 0.81$
+[Fig.~\ref{fig:cv}(b), solid curve], consistent with the precise
+value $\gamma = 1.94400(1)$.  However, the functional form of the
+subleading corrections to $Q(N)$ is not known analytically, making
+this fitting form ad hoc; the extrapolated value should therefore
+be regarded as indicative rather than definitive.
 
 The monotonic convergence of $\gamma_{\rm MC}$ toward $\gamma = 1.94400(1)$ with
 increasing $N$---reaching $0.11\%$ accuracy at $N = 1024$---supports
@@ -640,7 +648,7 @@ Simkin combinatorial formula.
 %=====================================================================
 The geometric constraints of the $N$-queens problem---specifically,
 the requirement that no two queens share the same row, column, or diagonal---can be
-precisely encoded using the matrix product operator (MPO) formalism~\cite{Crosswhite2010}.
+precisely encoded using the matrix product operator (MPO) formalism~\cite{Frowis2010}.
 Consider, for instance, a single row with 3 sites. Without imposing any constraints,
 the row admits $2^3$ possible configurations, corresponding to
 $(|0\rangle + |1\rangle)^{\otimes 3}$, where $|0\rangle$ and
@@ -767,14 +775,17 @@ benchmarks that complement the Monte Carlo data at moderate~$N$.
 Another perspective on the tensor network contraction is the
 row-by-row transfer matrix $\mathcal{T}$.  Contracting the network
 row by row with appropriate boundary vectors $|v_0\rangle$ and
-$\langle v_f|$ gives \lw{that is the relation of $v_{0,f}$ and  $\mathbf{v}_{0,1,2}$ 
-  ?}
+$\langle v_f|$ gives
 \begin{equation}
   Q(N) = \langle v_f |\,\mathcal{T}^N\,| v_0 \rangle,
 \end{equation}
-where $|v_0\rangle$ encodes the initial (no queen seen) boundary
-condition and $\langle v_f|$ projects onto the state in which every
-column is occupied exactly once.
+where $|v_0\rangle = \mathbf{v}_0^{\otimes N} \otimes
+\mathbf{v}_0^{\otimes (2N-1)} \otimes \mathbf{v}_0^{\otimes (2N-1)}$
+is the product of initial boundary vectors for all columns and
+diagonals (each initialized to $\mathbf{v}_0 = (1,0)$, signaling no
+queen seen), and $\langle v_f|$ projects onto the state in which every
+column carries exactly one queen ($\mathbf{v}_1 = (0,1)$) while each
+diagonal carries at most one ($\mathbf{v}_2 = (1,1)$).
 A crucial property of $\mathcal{T}$ is that it is
 \emph{nilpotent}: $\mathcal{T}^{N+1} = 0$.
 This follows from the column constraint.  Each application of
@@ -800,18 +811,21 @@ as described above.
 \begin{figure}[t]
   %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
   \includegraphics[width=\linewidth]{figures/localTensor.pdf}
-  \caption{The 17 nonzero elements of the site tensor $B$
+  \caption{(a)~The 17 nonzero elements of the rank-9 site tensor $B$
   [Eq.~\eqref{eq:Btensor}].
   Each diagram shows a lattice site with eight bond indices
-  carrying binary attack signals ($0$: absent, $1$: present);
-  red arrows mark active signals.
-  The first 16 elements correspond to empty sites ($p = 0$) with
-  all $2^4$ combinations of independent pass-through signals along
-  the four constraint channels (column, row, and two diagonal
-  families).  The 17th element (bottom right) represents an
-  occupied site ($p = 1$): all incoming signals are $0$ and all
-  outgoing signals are $1$.
-  }
+  carrying binary attack signals and one physical index
+  $\alpha \in \{0,1\}$ (red arrows); the first 16 elements
+  correspond to empty sites ($\alpha = 0$) with all $2^4$
+  combinations of independent pass-through signals along the four
+  constraint channels (column, row, and two diagonal families),
+  and the 17th element (bottom right) represents an occupied site
+  ($\alpha = 1$): all incoming signals are $0$ and all outgoing
+  signals are $1$.
+  (b)~The 17 nonzero elements of the rank-8 site tensor $C$
+  [Eq.~\eqref{eq:Ctensor}], obtained by summing $B$ over the
+  physical index $\alpha$.  This is the local tensor used in the
+  tensor network contraction for computing $Q(N)$.}
   \label{fig:tensor}
 \end{figure}
 
@@ -885,14 +899,14 @@ would further sharpen the estimate.
 
 These results establish the $N$-queens lattice gas as an interesting 
 problem from the statistical mechanics perspective. Monte Carlo
-simulation can be used to estimate the the
+simulation can be used to estimate the
 Simkin constant $\gamma$.
 The tensor network formulation presented in Sec.~\ref{sec:tensor}
 provides a complementary exact-enumeration route: it yields $Q(N)$
 without statistical noise at moderate~$N$.  Together, the two methods
 cover complementary regimes of~$N$. An open direction is to
 exploit whether the tools in computational quantum and statistical mechanics will 
-offer new results in this acient problem in combinatorics. 
+offer new results in this ancient problem in combinatorics. 
 
 
 \section{Data availability}
@@ -984,10 +998,10 @@ T.~Xiang,
 \textit{Density Matrix and Tensor Network Renormalization}
 (Cambridge University Press, Cambridge, 2024).
 
-\bibitem{Crosswhite2010}
-G.~M.~Crosswhite, A.~C.~Doherty, and G.~Vidal,
-Applying matrix product operators to model systems with long-range
-interactions,
+\bibitem{Frowis2010}
+F.~Fr\"owis, V.~Nebendahl, and W.~D\"ur,
+Tensor operators: Constructions and applications for long-range
+interaction systems,
 Phys.\ Rev.\ A \textbf{81}, 062337 (2010).
 
 \bibitem{Nishino1996}
