@@ -179,18 +179,21 @@ gamma_exact = 1.94400  # Nobel et al.
 
 ax2.errorbar(N_gamma, gamma_MC, yerr=gamma_err,
              fmt='s', color='#0072B2', markersize=4.5,
-             capsize=2.5, linewidth=1.0, markerfacecolor='#0072B2',
-             markeredgewidth=0.6, label=r'$\gamma_{\rm MC}$', zorder=5)
+             capsize=2.5, linewidth=1.0, markerfacecolor='none',
+             markeredgewidth=0.8, label=r'$\gamma_{\rm MC}$', zorder=5)
 
 # Finite-size scaling fit: gamma(N) = gamma_inf + a * N^{-alpha}
 from scipy.optimize import curve_fit
 def model_power(N, gamma_inf, a, alpha):
     return gamma_inf + a * N**(-alpha)
-popt, _ = curve_fit(model_power, N_gamma.astype(float), gamma_MC,
-                    sigma=gamma_err, absolute_sigma=True,
-                    p0=[1.944, -1.0, 0.5], maxfev=10000)
+popt, pcov = curve_fit(model_power, N_gamma.astype(float), gamma_MC,
+                       sigma=gamma_err, absolute_sigma=True,
+                       p0=[1.944, -1.0, 0.5], maxfev=10000)
+perr = np.sqrt(np.diag(pcov))
 N_fit = np.linspace(N_gamma[0]*0.8, N_gamma[-1]*3, 200)
-fit_label = r'$\gamma_\infty + a\,N^{-\alpha}$' + '\n' + r'$\gamma_\infty = %.3f$' % popt[0]
+fit_label = (r'$\gamma_\infty + a\,N^{-\alpha}$' + '\n'
+             + r'$\gamma_\infty = %.3f$' % popt[0] + '\n'
+             + r'$\alpha = %.2f$' % popt[2])
 ax2.plot(N_fit, model_power(N_fit, *popt), '-', color='#009E73',
          linewidth=1.0, label=fit_label, zorder=3)
 

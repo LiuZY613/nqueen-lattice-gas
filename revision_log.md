@@ -666,3 +666,47 @@
 7. **Typo 修正**：Conclusion 中 "estimate the the" → "estimate the"；"acient" → "ancient"。
 
 8. **清理**：删除所有 `\lw{...}` 批注标记（共7处）。保留 `\newcommand{\lw}` 宏定义。
+
+---
+
+## 导师第十轮批注 | 2026-04-20 (commit 879932c)
+
+### 导师批注 (Lei Wang)
+
+1. **Fig.4 caption 中需补充 $\alpha$ 拟合值 & (b) 数据点误差棒** (eassy_v3.tex, 约第423行)
+   — `\lw{mention the fitted value of alpha here. are there errorbar on the datapoints in (b)? }`
+   — 在 Fig.4 caption 中，对有限尺度标度拟合 $\gamma_{\rm MC}(N) = \gamma_\infty + a\,N^{-\alpha}$ 需要明确给出 $\alpha$ 的拟合数值；同时质疑 Fig.4(b) 中 $\gamma_{\rm MC}$ vs $N$ 的数据点是否带有误差棒。
+
+   **Fig.4 caption: report fitted $\alpha$ & add errorbars in (b)** (eassy_v3.tex, ~line 423)
+   — `\lw{mention the fitted value of alpha here. are there errorbar on the datapoints in (b)? }`
+   — In the Fig.4 caption for the finite-size scaling fit $\gamma_{\rm MC}(N) = \gamma_\infty + a\,N^{-\alpha}$, the fitted value of the exponent $\alpha$ should be reported explicitly. Also questions whether the $\gamma_{\rm MC}$ vs $N$ data points in panel (b) carry error bars.
+
+---
+
+## 我们的修改（回应导师第十轮批注）| 2026-04-21
+
+逐条回应导师2条批注：
+
+1. **Fig.4 caption 补充 $\alpha$ 拟合值**（批注1前半）：
+   — 重新运行 `curve_fit` 保留协方差矩阵，从 `figures/fit_gamma_fss.py` 对应结果提取：$\alpha = 0.81 \pm 0.06$，$\chi^2/\mathrm{ndof} = 8.08/3$。
+   — caption 中 "yielding $\gamma_\infty = 1.947 \pm 0.004$." → "yielding $\gamma_\infty = 1.947 \pm 0.004$ and $\alpha = 0.81 \pm 0.06$."
+   — `figures/plot_PRE_figures.py` 同步：`popt, _ = curve_fit(...)` → `popt, pcov = curve_fit(...)`；图例 fit 标签新增一行 `$\alpha = 0.81$`。
+
+   **Report fitted $\alpha$ in Fig.4 caption** (response to comment 1, first half):
+   — Rerun `curve_fit` and retain the covariance matrix; the independent fit script `figures/fit_gamma_fss.py` gives $\alpha = 0.81 \pm 0.06$ with $\chi^2/\mathrm{ndof} = 8.08/3$.
+   — Caption updated from "yielding $\gamma_\infty = 1.947 \pm 0.004$." to "yielding $\gamma_\infty = 1.947 \pm 0.004$ and $\alpha = 0.81 \pm 0.06$."
+   — `figures/plot_PRE_figures.py` synced: `popt, _ = curve_fit(...)` → `popt, pcov = curve_fit(...)`; the fit-label legend now carries an extra line `$\alpha = 0.81$`.
+
+2. **Fig.4(b) 误差棒可见性修复**（批注1后半）：
+   — 误差棒实际上一直存在（`ax2.errorbar(..., yerr=gamma_err, ...)`，`gamma_err = [0.001, 0.002, 0.002, 0.002, 0.003, 0.003]`），但被 `markerfacecolor='#0072B2'` 的实心方块遮住。
+   — 将 panel (b) 的 marker 改为空心（`markerfacecolor='none'`，`markeredgewidth=0.8`），与 panel (a) 风格一致，jackknife 误差棒因此可见。
+   — caption 末尾追加说明："Jackknife-propagated error bars on the data points are plotted but are smaller than or comparable to the symbol size."
+
+   **Make Fig.4(b) error bars visible** (response to comment 1, second half):
+   — The error bars were already being drawn (`ax2.errorbar(..., yerr=gamma_err, ...)` with `gamma_err = [0.001, 0.002, 0.002, 0.002, 0.003, 0.003]`) but were hidden under the solid blue squares (`markerfacecolor='#0072B2'`).
+   — Switched the panel-(b) markers to hollow (`markerfacecolor='none'`, `markeredgewidth=0.8`), matching the style of panel (a); the jackknife error bars are now visible.
+   — A clarifying sentence was appended to the caption: "Jackknife-propagated error bars on the data points are plotted but are smaller than or comparable to the symbol size."
+
+3. **清理**：删除 Fig.4 caption 中的 `\lw{...}` 批注标记。保留 `\newcommand{\lw}` 宏定义。
+
+   **Cleanup**: removed the `\lw{...}` annotation from the Fig.4 caption. Kept the `\newcommand{\lw}` definition.
