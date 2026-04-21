@@ -6,6 +6,7 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{placeins}
 
 \newcommand{\lw}[1]{\textbf{\textcolor{red}{[LW:#1]}}}
 
@@ -743,6 +744,28 @@ passes or blocks its signal, giving $2^4 = 16$ elements.
 For an occupied site ($\alpha = 1$), all incoming signals must vanish and
 all outgoing signals are emitted, giving one additional element.
 
+\begin{figure}[t]
+  %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
+  \includegraphics[width=\linewidth]{figures/localTensor.pdf}
+  \caption{(a)~The 17 nonzero elements of the rank-9 site tensor $B$
+  [Eq.~\eqref{eq:Btensor}].
+  Each diagram shows a lattice site with eight bond indices
+  carrying binary attack signals and one physical index
+  $\alpha \in \{0,1\}$ (red arrows); the first 16 elements
+  correspond to empty sites ($\alpha = 0$) with all $2^4$
+  combinations of independent pass-through signals along the four
+  constraint channels (column, row, and two diagonal families),
+  and the 17th element (bottom right) represents an occupied site
+  ($\alpha = 1$): all incoming signals are $0$ and all outgoing
+  signals are $1$.
+  (b)~The 17 nonzero elements of the rank-8 site tensor $C$
+  [Eq.~\eqref{eq:Ctensor}], obtained by summing $B$ over the
+  physical index $\alpha$.  This is the local tensor used in the
+  tensor network contraction for computing $Q(N)$.}
+  \label{fig:tensor}
+\end{figure}
+
+
 Since the ground state wavefunction $|\Psi \rangle$ contains all solution 
 configurations of the $N$-queens problem, the exact number of solutions $Q(N)$ 
 is obtained by 
@@ -810,26 +833,6 @@ not in its spectrum.  This rules out spectral methods (DMRG, VUMPS,
 CTMRG) and makes finite-$N$ exact contraction the natural framework,
 as described above.
 
-\begin{figure}[t]
-  %\includegraphics[width=\linewidth]{figures/fig6_tensor.png}
-  \includegraphics[width=\linewidth]{figures/localTensor.pdf}
-  \caption{(a)~The 17 nonzero elements of the rank-9 site tensor $B$
-  [Eq.~\eqref{eq:Btensor}].
-  Each diagram shows a lattice site with eight bond indices
-  carrying binary attack signals and one physical index
-  $\alpha \in \{0,1\}$ (red arrows); the first 16 elements
-  correspond to empty sites ($\alpha = 0$) with all $2^4$
-  combinations of independent pass-through signals along the four
-  constraint channels (column, row, and two diagonal families),
-  and the 17th element (bottom right) represents an occupied site
-  ($\alpha = 1$): all incoming signals are $0$ and all outgoing
-  signals are $1$.
-  (b)~The 17 nonzero elements of the rank-8 site tensor $C$
-  [Eq.~\eqref{eq:Ctensor}], obtained by summing $B$ over the
-  physical index $\alpha$.  This is the local tensor used in the
-  tensor network contraction for computing $Q(N)$.}
-  \label{fig:tensor}
-\end{figure}
 
 % A key feature of the $N$-queens problem is the super-extensive
 % ground-state entropy $S_0 = N(\ln N - \gamma) \sim N\ln N$, which
@@ -865,14 +868,12 @@ as described above.
   purple ($\nearrow$-diagonal).
   Boundary vectors $\mathbf{v}_0 = (1,0)$, $\mathbf{v}_1 = (0,1)$,
   and $\mathbf{v}_2 = (1,1)$ are labeled at every line terminus,
-  enforcing the queen constraints on each row, column, and diagonal.
-  \lw{fix floating location of figures, now this appears after acknolwdgement}
-
-  }
+  enforcing the queen constraints on each row, column, and diagonal.}
   \label{fig:tn_network}
 \end{figure}
 
 
+\FloatBarrier
 %=====================================================================
 \section{Conclusions}
 \label{sec:conclusions}

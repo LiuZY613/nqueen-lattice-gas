@@ -710,3 +710,25 @@
 3. **清理**：删除 Fig.4 caption 中的 `\lw{...}` 批注标记。保留 `\newcommand{\lw}` 宏定义。
 
    **Cleanup**: removed the `\lw{...}` annotation from the Fig.4 caption. Kept the `\newcommand{\lw}` definition.
+
+---
+
+## 导师第十一轮批注 | 2026-04-21 (commit f23c839, GitLab origin)
+
+### 导师批注 (Lei Wang)
+
+1. **Fig.6 (tensor network schematic) 浮动位置** (eassy_v3.tex, Fig.tn_network caption, 约第869行)
+   — `\lw{fix floating location of figures, now this appears after acknolwdgement}`
+   — 张量网络示意图 (fig:tn_network, 即 fig6_tn_schematic.pdf) 的浮动位置有问题，当前它出现在 Acknowledgments 致谢节之后，需要修复让它出现在正文 Sec. VI 中相应位置。
+
+   **Fix floating location of Fig.6 (tensor network schematic)** (eassy_v3.tex, Fig.tn_network caption, ~line 869)
+   — `\lw{fix floating location of figures, now this appears after acknolwdgement}`
+   — The tensor network schematic (fig:tn_network, i.e. fig6_tn_schematic.pdf) is floating incorrectly — it currently appears after the Acknowledgments section. Needs to be fixed so it appears near its reference in Sec. VI.
+
+2. **致谢新增 Qi Yang** (Acknowledgments, 约第922行)
+   — 导师直接在致谢中新增 Qi Yang：
+   — "...Jinguo Liu, Yijia Wang, Pan Zhang, Youjin Deng and Tao Xiang." → "...Jinguo Liu, Yijia Wang, **Qi Yang**, Pan Zhang, Youjin Deng and Tao Xiang."
+
+   **Added Qi Yang to Acknowledgments** (Acknowledgments, ~line 922)
+   — Advisor directly added Qi Yang to the acknowledgments:
+   — "...Jinguo Liu, Yijia Wang, Pan Zhang, Youjin Deng and Tao Xiang." → "...Jinguo Liu, Yijia Wang, **Qi Yang**, Pan Zhang, Youjin Deng and Tao Xiang."
