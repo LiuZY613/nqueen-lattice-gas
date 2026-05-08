@@ -96,7 +96,7 @@ for i in range(N):
         c = plt.Circle((x, y), r_node, fc='white', ec=C_node,
                         lw=2.0, zorder=5)
         ax.add_patch(c)
-        ax.text(x - 0.03, y - 0.03, r'$T$', ha='center', va='center',
+        ax.text(x - 0.03, y - 0.03, r'$C$', ha='center', va='center',
                 fontsize=FS + 1, color=C_node, zorder=6)
 
 # ── boundary stubs (arrowed) ────────────────────────────────────────
