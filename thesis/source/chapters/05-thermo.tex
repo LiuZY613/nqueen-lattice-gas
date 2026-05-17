@@ -1,0 +1,129 @@
+﻿\chapter{热力学积分}
+
+\section{理论框架}
+
+热力学基本关系$S(T)=\int_{0}^{T}(C_{v}/T')\,\mathrm{d}T'+S(0)$
+以微分形式表达了熵与比热之间的联系。其积分形式将$T=0$和$T=\infty$之间的熵差与
+$C_{v}/T$的积分关联起来：
+%
+\begin{equation}
+  S(\infty) - S(0) = \int_{0}^{\infty} \frac{C_{v}}{T}\,\mathrm{d}T.
+  \label{eq:thermo_int}
+\end{equation}
+%
+除以$N$得到每皇后量：
+%
+\begin{equation}
+  \frac{S(\infty)}{N} - \frac{S(0)}{N}
+  = \int_{0}^{\infty} \frac{C_{v}}{NT}\,\mathrm{d}T.
+  \label{eq:DS}
+\end{equation}
+
+这一关系连接了两个独立可知的量：左边由组合分析确定，右边由Monte Carlo数据通过
+数值积分确定。具体而言，左边$S(\infty)/N=(1/N)\ln\binom{N^{2}}{N}\approx\ln N+1$
+是均匀分布的熵——这一公式是平凡精确的，不依赖任何关于基态N皇后解的计数知识，
+只需要棋盘上有$N^{2}$个格点和$N$个皇后的组合事实。
+$S(0)/N=\ln Q(N)/N\approx\ln N-\gamma$是基态熵。
+右边$\int_{0}^{\infty}C_{v}/(NT)\,\mathrm{d}T$可以从Monte Carlo模拟获得的
+$C_{v}(T)/N$数据通过数值积分计算。
+
+将两边结合，可以从Monte Carlo数据反推出基态熵：
+%
+\begin{equation}
+  s_{0}^{\rm MC} = \frac{S(\infty)}{N}
+    - \int_{0}^{\infty}\frac{C_{v}}{NT}\,\mathrm{d}T,
+  \label{eq:s0_MC}
+\end{equation}
+%
+进而得到Simkin常数的热力学估计：
+%
+\begin{equation}
+  \gamma_{\rm MC} = \ln N - s_{0}^{\rm MC}
+  = \ln N - \frac{S(\infty)}{N}
+    + \int_{0}^{\infty}\frac{C_{v}}{NT}\,\mathrm{d}T.
+\end{equation}
+
+关键的是，这个热力学测定方案的输入完全独立于组合学对$\gamma$的知识：唯一的输入是
+均匀分布的高温熵$S(\infty)/N$——一个仅依赖棋盘几何和皇后总数的平凡量——以及
+Monte Carlo产生的$C_{v}(T)/N$数据。Simkin-Nobel精确值$\gamma=1.94400(1)$
+仅作为事后比较的基准，不参与积分的任何一步。这使得热力学方案构成了一条真正独立于
+组合枚举的测定路径。
+
+\section{Simkin常数的热力学测定}
+
+数值积分的具体操作如下：我们在280个温度网格点（$T=0.05\sim400\,J$）上使用
+梯形法则计算积分。低温截断$T_{\min}=0.05\,J$：在$T<0.1\,J$区域，
+$C_{v}/T$呈指数衰减，截断贡献小于总积分的$0.01\%$。高温截断$T_{\max}=400\,J$：
+在$T>400\,J$区域，$C_{v}/T\propto T^{-3}$快速衰减，截断误差同样小于$0.01\%$。
+对数温度网格上的梯形法则离散化误差远小于Monte Carlo数据的统计不确定性。
+
+统计误差的传播通过jackknife方法系统处理：对200个jackknife样本分别计算
+$C_{v}(T)/N$、执行梯形积分得到200个$s_{0}^{\rm MC}$和$\gamma_{\rm MC}$的
+折刀估计，这些估计值的涨落给出最终结果的标准误差。
+表\ref{tab:thermo}汇总了所有$N$的热力学积分结果。
+
+\begin{table}[htbp]
+  \centering
+  \caption{热力学积分得到的基态熵与Simkin常数。
+  $s_{0}^{\rm MC}=S(\infty)/N-\int_{0}^{\infty}(C_{v}/NT)\,\mathrm{d}T$，
+  其中$S(\infty)/N=(1/N)\ln\binom{N^{2}}{N}$是精确的。统计不确定度通过将
+  jackknife误差传播通过梯形积分获得。$N\le16$与精确值$s_{0}^{\rm exact}
+  =\ln Q(N)/N$比较；$N\ge32$提取$\gamma_{\rm MC}=\ln N-s_{0}^{\rm MC}$
+  与精确值$\gamma=1.94400(1)$比较。}
+  \label{tab:thermo}
+  \begin{tabular}{ccccc}
+    \toprule
+    $N$ & $s_{0}^{\rm MC}$ & $s_{0}^{\rm exact}$ & $\gamma_{\rm MC}$ & 偏差 \\
+    \midrule
+    8    & $0.566\pm0.000$  & 0.565  & --- & 0.1\% \\
+    16   & $1.031\pm0.001$  & 1.032  & --- & 0.1\% \\
+    \midrule
+    32   & $1.633\pm0.001$  & --- & $1.833\pm0.001$ & 5.7\% \\
+    64   & $2.274\pm0.002$  & --- & $1.885\pm0.002$ & 3.0\% \\
+    128  & $2.943\pm0.002$  & --- & $1.909\pm0.002$ & 1.8\% \\
+    256  & $3.620\pm0.002$  & --- & $1.925\pm0.002$ & 1.0\% \\
+    512  & $4.308\pm0.003$  & --- & $1.931\pm0.003$ & 0.69\% \\
+    1024 & $4.985\pm0.003$  & --- & $1.946\pm0.003$ & 0.11\% \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+表\ref{tab:thermo}的结果证明了热力学积分流程的可靠性以及Monte Carlo数据的精度。
+在$N=8$和$N=16$处，$s_{0}^{\rm MC}$与精确基态熵的偏差仅为$0.1\%$，
+验证了从模拟到积分的整个流程的准确性。对于$N\ge32$，$\gamma_{\rm MC}$从
+$N=32$时的$1.833$单调收敛到$N=1024$时的$1.946\pm0.003$。
+与精确组合学值$\gamma=1.94400(1)$的偏差在$N=1024$处仅为$0.11\%$。
+图\ref{fig:cv}(b)展示了这一单调收敛过程。
+
+需要指出的是，在$N=1024$处jackknife传播的统计不确定度
+$\sigma(\gamma_{\rm MC})=0.003$与数值结果和精确值的偏差
+$|\gamma_{\rm MC}-\gamma|\approx0.002$处于同一量级，
+二者在$1\sigma$以内一致。这意味着\textbf{在单一$N=1024$处，
+我们的Monte Carlo测定与组合学精确值在统计意义上无法被区分}——
+这本身就构成了对$\gamma$的一个独立物理学验证：
+若热力学积分流程或Monte Carlo采样存在系统偏差，本应在$\le0.1\%$精度
+下显露出与$\gamma=1.94400(1)$的张力，但没有发现。
+然而，仅凭单点结果尚不能严格断言残余偏差的物理来源。
+下一段所讨论的尺寸标度（图\ref{fig:cv}(b)）显示$\gamma_{\rm MC}(N)$
+随$N$系统性地单调收敛，提示残余差异中含有可识别的有限尺寸贡献，
+即$\ln Q(N)/N=\ln N-\gamma+O(N^{-\alpha})$中次导阶的修正——
+这一项才是阻碍我们以更高精度从有限$N$模拟外推到$\gamma_{\infty}$的主因。
+
+为了尝试提取热力学极限值，我们对$N=32\sim1024$六个数据点进行了有限尺寸标度拟合：
+%
+\begin{equation}
+  \gamma_{\rm MC}(N) = \gamma_{\infty} + a\cdot N^{-\alpha},
+\end{equation}
+%
+拟合给出$\gamma_{\infty}=1.947\pm0.004$，$\alpha\approx0.81\pm0.06$。
+这个外推值与精确值$\gamma=1.94400(1)$在$1\sigma$以内一致。需要指出，
+由于$Q(N)$次渐近展开的函数形式在数学上尚未完全确定，上述三参数拟合的形式是
+经验性的（\textit{ad hoc}），其外推结果应视为指示性而非确定性的。
+更可靠的外推将依赖对$Q(N)$次导阶修正的进一步解析理解或扩展到更大$N$
+（如$N=2048$或$4096$）的Monte Carlo数据。
+
+综合来看，Monte Carlo模拟与热力学积分的结合为Simkin常数提供了独立于组合数学的
+测定途径。该方法的核心优势有三：（1）仅依赖平凡精确的高温熵，无需$Q(N)$的任何
+先验知识；（2）利用$C_{v}/N$的收敛性保证大$N$极限的存在性；
+（3）Jackknife误差传播确保统计不确定度的正确估计。该方法的精度受限于N皇后公式的
+有限$N$修正——随着未来将模拟扩展到更大的$N$，预计精度将进一步提升。

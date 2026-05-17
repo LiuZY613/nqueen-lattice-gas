@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thesis main file --- N皇后问题的统计力学
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[
+    type = bachelor,
+    fontset = win,
+    decl-page,
+    oneside,
+  ]{njuthesis}
+
+\input{njuthesis-setup.def}
+
+% Required packages (njuthesis already provides amsmath, amssymb, bm)
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\hypersetup{pdfpagelayout=TwoPageRight}
+
+% Custom commands
+\DeclareMathOperator{\Tr}{Tr}
+\newcommand{\gammamc}{\gamma_{\rm MC}}
+
+\begin{document}
+
+\maketitle
+\raggedbottom
+
+\input{frontmatter/abstract-zh}
+\input{frontmatter/abstract-en}
+
+\tableofcontents
+
+\mainmatter
+
+\include{chapters/01-introduction}
+\include{chapters/02-model}
+\include{chapters/03-analytical}
+\include{chapters/04-monte-carlo}
+\include{chapters/05-thermo}
+\include{chapters/06-tensor}
+\include{chapters/07-conclusion}
+
+\printbibliography
+
+\input{frontmatter/acknowledgement}
+
+\end{document}

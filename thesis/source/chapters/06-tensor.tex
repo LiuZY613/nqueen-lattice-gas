@@ -1,0 +1,332 @@
+﻿\chapter{张量网络表述}
+
+除Monte Carlo模拟之外，我们还发展了一套基于张量网络的精确枚举方法。
+与Monte Carlo的统计抽样不同，张量网络方法通过精确收缩直接计算$Q(N)$，
+结果不含任何统计噪声，为中、小系统尺寸提供了天然互补的基准检验点。
+本章详细介绍其构造原理与数学性质。
+
+\section{约束的矩阵乘积算符编码}
+
+\subsection{一维攻击线的MPO表示}
+
+N皇后问题中沿着行、列、对角线的非攻击约束具有天然的一维结构：
+每条攻击线是一条一维格点序列，约束仅涉及该序列内部的皇后占据情况。
+矩阵乘积算符（MPO）\cite{Frowis2010}为这类一维序列约束提供了紧凑的代数编码。
+
+以一条长度为3的行约束为例。在不施加任何约束时，该行的希尔伯特空间为
+$(|0\rangle+|1\rangle)^{\otimes3}$，共$2^{3}=8$种可能的占据构型。
+若要求该行恰好有一个皇后，合法构型缩减为三种：
+%
+\begin{align}
+  |1,0,0\rangle,\quad |0,1,0\rangle,\quad |0,0,1\rangle.
+\end{align}
+%
+这一约束可以通过一个MPO紧凑地表达为：
+%
+\begin{align}
+  \hat{n}_{1}\otimes\hat{n}_{0}\otimes\hat{n}_{0}
+  +\hat{n}_{0}\otimes\hat{n}_{1}\otimes\hat{n}_{0}
+  +\hat{n}_{0}\otimes\hat{n}_{0}\otimes\hat{n}_{1}
+  =\mathbf{v}_{0}*A*A*A*\mathbf{v}_{1}^{T}=M_{\text{row}},
+  \label{eq:row_mpo}
+\end{align}
+%
+其中$\hat{n}_{0}=|0\rangle\langle0|$是空位投影算符，$\hat{n}_{1}=|1\rangle\langle1|$
+是占据投影算符。该MPO的核心是局部转移矩阵$A$：
+%
+\begin{equation}
+  A = \begin{pmatrix}
+    \hat{n}_{0} & \hat{n}_{1} \\
+    0           & \hat{n}_{0}
+  \end{pmatrix},
+  \label{eq:A_matrix}
+\end{equation}
+%
+以及边界向量$\mathbf{v}_{0}=(1,0)$和$\mathbf{v}_{1}=(0,1)$。$A$作为rank-3张量
+$A_{\alpha\beta}^{\sigma\sigma'}$，其非零元素具有清晰的物理语义：
+%
+\begin{itemize}
+  \item $A_{00}^{00}=1$：空站点，且之前未遇到皇后——状态不变，信号继续为0；
+  \item $A_{11}^{00}=1$：空站点，但已遇到过皇后——状态不变，信号保持为1（继续传递``已见''信号）；
+  \item $A_{01}^{11}=1$：占据站点，且之前未遇到皇后——信号从0翻转为1（皇后出现）。
+\end{itemize}
+%
+所有其他组合（如$A_{00}^{11}=0$，空站点不可能将信号从1反转为0；
+$A_{11}^{11}=0$，已遇到过皇后不能再出现第二个皇后）均为零，这自然地实现了
+``恰好一个皇后''的约束。
+
+将MPO作用于无约束的全状态空间，即可直接得到包含所有满足该行约束的构型的
+波函数：
+%
+\begin{equation}
+  |\Psi\rangle = (\mathbf{v}_{0}*A*A*A*\mathbf{v}_{1}^{T})
+                 (|0\rangle+|1\rangle)^{\otimes3}.
+  \label{eq:row_wf}
+\end{equation}
+%
+边界向量$\mathbf{v}_{0}=(1,0)$编码了``开始时未遇皇后''的初始条件，
+$\mathbf{v}_{1}=(0,1)$编码了``结束时恰好遇到过一个皇后''的终止条件。
+
+\subsection{``恰好一个''与``至多一个''约束的区分}
+
+行和列要求每线\textbf{恰好一个}皇后（$n=1$），而对角线要求每线
+\textbf{至多一个}皇后（$n\le1$）。这两类约束在MPO框架中可以通过仅改变
+终端边界向量来优雅地区分。对角线的MPO构造为：
+%
+\begin{align}
+  &\hat{n}_{1}\otimes\hat{n}_{0}\otimes\hat{n}_{0}
+   +\hat{n}_{0}\otimes\hat{n}_{1}\otimes\hat{n}_{0}
+   +\hat{n}_{0}\otimes\hat{n}_{0}\otimes\hat{n}_{1}
+   +\hat{n}_{0}\otimes\hat{n}_{0}\otimes\hat{n}_{0}
+   \nonumber\\
+  =&\;\mathbf{v}_{0}*A*A*A*\mathbf{v}_{2}^{T}=M_{\text{diag}},
+  \label{eq:diag_mpo}
+\end{align}
+%
+与行约束MPO（式\ref{eq:row_mpo}）相比，唯一的区别在于终端向量从
+$\mathbf{v}_{1}=(0,1)$改为$\mathbf{v}_{2}=(1,1)$。选择$\mathbf{v}_{2}=(1,1)$
+意味着结束时允许信号为0（从未遇到皇后——该对角线为空）或信号为1
+（恰好遇到过一个皇后），从而正确实现了``至多一个''的约束。
+值得注意的是，MPO内部的转移矩阵$A$完全不变——约束类型的修改完全体现在
+边界条件上。这种边界条件与体积算符的分离是MPO形式化的优美特征。
+
+\section{局域张量的构造}
+
+\subsection{四方向MPO的交汇}
+
+N皇后问题的核心几何特征是：每个格点$(i,j)$恰好位于四条攻击线的交点上
+——行$i$、列$j$、主对角线$(i-j)$和反对角线$(i+j)$。因此，
+该格点的局域约束是四个方向MPO的联合作用。将四个方向的约束相乘，
+得到包含所有合法皇后构型的基态波函数$|\Psi\rangle$：
+%
+\begin{equation}
+  |\Psi\rangle = \prod_{\text{row}} M_{\text{row}}
+                \prod_{\text{col}} M_{\text{row}}
+                \prod_{\diagdown} M_{\text{diag}}
+                \prod_{\diagup} M_{\text{diag}}
+                \;(|0\rangle+|1\rangle)^{\otimes N^{2}}.
+  \label{eq:psi_full}
+\end{equation}
+
+在每个格点$(i,j)$处，四个方向的MPO链穿过，各自携带二进制的攻击信号。
+将四个$A$矩阵在格点处收缩，得到一个rank-9的局域张量$B$——
+8个bond腿索引（四个方向各有两个虚拟指标：上/下、左/右、$\searrow$上/下、
+$\nearrow$左/右）加1个物理腿索引$\alpha\in\{0,1\}$表示占据状态：
+%
+\begin{align}
+  B_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha}
+  &= \sum_{\alpha'\beta'\beta\sigma}
+     A_{ud}^{\alpha\alpha'}\;
+     A_{lr}^{\alpha'\beta'}\;
+     A_{\bar{u}\bar{d}}^{\beta'\beta}\;
+     A_{\bar{l}\bar{r}}^{\beta\sigma}\;|\sigma\rangle \nonumber\\
+  &= A_{ud}^{\alpha\alpha}\;
+     A_{lr}^{\alpha\alpha}\;
+     A_{\bar{u}\bar{d}}^{\alpha\alpha}\;
+     A_{\bar{l}\bar{r}}^{\alpha\alpha}\;|\alpha\rangle,
+  \label{eq:Btensor}
+\end{align}
+%
+其中$(u,d)$、$(l,r)$、$(\bar{u},\bar{d})$、$(\bar{l},\bar{r})$分别为
+列、行、$\searrow$-对角线、$\nearrow$-对角线方向上的虚拟指标对；
+$\alpha',\beta',\beta,\sigma\in\{0,1\}$为内部求和指标。
+由于$A$在物理空间是对角的（$A_{\alpha\beta}^{\sigma\sigma'}\neq0$
+仅当$\sigma'=\sigma$），所有的内部求和指标最终都坍缩到物理指标$\alpha$。
+
+\subsection{17个非零元的计数}
+
+由于每个方向的MPO转移矩阵$A$仅有3个非零元，局域张量$B$的元素非常稀疏，
+恰好只有17个非零元（图\ref{fig:tensor}a）：
+%
+\begin{itemize}
+  \item \textbf{空站点（$\alpha=0$）}：四个方向的信号各自独立地选择
+  ``保持为0''（$A_{00}^{00}$）或``保持为1''（$A_{11}^{00}$），
+  共有$2^{4}=16$种组合。例如，张量元素$B_{0000}^{0}=1$对应于所有方向
+  均为0的无攻击信号情况；$B_{1111}^{0}=1$对应于所有方向均已传递``已见皇后''
+  的信号。
+  \item \textbf{占据站点（$\alpha=1$）}：皇后占据了该格点，所有入射信号必须
+  为0（皇后出现之前不能有另一个皇后在同一攻击线上），而所有出射信号变为1
+  （该皇后向所有方向发出``已见''信号）。这唯一地确定了
+  $B_{1111}^{1}=1$——即第17个非零元，位于图\ref{fig:tensor}a的右下角。
+\end{itemize}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{fig6_tensor.png}
+  \caption{\textbf{(a)}~rank-9局域张量$B$的17个非零元素。每个图显示一个格点站点，
+  包含八个传递二进制攻击信号的bond腿索引和一个物理腿索引$\alpha\in\{0,1\}$
+  （红色箭头）。前16个元素对应空站点（$\alpha=0$），覆盖了四个方向独立传递
+  $2^{4}=16$种信号组合。第17个元素（右下角）对应占据站点（$\alpha=1$）：
+  所有入射信号为0、所有出射信号为1。
+  \textbf{(b)}~rank-8局域张量$C$的17个非零元素，通过对物理腿索引$\alpha$求和
+  $C=\sum_{\alpha}B^{\alpha}$得到。此张量直接用于$Q(N)$的精确计数收缩。}
+  \label{fig:tensor}
+\end{figure}
+
+\subsection{物理指标的收缩与Q(N)的提取}
+
+基态波函数$|\Psi\rangle$包含了\textbf{所有}满足N皇后约束的构型的等权重叠加
+——每个解$|s_{k}\rangle$在$|\Psi\rangle$中的系数为1。
+因此，$Q(N)$可以通过求$|\Psi\rangle$与全1的直积态的内积获得：
+%
+\begin{equation}
+  Q(N) = \langle\Psi| (|0\rangle+|1\rangle)^{\otimes N^{2}},
+  \label{eq:QN_tn}
+\end{equation}
+%
+其中$(|0\rangle+|1\rangle)^{\otimes N^{2}}$枚举了棋盘上所有$2^{N^{2}}$种
+可能的占据配置。由于$(|0\rangle+|1\rangle)^{\otimes N^{2}}$是直积态，
+$\langle\Psi|$与它的内积等价于将每个物理指标与向量
+$(1,1)^{T}=|0\rangle+|1\rangle$收缩。因此，我们可以定义一个新的rank-8
+局域张量$C$（通过对物理指标求和消去物理腿）：
+%
+\begin{equation}
+  C_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}
+  = \sum_{\alpha=0,1} B_{ud,\,lr,\,\bar{u}\bar{d},\,\bar{l}\bar{r}}^{\,\alpha},
+  \label{eq:Ctensor}
+\end{equation}
+%
+$C$同样精确地具有17个非零元（如图\ref{fig:tensor}b所示）：
+16个来自于$B$的空站点元素，1个来自于$B$的占据站点元素。
+至此，$Q(N)$的计算化为在一个$N\times N$格点上完全收缩以$C$为局域张量、
+bond dimension $D=2$的张量网络。图\ref{fig:tn_network}展示了$N=4$的完整网络。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{fig6_tn_schematic.png}
+  \caption{用于精确计数N皇后解的张量网络（$N=4$）。每个节点为rank-8的局域张量$C$
+  [式\ref{eq:Ctensor}]。箭头的四种颜色/线型区分四个键族：行（红实线）、
+  列（蓝实线）、$\searrow$-对角线（绿虚线）和$\nearrow$-对角线（紫点线）。
+  边界向量$\mathbf{v}_{0}=(1,0)$、$\mathbf{v}_{1}=(0,1)$和$\mathbf{v}_{2}=(1,1)$
+  标注在每条线的端点处，分别实现``初始时未遇皇后''、``结束时恰好一个皇后''
+  和``结束时至多一个皇后''的约束条件。}
+  \label{fig:tn_network}
+\end{figure}
+
+\section{转移矩阵方法与幂零性}
+
+\subsection{逐行收缩与转移矩阵}
+
+张量网络的另一种理解视角是逐行转移矩阵方法\cite{Xiang2024}。
+以行为单位逐行处理棋盘，定义作用于所有列键和两族对角线键的联合空间上的
+转移矩阵$\mathcal{T}$，它吸收一整行的$N$个局域张量。则$Q(N)$可写为：
+%
+\begin{equation}
+  Q(N) = \langle v_{f}|\,\mathcal{T}^{N}\,|v_{0}\rangle,
+  \label{eq:QN_transfer}
+\end{equation}
+%
+其中初始态$|v_{0}\rangle$为所有列和两族对角线的初始边界向量的张量积：
+%
+\begin{equation}
+  |v_{0}\rangle = \mathbf{v}_{0}^{\otimes N}
+                 \otimes \mathbf{v}_{0}^{\otimes(2N-1)}
+                 \otimes \mathbf{v}_{0}^{\otimes(2N-1)},
+\end{equation}
+%
+每个列和每条对角线均以$\mathbf{v}_{0}=(1,0)$初始化（表示``尚未遇到皇后''）。
+终端态$\langle v_{f}|$则根据不同约束类型投影到相应的边界向量：
+所有$N$列需满足\textbf{恰好一个}皇后，投影到$\mathbf{v}_{1}=(0,1)$；
+所有$2N-1$条主对角线和$2N-1$条反对角线需满足\textbf{至多一个}皇后，
+投影到$\mathbf{v}_{2}=(1,1)$。
+因此$|v_{0}\rangle$和$\langle v_{f}|$所在希尔伯特空间的维度为
+$2^{N}\times2^{2N-1}\times2^{2N-1}=2^{5N-2}$。
+
+\subsection{幂零性的组合学根源}
+
+N皇后转移矩阵$\mathcal{T}$具有一个极为特殊的代数性质——幂零性：
+%
+\begin{equation}
+  \mathcal{T}^{N+1} = 0.
+  \label{eq:nilpotent}
+\end{equation}
+%
+这一性质源于简单的组合学事实。$\mathcal{T}$的每次作用对应处理一个完整的行。
+在执行行约束（每行恰好一个皇后）的前提下，$\mathcal{T}$每次作用时新占据的列数
+恰好为1。因此，在第$k$次作用后，恰好有$k$列已被占据。
+处理完$N$行后，所有$N$列均已被占据。此时若再作用$\mathcal{T}$（即处理第$N+1$行），
+由于没有剩余的未占据列可供新皇后放置，任何构型都将违反列约束而被消灭。
+
+从物理角度看，幂零性反映了N皇后问题的\textbf{有限资源耗尽机制}：
+皇后在每个攻击维度上的放置受限于该维度的容量（行有$N$条、列有$N$条），
+一旦容量耗尽，系统无法再接受额外的皇后而不产生攻击。
+
+\subsection{与标准统计力学模型的本质差异}
+
+幂零性使N皇后格点气体与标准二维统计力学模型之间存在根本性的方法论鸿沟。
+以二维Ising模型为例，其转移矩阵具有唯一的最大特征值
+$\lambda_{1}\sim\alpha^{N}$（$\alpha$为某个常数），配分函数
+$Z\sim\lambda_{1}^{N}\sim\alpha^{N^{2}}$由该主导特征值控制。
+这一谱结构是角转移矩阵重正化群（CTMRG）\cite{Nishino1996}等无限尺寸收缩方法
+的工作基础——这些方法通过迭代地追踪主导特征向量来逼近无限系统的物理量。
+
+然而，N皇后转移矩阵$\mathcal{T}$由于幂零性，\textbf{所有特征值均为零}。
+不存在任何非零特征值可供追踪：解计数$Q(N)$完全蕴含在$\mathcal{T}^{N}$的
+矩阵元中，而非其谱中。这从根本上使依赖最大特征值或谱分解的以下标准谱方法
+在此问题上无法直接应用：
+%
+\begin{itemize}
+  \item 密度矩阵重正化群（DMRG）：依赖转移矩阵的主导特征向量来构建有效的
+  renormalized basis，但幂零矩阵没有非平凡的左/右特征向量；
+  \item 变分均匀矩阵乘积态（VUMPS）：通过求解转移矩阵的固定点方程来逼近无限
+  系统的基态，但幂零转移矩阵的固定点方程无非平凡解；
+  \item CTMRG：依赖角转移矩阵的谱分解来构造环境张量，但幂零性使谱分解
+  失效。
+\end{itemize}
+%
+因此，与标准统计力学模型可以依赖最大特征值主导的无限尺寸近似方法不同，
+N皇后问题在这一框架下需采用有限$N$精确收缩。
+这是幂零性给我们带来的最重要的方法论启示。
+
+\subsection{超广延熵的物理含义}
+
+N皇后格点气体还有一个值得注意的特征——其基态熵在按皇后数归一化时呈现
+\textbf{超广延}（super-extensive）的标度行为。由Simkin公式，基态熵
+$S_{0}=\ln Q(N)\approx N(\ln N-\gamma)$。每皇后熵
+$s_{0}=S_{0}/N\approx\ln N-\gamma$随$\ln N$发散而非收敛到有限常数。
+需要指出，这里``超广延''特指按皇后数$N$归一化的结果；若改按格点数$N^{2}$
+归一化，则每格点熵$S_{0}/N^{2}\approx(\ln N-\gamma)/N\to0$。这一标度行为
+与常规格点模型（如Ising模型，其自由能每格点收敛到有限常数）的鲜明对比
+不在于归一化的具体方式，而在于N皇后系统在两种归一化下都不存在
+``每自由度有限熵''的常规图景，反映了其皇后密度趋零的极端稀疏占据特征。
+
+超广延性的物理根源即在于此皇后密度的消失：$N$个皇后占据$N^{2}$个格点，
+密度$\rho=N/N^{2}=1/N\to0$。每个皇后的配置自由度随$\ln N$无限增长，
+这是棋盘相对于皇后数无限稀疏化的直接后果。
+
+超广延性对张量网络收缩具有重要的实际影响。逐行收缩时，
+水平截面上需要追踪的二进制bond指标数量为$O(N)$（$N$条列键$+$约$2N$条
+对角线键），因此边界MPS的精确bond dimension为$\chi=2^{O(N)}$。
+这与标准的广延熵模型不同——在后一类模型中，边界MPS的bond dimension可以有界
+（对应面积律）或随截面积多项式增长。超广延熵使张量网络收缩的指数复杂度
+是其深层物理结构的反映，而非方法性的不足。
+
+\section{数值实现与互补性}
+
+张量网络的实际收缩采用边界矩阵乘积态（boundary MPS）方法\cite{Xiang2024}：
+从棋盘顶部开始，逐行将$N$个局域张量$C$吸收到水平MPS中。
+每次吸收后，通过奇异值分解截断MPS的bond dimension以控制计算成本。
+由于精确bond dimension $\chi=2^{O(N)}$随$N$指数增长，实际可处理的
+系统尺寸受限于可用计算资源。粗略估计，在单个计算节点上可精确收缩至$N\approx15\sim20$。
+
+尽管计算复杂度是指数型的，张量网络方法有两个不可替代的优势。
+第一，结果完全精确——不包含任何统计噪声或截断近似（只要不进行bond dimension
+截断），与Monte Carlo的随机误差形成互补。第二，张量网络的构造从MPO的代数
+结构出发，直接编码了皇后约束的精确数学形式，提供了对约束满足问题结构的
+解析洞见——特别是幂零性、边界条件分离、局域张量稀疏性等特征，
+这些是纯数值方法难以揭示的。
+
+从方法论角度看，张量网络与Monte Carlo分别覆盖了互补的$N$区域。
+张量网络在$N$较小（$N\lesssim20$）时给出无统计噪声的精确$Q(N)$值，
+为Monte Carlo程序提供验证基准。Monte Carlo在大$N$（$N\gtrsim32$）时
+通过热力学积分间接测量$\gamma$，精度受限于有限$N$修正。
+两种方法的联合使用构成了N皇后问题统计力学研究的完整工具箱。
+
+更一般地，张量网络收缩为约束满足问题的精确计数提供了一个通用框架
+\cite{Kourtis2019,Vanderstraeten2018}。N皇后问题作为具有规则二维几何结构的
+约束满足问题的典型实例，其张量网络表述中呈现的幂零转移矩阵、超广延熵等特征，
+可能也存在于其他具有类似``填充约束''结构的组合计数问题中，
+为进一步的理论探索提供了方向。
+
+本研究使用的Monte Carlo模拟代码与数据、张量网络精确收缩程序以及分析脚本
+均已公开发布于GitHub仓库\cite{github_repo}，以便后续工作复现与扩展。

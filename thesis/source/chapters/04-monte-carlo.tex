@@ -1,0 +1,120 @@
+﻿\chapter{有限温度蒙特卡洛模拟结果}
+
+\section{收敛性诊断}
+
+在呈现热力学物理量之前，我们首先核实Monte Carlo模拟是否达到平衡并产生统计独立的测量。
+图\ref{fig:convergence}展示了Kawasaki动力学（皇后-空位交换）的接受率和能量序列的
+积分自相关时间$\tau_{\text{int}}$随温度的变化，涵盖$N=8\sim1024$共8个系统尺寸。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{fig2_convergence.png}
+  \caption{Monte Carlo模拟的收敛性诊断。\textbf{(a)}~Kawasaki（皇后-空位交换）
+  接受率随温度的变化（对数纵坐标），$N=8\sim1024$。$T\lesssim0.1\,J$时接受率
+  降至$10^{-5}$以下，$T=1\,J$时升至$0.38\sim0.47$。\textbf{(b)}~能量的积分
+  自相关时间$\tau_{\text{int}}$（对数纵坐标）。尖峰位于$T\approx0.055\sim0.10\,J$处，
+  比热峰$T^{*}\approx0.235\,J$处$\tau_{\text{int}}$仅为$85\sim200$ sweeps。}
+  \label{fig:convergence}
+\end{figure}
+
+接受率（图\ref{fig:convergence}a）展示了以下特征：（1）随温度单调递增——低温下
+由于Kawasaki交换大概率产生皇后攻击被拒绝（$T\lesssim0.1\,J$时接受率$<10^{-5}$），
+系统近乎冻结在基态；温度升高后约束松弛，更多交换变为能量可接受。
+（2）在$T=1\,J$时接受率达到$0.38\sim0.47$，对于$N\ge32$曲线基本重合，
+表明接受率已趋近热力学极限。（3）$N=8$的接受率显著偏高（$T=1\,J$时约$0.47$
+vs 大$N$的$0.38$），因为小棋盘上皇后密度低、约束更弱。
+
+自相关时间（图\ref{fig:convergence}b）的低温行为值得特别关注：
+（1）$\tau_{\text{int}}$在$T\approx0.055\sim0.10\,J$处出现尖锐峰值，
+$N=1024$时峰高达$\tau_{\text{int}}\approx5.0\times10^{4}$ sweeps。
+（2）然而，这个峰值位于远低于比热峰（$T^{*}\approx0.235\,J$）的温度区域。
+在$T^{*}$处，$\tau_{\text{int}}$仅为$85\sim200$ sweeps，
+对于所有$N$均如此低的值表明比热峰区域的物理已被高精度采样。
+（3）$T>0.4\,J$时$\tau_{\text{int}}$迅速降至$5\sim10$ sweeps，
+高温区的去相关效率极高。
+
+最关键的是采样充分性：即使在$\tau_{\text{int}}$最不利的低温峰值
+（$\tau_{\text{int}}\approx5.0\times10^{4}$ sweeps，$N=1024$），
+$10^{8}$次测量sweep仍产生约2000个独立样本——足以精确测量已趋于零的低温能量和比热。
+在物理上最重要的$C_{v}$峰温度，独立样本超过$5\times10^{5}$个，统计精度极高。
+
+\section{能量}
+
+图\ref{fig:energy}展示了每皇后能量$E/N$随温度的变化
+（对数温度坐标，全范围$T=0.05\sim400\,J$）。
+最显著的特征是$N\ge32$时所有曲线几乎不可区分，证实了能量向热力学极限的快速收敛。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.85\textwidth]{fig3_energy.png}
+  \caption{每皇后能量$E/N$随温度的变化（对数温度坐标），$N=8\sim1024$。
+  虚线标记解析高温极限$E/N=5/3$（$N\to\infty$）。$N\ge32$时曲线几乎不可区分。}
+  \label{fig:energy}
+\end{figure}
+
+在高温区，所有尺寸的$E/N$精确接近有限$N$理论值
+$\langle E\rangle/N=(5N-1)(N-1)/[3N(N+1)]$。
+在$T=500\,J$处，模拟值与解析预测值的偏差处于万分之几的水平，
+验证了模拟的精确性和解析推导的正确性。在低温区（$T\lesssim0.2\,J$），
+$E/N$呈指数衰减趋近零，与基态能量为零的预期一致。
+
+\section{比热收敛与无相变}
+
+比热$C_{v}/N=(\langle E^{2}\rangle-\langle E\rangle^{2})/(T^{2}N)$的测量
+是本研究的核心实验。图\ref{fig:cv}展示了在峰值温度区域（$T\le1\,J$，线性坐标）
+$C_{v}/N$随温度的变化曲线以及峰值的细节。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{fig4_cv.png}
+  \caption{\textbf{(a)}~每皇后比热$C_{v}/N$随$T$的变化（$T\le1\,J$，线性坐标），含误差棒。
+  插图：$N\ge64$的峰值区域放大。$N\ge32$后曲线坍塌到一条普适曲线上。
+  \textbf{(b)}~$\gamma_{\rm MC}=\ln N-s_{0}^{\rm MC}$随$N$的变化（$N=32\sim1024$）。
+  虚线标记精确值$\gamma=1.94400(1)$。实线为
+  $\gamma_{\rm MC}(N)=\gamma_{\infty}+a\,N^{-\alpha}$的拟合，
+  $\gamma_{\infty}=1.947\pm0.004$，$\alpha=0.81\pm0.06$。}
+  \label{fig:cv}
+\end{figure}
+
+比热曲线最引人注目的特征是其向热力学极限的收敛性：当$N\ge32$时，8个尺寸的
+$C_{v}/N$曲线坍塌到同一条与$N$无关的函数上。这是本研究的核心实验发现之一。
+$C_{v}/N$的峰值$C_{v}^{\max}/N\approx1.63$出现在温度$T^{*}\approx0.235\,J$处，
+且峰的高度和位置在$N\ge32$后基本不随尺寸变化。
+
+表\ref{tab:cv_peak}列出了所有系统尺寸的$C_{v}^{\max}/N$峰值数据。
+$C_{v}^{\max}/N$在$N=32\sim1024$范围内的变化幅度$\Delta C_{v}^{\max}/N\lesssim0.007$，
+远小于对数发散$\propto\ln N$所预期的$\sim0.06$/加倍量级。
+这一行为排除了热力学相变的存在，将比热峰定性为Schottky型异常
+\cite{Binder2010}——一种由有限能隙而非对称性破缺产生的宽峰结构，无临界涨落。
+
+\begin{table}[htbp]
+  \centering
+  \caption{$C_{v}/N$峰值随系统尺寸的标度行为。$N=8\sim128$使用高精度密集
+  温度取样（$T\in(0.20,0.30)\,J$）；$N=256\sim1024$使用标准280点网格。}
+  \label{tab:cv_peak}
+  \begin{tabular}{cccc}
+    \toprule
+    $N$ & $T_{\text{peak}}$ (J) & $C_{v}^{\max}/N$ & 误差 \\
+    \midrule
+    8    & 0.281  & 1.6915 & 0.0002 \\
+    16   & 0.227  & 1.6783 & 0.0006 \\
+    32   & 0.231  & 1.6288 & 0.0005 \\
+    64   & 0.237  & 1.6216 & 0.0004 \\
+    100  & 0.237  & 1.6229 & 0.0004 \\
+    128  & 0.237  & 1.6225 & 0.0004 \\
+    256  & 0.2450 & 1.6238 & 0.0020 \\
+    512  & 0.2400 & 1.6287 & 0.0023 \\
+    1024 & 0.2325 & 1.6251 & 0.0024 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+从物理上理解，比热峰反映了系统从非攻击基态（$E=0$）到含少量攻击对的低能激发态
+（$E\sim O(1)$）的热激发。基态与激发态之间的有限能隙产生了具有特征宽度的比热峰，
+但没有伴随任何序参量的涌现或长程关联的发散——这正是Schottky异常的典型特征。
+
+$C_{v}/N$收敛到一条与尺寸无关的普适函数，具有深远的物理学意义。它意味着有限温度下
+系统的热力学行为在热力学极限下是严格定义的——每皇后的能量、比热、熵等广延量与$N$的
+比值都存在良好定义的大$N$极限。这为下一章的热力学积分提供了必要前提：
+只有$C_{v}/N$在$N\to\infty$时有确定极限，积分
+$\int_{0}^{\infty}(C_{v}/NT)\,\mathrm{d}T$才是一个不依赖$N$的常数。

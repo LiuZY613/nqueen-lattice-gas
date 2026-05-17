@@ -1,0 +1,68 @@
+% njuthesis 参数设置文件 v1.4.3 2025-05-21
+
+% info 类用于录入个人信息
+\njusetup[info]{
+    title = {基于格点气体模型与张量网络的N皇后问题研究},
+    %
+    title* = {Statistical Mechanics of the N-Queens Problem
+              via Lattice Gas Model and Tensor Networks},
+    %
+    author = {刘宗岳},
+    %
+    author* = {Liu Zongyue},
+    %
+    keywords = {N皇后问题,蒙特卡洛模拟,热力学积分,张量网络,Simkin常数},
+    %
+    keywords* = {statistical mechanics,Monte Carlo simulation,
+                 thermodynamic integration,tensor network,Simkin constant},
+    %
+    grade = {2022},
+    %
+    student-id = {221240005},
+    %
+    department = {匡亚明学院},
+    department* = {Kuang Yaming Honors School},
+    %
+    major = {物理学},
+    major* = {Physics},
+    %
+    supervisor = {吴盛俊,教授},
+    supervisor*= {Professor Shengjun Wu},
+    %
+    supervisor-ii = {王磊,教授},
+    supervisor-ii* = {Professor Lei Wang},
+    %
+    submit-date = {2026-05-16},
+}
+
+% bib 类用于参考文献设置
+\njusetup[bib]{
+    style = numeric,
+    %
+    resource = {njuthesis-sample.bib},
+}
+
+% image 类用于载入外置的图片
+\njusetup[image]{
+    path = {{./figures/}},
+    nju-emblem = {nju-emblem},
+    nju-name = {nju-name},
+}
+
+% abstract 类用于设置摘要样式
+\njusetup[abstract]{
+    toc-entry = false,
+}
+
+% 目录自身是否显示在目录条目中
+\njusetup{
+    tableofcontents/toc-entry = false,
+}
+
+% 为目录中的章标题添加引导线
+\njusetup[tableofcontents/dotline]{chapter}
+
+% math 类用于设置数学符号样式
+\njusetup[math]{
+    style = GB,
+}

@@ -27,3 +27,22 @@ eassy_v2.pdf
 !tensor/**
 
 eassy_v2.pdf
+
+# 保留 thesis 文件夹（南大本科毕业论文 + LaTeX 源码）
+!thesis/
+!thesis/**
+
+# 排除 LaTeX 构建产物
+thesis/source/*.aux
+thesis/source/*.log
+thesis/source/*.out
+thesis/source/*.toc
+thesis/source/*.bbl
+thesis/source/*.bcf
+thesis/source/*.blg
+thesis/source/*.thm
+thesis/source/*.xdv
+thesis/source/*.fls
+thesis/source/*.fdb_latexmk
+thesis/source/thesis.run.xml
+thesis/source/chapters/*.aux
