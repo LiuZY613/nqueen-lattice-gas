@@ -52,10 +52,58 @@ Monte Carlo产生的$C_{v}(T)/N$数据。Simkin-Nobel精确值$\gamma=1.94400(1)
 \section{Simkin常数的热力学测定}
 
 数值积分的具体操作如下：我们在280个温度网格点（$T=0.05\sim400\,J$）上使用
-梯形法则计算积分。低温截断$T_{\min}=0.05\,J$：在$T<0.1\,J$区域，
-$C_{v}/T$呈指数衰减，截断贡献小于总积分的$0.01\%$。高温截断$T_{\max}=400\,J$：
-在$T>400\,J$区域，$C_{v}/T\propto T^{-3}$快速衰减，截断误差同样小于$0.01\%$。
-对数温度网格上的梯形法则离散化误差远小于Monte Carlo数据的统计不确定性。
+梯形法则计算积分。为保证测得的$\gamma_{\rm MC}$误差完全可控，下面对该流程中
+所有可能的误差源逐项作出解析估计。
+
+\paragraph{(i) 低温截断误差。}在$T\ll J$区域，
+比热由两能级Schottky形式主导：$C_{v}/N\sim M_{\rm eff}(J/T)^{2}\exp(-J/T)$
+（见第\ref{fig:cv}图与式\ref{eq:lowT}）。因此被积函数$C_{v}/(NT)$在低温区
+满足$C_{v}/(NT)\sim M_{\rm eff}\,J^{2}/T^{3}\cdot\exp(-J/T)$。
+利用变量替换$u=J/T$可得截断贡献的解析上界：
+%
+\begin{equation}
+  \int_{0}^{T_{\min}}\!\frac{C_{v}}{NT}\,\mathrm{d}T
+  \;\lesssim\; M_{\rm eff}\,\Bigl(\frac{J}{T_{\min}}+1\Bigr)\exp\!\Bigl(-\frac{J}{T_{\min}}\Bigr).
+\end{equation}
+%
+代入$T_{\min}=0.05\,J$（即$J/T_{\min}=20$）与$M_{\rm eff}\sim O(1)$：
+截断贡献$\lesssim 20\cdot e^{-20}\approx 4\times 10^{-8}$。与总积分
+$1+\gamma\approx 2.944$相比，相对误差量级仅$10^{-8}$，可完全忽略。
+
+\paragraph{(ii) 高温截断误差。}在$T\gg J$区域，由高温展开
+$\langle E\rangle = \langle E\rangle_{\infty} - \langle\Delta H^{2}\rangle_{\infty}/T+O(T^{-2})$
+立即可得$C_{v}=\langle\Delta H^{2}\rangle_{\infty}/T^{2}+O(T^{-3})$。
+对于N皇后格点气体，$\langle\Delta H^{2}\rangle_{\infty}=O(N)$
+（由攻击线分解形式$H=\sum_{\alpha}\binom{n_{\alpha}}{2}$中$6N-2$条弱关联攻击线
+贡献的求和给出）。因此$C_{v}/(NT)\sim O(1)/T^{3}$，截断贡献为
+%
+\begin{equation}
+  \int_{T_{\max}}^{\infty}\!\frac{C_{v}}{NT}\,\mathrm{d}T
+  \;\sim\;\frac{\langle\Delta H^{2}\rangle_{\infty}/N}{2T_{\max}^{2}}
+  \;\sim\;\frac{1}{T_{\max}^{2}}.
+\end{equation}
+%
+代入$T_{\max}=400\,J$：相对误差量级$\sim 1/(400)^{2}\approx 6\times 10^{-6}$，
+亦远小于统计误差。
+
+\paragraph{(iii) 梯形法离散化误差。}我们的温度网格在$T=0.05\sim 400\,J$上
+近似按对数均匀分布，共$280$个点。对数变量$x=\ln T$下的步长
+$h=\ln(T_{\max}/T_{\min})/279=\ln(8000)/279\approx 0.032$。
+对数变量上的梯形法则离散化误差按经典估计为$O(h^{2})\cdot\max|f''|/12$，
+其中$f(x)=T\cdot C_{v}/N\cdot e^{x}/T=C_{v}/N$（按$\mathrm{d}T=T\,\mathrm{d}x$
+换元后被积函数光滑）。由此估计的相对离散化误差量级为
+$h^{2}/12\approx 8.5\times 10^{-5}$，亦比$0.1\%$量级的统计误差低一个数量级以上。
+
+\paragraph{(iv) jackknife统计误差。}如下面将看到的，对$200$个等长bin做
+jackknife传播得到$\sigma(\gamma_{\rm MC})\approx 0.003$（$N=1024$，
+表\ref{tab:thermo}）。这是当前误差预算中的\textbf{主导项}。
+
+\paragraph{综合误差预算。}上述四项中，截断与离散化合计贡献小于$10^{-4}$
+量级的相对误差，远在$\sigma(\gamma_{\rm MC})/\gamma\approx 1.5\times 10^{-3}$
+之下，因此$\gamma_{\rm MC}$的最终不确定度由Monte Carlo采样的统计涨落
+（jackknife）与N皇后渐近公式的有限$N$修正$O(N^{-\alpha})$主导，
+而非数值积分本身。
+
 
 统计误差的传播通过jackknife方法系统处理：对200个jackknife样本分别计算
 $C_{v}(T)/N$、执行梯形积分得到200个$s_{0}^{\rm MC}$和$\gamma_{\rm MC}$的
