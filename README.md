@@ -1,150 +1,157 @@
-# n-Queens Lattice Gas: Monte Carlo Simulations
+# Reproducible Monte Carlo study of the N-queens lattice gas
 
-Simulation code and data accompanying the paper:
+This repository contains the simulation source, production data, dense
+specific-heat peak scans, analysis scripts, and run provenance for the paper
+"Statistical mechanics of the N-queens problem."
 
-> Z.-Y. Liu and L. Wang, "Statistical mechanics of the *n*-queens lattice gas: Monte Carlo simulations and thermodynamic integration," submitted to Physical Review E.
-
-## Model
-
-We study the *n*-queens problem as a lattice gas on an N x N chessboard. Each site carries an occupation variable n_ij in {0, 1}, and the Hamiltonian counts mutually attacking queen pairs:
-
-H = J * sum_{attacking pairs} n_ij * n_i'j'
-
-where the sum runs over all pairs sharing a row, column, main diagonal, or anti-diagonal. We work in the canonical ensemble with fixed particle number N and coupling J = 1.
-
-The Monte Carlo dynamics uses Kawasaki (queen-vacancy exchange) moves with the Metropolis acceptance criterion. One sweep consists of N attempted exchanges.
-
-## Repository Structure
-
-```
-src/                    Monte Carlo simulation source code
-  mc_canonical.c        Main simulation code (C, single-file)
-  Makefile              Build instructions
-
-scripts/                SLURM job submission scripts
-  run_8to512.sh         Run N = 8, 16, 32, 64, 128, 256, 512 (280 temperatures each)
-  run_1024.sh           Run N = 1024 (280 temperatures)
-  worker.sh             Single (N, T) simulation task (called by srun)
-
-data/                   Simulation results (280 temperature points per system size)
-  data_N8.dat           N = 8
-  data_N16.dat          N = 16
-  data_N32.dat          N = 32
-  data_N64.dat          N = 64
-  data_N128.dat         N = 128
-  data_N256.dat         N = 256
-  data_N512.dat         N = 512
-  data_N1024.dat        N = 1024
-
-analysis/               Python scripts for data analysis and figure generation
-  plot_PRE_figures.py   Generate publication figures (energy, specific heat)
-  plot_fig2_convergence.py  Convergence diagnostics figure
-  plot_fig1_schematic.py    Schematic diagram
-  merge_data.py         Merge raw simulation outputs into data files
-  compute_gamma.py      Compute Simkin constant via thermodynamic integration
-  calc_entropy.py       Calculate entropy from Cv data
-```
-
-## Building
+The fastest route to every reported numerical result starts from the archived
+data and takes one command:
 
 ```bash
-cd src
-make
+python -m pip install -r requirements.txt
+python reproduce.py
 ```
 
-Requires only a C compiler (gcc recommended) and the standard math library. No external dependencies.
-
-## Running a Single Simulation
+Equivalently, on a Unix-like system:
 
 ```bash
-./mc_canonical -L 64 -N 64 -T 0.235 -therm 2000000 -nmeas 100000000 -nbin 200 -seed 42
+make reproduce
 ```
 
-**Parameters:**
-| Flag | Description | Default |
-|------|-------------|---------|
-| `-L` | Board size (L x L) | 8 |
-| `-N` | Number of queens | 8 |
-| `-T` | Temperature (units of J) | 1.0 |
-| `-therm` | Thermalization sweeps | 100000 |
-| `-nmeas` | Measurement sweeps | 1000000 |
-| `-nbin` | Jackknife bins | 200 |
-| `-seed` | RNG seed | 12345 |
-| `-max_lag` | Max lag for autocorrelation | 2000 |
-| `-acf_interval` | ACF sampling interval (sweeps) | 10 |
+The command validates all input grids, repeats the thermodynamic integration,
+propagates the jackknife errors, repeats the finite-size fit and the 5000-sample
+peak bootstrap, and regenerates the publication plots. Outputs are written to
+`results/` and include machine-readable CSV files and a Markdown report.
 
-**Output format** (single line, space-separated):
-```
-T  E/N  err_E/N  Cv/N  err_Cv/N  accept_rate  E_total  tau_int
-```
+## Model and Monte Carlo dynamics
 
-## Reproducing the Paper Data
+An N by N board contains exactly N queens. The Hamiltonian counts pairs of
+queens sharing a row, column, main diagonal, or anti-diagonal, with coupling
+J = 1. Sampling uses queen-vacancy Kawasaki exchanges with the Metropolis
+acceptance rule. One sweep is N attempted exchanges.
 
-The paper uses 280 temperature points per system size with 10^8 measurement sweeps and 2 x 10^6 thermalization sweeps. On a SLURM cluster:
+Energy is maintained incrementally from row, column, and diagonal occupancy
+arrays. Consequently, measuring E and E squared after each sweep does not
+require rescanning the board. The energy series used for the integrated
+autocorrelation time is sampled every 10 sweeps.
+
+## Production configuration
+
+The production program is `src/mc_canonical.c`.
+
+- Language: ISO C using only the standard C library and `libm`.
+- Historical compiler: GCC 8.5.0, invoked as `gcc -O3 -Wall ... -lm`.
+- Source SHA-256 used for the archived runs:
+  `a2facd9cd0ca12150ced2f3e38826df885315b4132213f6a3198a1a613a35c25`.
+- Random-number generator: xorshift128+ with a 128-bit state and ten warm-up
+  draws after initialization.
+- Main-run seed: `20260324 + 1000*N + temperature_index`, where the index runs
+  from 0 to 279. There is one deterministic stream per state point, hence 2240
+  main-run streams in total.
+- Measurement length: 100,000,000 sweeps per state point.
+- Thermalization length: 2,000,000 sweeps per state point.
+- Error analysis: 200 jackknife bins.
+- Autocorrelation settings: maximum lag 5000 stored intervals and one stored
+  energy every 10 sweeps.
+
+The 280-point temperature grid spans 0.05 J through 500 J. It contains 160
+points from 0.1025 J through 0.5000 J at spacing 0.0025 J, 11 points from
+0.050 J through 0.100 J at spacing 0.005 J, and 109 intermediate/high
+temperature points. The thermodynamic integral uses the 278 points through
+400 J. The 450 J and 500 J points are high-temperature consistency checks.
+
+## Dense peak data used for the peak-scaling table
+
+For N = 8, 16, 32, 64, 100, and 128, the complete peak grid contains 101
+temperatures from 0.200 J through 0.300 J at spacing 0.001 J. It was assembled
+from two archived campaigns:
+
+- `data/peak/data_N*_baseline.dat` contains the original 30-temperature runs.
+  The five points at 0.200, 0.225, 0.250, 0.275, and 0.300 J enter the peak fit.
+  Their seed rule was `20260320 + 1000*N + temperature_index`.
+- `data/peak/data_N*_additional.dat` contains the remaining 96 peak points.
+  Their seed rule was `20260323 + 10000*N + peak_temperature_index`.
+
+Both campaigns used 2,000,000 thermalization sweeps, 100,000,000 measurement
+sweeps, 200 jackknife bins, maximum autocorrelation lag 2000, and an energy
+sampling interval of 10 sweeps. `analysis/reproduce_results.py` reconstructs
+the 101-point grid, performs an inverse-variance-weighted quartic fit, and uses
+5000 deterministic Gaussian bootstrap replicas to estimate the peak error.
+
+## Recorded computational budget
+
+The main production data were generated by two concurrent 280-task Slurm jobs.
+The archived stdout records are in `provenance/logs/`.
+
+- N = 8 through 512: 2 h 38 min 39 s elapsed, corresponding to approximately
+  10.89 million attempted moves per second per core over the complete run.
+- N = 1024: 5 h 7 min 54 s elapsed, corresponding to approximately 5.65
+  million attempted moves per second per core.
+- Combined allocation: approximately 2177 core-hours. Because the jobs
+  overlapped, the elapsed interval from the first start to the final completion
+  was 5 h 11 min 24 s.
+- The six successful dense-peak batches consumed approximately 84.4 core-hours
+  and completed in about 12 minutes of overlapping wall time.
+
+The historical scheduler logs did not retain a CPU marketing-model string.
+They do retain the exact job timing and task counts; we therefore report those
+measured quantities rather than infer a processor model. The runs used the
+BCM `home` partition on x86-64 Linux nodes. See `provenance/PRODUCTION.md` for
+the full accounting and the distinction between recorded facts and unavailable
+historical metadata.
+
+## Repository layout
+
+- `src/`: the C Monte Carlo code and Makefile.
+- `scripts/`: portable Slurm production scripts and data-merging utilities.
+- `data/`: the eight 280-point production data sets.
+- `data/peak/`: the two source campaigns for the 101-point peak grids.
+- `analysis/`: thermodynamic integration, bootstrap, validation, and plotting.
+- `provenance/`: historical run configuration, timing, and original stdout.
+- `results/`: generated locally by `python reproduce.py` and intentionally not
+  versioned.
+
+## Re-running the Monte Carlo simulations
+
+First compile and run a short local smoke test:
 
 ```bash
-# Compile
-cd src && make && cd ..
-
-# Submit jobs (requires 280 CPU cores)
-sbatch scripts/run_8to512.sh    # N = 8 to 512
-sbatch scripts/run_1024.sh      # N = 1024
+make smoke
 ```
 
-Each job runs 280 temperatures in parallel via `srun`. Total wall-clock time is approximately 9 hours on 280 cores.
-
-## Data Format
-
-Each `data_N{N}.dat` file contains 280 rows (one per temperature point) with 8 columns:
-
-| Column | Quantity | Description |
-|--------|----------|-------------|
-| 1 | T | Temperature (units of J) |
-| 2 | E/N | Energy per queen |
-| 3 | err_E/N | Jackknife error on E/N |
-| 4 | Cv/N | Specific heat per queen |
-| 5 | err_Cv/N | Jackknife error on Cv/N |
-| 6 | accept_rate | Metropolis acceptance rate |
-| 7 | E_total | Total energy |
-| 8 | tau_int | Integrated autocorrelation time (sweeps) |
-
-Temperature range: T = 0.05 to 500 J, with dense sampling (step 0.0025 J) in the specific heat peak region T = 0.1025 to 0.5 J.
-
-## Generating Figures
+For a Slurm cluster, review the partition, time, and allocation directives in
+the scripts for the local scheduler, then run:
 
 ```bash
-cd analysis
-python plot_PRE_figures.py       # Fig. 3 (energy) and Fig. 4 (specific heat)
-python plot_fig2_convergence.py  # Fig. 2 (convergence diagnostics)
-python plot_fig1_schematic.py    # Fig. 1 (schematic)
+sbatch scripts/run_8to512.sh
+sbatch scripts/run_1024.sh
+gcc -O3 -Wall -o build/mc_canonical_peak src/mc_canonical.c -lm
+sbatch scripts/run_peak_grid.sh
 ```
 
-Requires Python 3 with NumPy and Matplotlib.
+These are expensive production calculations. The first two scripts reproduce
+the main 280-point campaigns. The third is a clean 101-element job-array
+version of the peak scan. `scripts/merge_peak_grid.py` merges its outputs after
+all array elements finish.
 
-## Computing the Simkin Constant
+## Individual run
 
 ```bash
-cd analysis
-python compute_gamma.py
+make -C src
+./src/mc_canonical -L 64 -N 64 -T 0.235 \
+  -therm 2000000 -nmeas 100000000 -nbin 200 -seed 42 \
+  -max_lag 5000 -acf_interval 10
 ```
 
-This performs the thermodynamic integration of Cv/T to extract the ground-state entropy and the Simkin constant gamma_MC for each system size.
+The eight output columns are temperature, E/N, its jackknife error, Cv/N, its
+jackknife error, acceptance rate, total energy, and integrated autocorrelation
+time in sweeps.
+
+## Citation and archival version
+
+Use `CITATION.cff` for citation metadata. A release tag and archival DOI will
+be added to this section when the reviewed repository version is deposited.
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
-
-## Citation
-
-If you use this code or data, please cite:
-
-```bibtex
-@article{liu2026nqueens,
-  title={Statistical mechanics of the $n$-queens lattice gas:
-         Monte Carlo simulations and thermodynamic integration},
-  author={Liu, Zong-Yue and Wang, Lei},
-  journal={Physical Review E},
-  year={2026},
-  note={submitted}
-}
-```
+The code and data are released under the MIT License; see `LICENSE`.

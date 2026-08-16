@@ -2,6 +2,8 @@
 src/mc_canonical
 *.o
 *.exe
+results/
+runs/
 
 # Python
 __pycache__/

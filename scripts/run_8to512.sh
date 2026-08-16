@@ -4,6 +4,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=280
 #SBATCH --cpus-per-task=1
+#SBATCH --time=12:00:00
 #SBATCH --output=run_8to512_%j.log
 #SBATCH --error=run_8to512_%j.err
 
@@ -12,8 +13,9 @@
 #  每个尺度用 srun 280并行，完成后立即合并
 # ============================================================
 
-set -e
-WORKDIR=~/private/homefile/nqueen模拟/task2_N等于L
+set -euo pipefail
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+WORKDIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$WORKDIR"
 
 echo "=========================================="
@@ -21,7 +23,8 @@ echo "  N=8~512 × 280 temperatures — $(date)"
 echo "=========================================="
 
 # Compile
-gcc -O3 -o mc_canonical mc_canonical.c -lm -Wall
+mkdir -p "$WORKDIR/build"
+gcc -O3 -o "$WORKDIR/build/mc_canonical" "$WORKDIR/src/mc_canonical.c" -lm -Wall
 echo "Compiled."
 
 # Parameters
@@ -29,10 +32,10 @@ NMEAS=100000000
 THERM=2000000
 NBIN=200
 BASE_SEED=20260324
-BIN="$WORKDIR/mc_canonical"
+BIN="$WORKDIR/build/mc_canonical"
 
 # Directories
-RUNDIR="$WORKDIR/run_280pt_small"
+RUNDIR="${RUN_ROOT:-$WORKDIR/runs/main_8to512}"
 RESULTSDIR="$RUNDIR/results"
 DATADIR="$RUNDIR/data"
 mkdir -p "$RESULTSDIR" "$DATADIR"
@@ -56,7 +59,7 @@ NTEMPS=$(wc -l < "$TEMP_LIST")
 echo "Temperature points: $NTEMPS"
 
 # Copy worker script
-cp "$WORKDIR/worker.sh" "$RUNDIR/worker.sh"
+cp "$SCRIPT_DIR/worker.sh" "$RUNDIR/worker.sh"
 chmod +x "$RUNDIR/worker.sh"
 
 # Run each size: srun as barrier, merge after each

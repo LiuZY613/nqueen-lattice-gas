@@ -1,0 +1,30 @@
+==========================================
+  N=8~512 × 280 temperatures — Tue Mar 24 20:40:14 CST 2026
+==========================================
+Compiled.
+Temperature points: 280
+
+=== N=8 — Start Tue Mar 24 20:40:14 CST 2026 ===
+  N=8 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N8.dat — Tue Mar 24 20:41:18 CST 2026
+
+=== N=16 — Start Tue Mar 24 20:41:18 CST 2026 ===
+  N=16 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N16.dat — Tue Mar 24 20:43:33 CST 2026
+
+=== N=32 — Start Tue Mar 24 20:43:33 CST 2026 ===
+  N=32 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N32.dat — Tue Mar 24 20:48:25 CST 2026
+
+=== N=64 — Start Tue Mar 24 20:48:25 CST 2026 ===
+  N=64 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N64.dat — Tue Mar 24 20:56:58 CST 2026
+
+=== N=128 — Start Tue Mar 24 20:56:58 CST 2026 ===
+  N=128 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N128.dat — Tue Mar 24 21:11:35 CST 2026
+
+=== N=256 — Start Tue Mar 24 21:11:35 CST 2026 ===
+  N=256 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N256.dat — Tue Mar 24 21:41:42 CST 2026
+
+=== N=512 — Start Tue Mar 24 21:41:42 CST 2026 ===
+  N=512 done: 280 points → /home/user_liuzy/private/homefile/nqueen模拟/task2_N等于L/run_280pt_small/data/data_N512.dat — Tue Mar 24 23:18:53 CST 2026
+
+==========================================
+  ALL N=8~512 COMPLETE — Tue Mar 24 23:18:53 CST 2026
+==========================================

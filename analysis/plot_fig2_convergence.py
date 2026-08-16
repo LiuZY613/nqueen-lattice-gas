@@ -47,6 +47,10 @@ COL_WIDTH = 3.4  # PRE single-column width in inches
 PANEL_HEIGHT = 2.5  # height per panel
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(BASE)
+DATA_DIR = os.path.join(ROOT, 'data')
+OUTPUT_DIR = os.path.join(ROOT, 'results', 'figures')
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ============================================================
 # Load data
@@ -57,7 +61,7 @@ markers = ['o', 's', '^', 'D', 'v', 'h', 'p', '*']
 
 data = {}
 for N in Ns:
-    fpath = os.path.join(BASE, f'data_N{N}.dat')
+    fpath = os.path.join(DATA_DIR, f'data_N{N}.dat')
     if not os.path.exists(fpath):
         print(f"Warning: {fpath} not found, skipping N={N}")
         continue
@@ -137,9 +141,9 @@ ax2.text(0.97, 0.05, r'$\bf{(b)}$', transform=ax2.transAxes,
 
 plt.tight_layout(h_pad=0.5)
 try:
-    fig.savefig(os.path.join(BASE, 'fig2_convergence.pdf'), dpi=300)
+    fig.savefig(os.path.join(OUTPUT_DIR, 'fig2_convergence.pdf'), dpi=300)
 except PermissionError:
     print("Warning: PDF locked, skipping PDF output")
-fig.savefig(os.path.join(BASE, 'fig2_convergence.png'), dpi=300)
+fig.savefig(os.path.join(OUTPUT_DIR, 'fig2_convergence.png'), dpi=300)
 plt.close()
 print("Saved fig2_convergence.pdf/png")

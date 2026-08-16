@@ -4,6 +4,7 @@
 #SBATCH --ntasks=280
 #SBATCH --nodes=3-6
 #SBATCH --cpus-per-task=1
+#SBATCH --time=12:00:00
 #SBATCH --output=run_1024_%j.log
 #SBATCH --error=run_1024_%j.err
 
@@ -12,8 +13,9 @@
 #  280核并行，完成后合并
 # ============================================================
 
-set -e
-WORKDIR=~/private/homefile/nqueen模拟/task2_N等于L
+set -euo pipefail
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+WORKDIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$WORKDIR"
 
 echo "=========================================="
@@ -21,7 +23,8 @@ echo "  N=1024 × 280 temperatures — $(date)"
 echo "=========================================="
 
 # Compile
-gcc -O3 -o mc_canonical_1024 mc_canonical.c -lm -Wall
+mkdir -p "$WORKDIR/build"
+gcc -O3 -o "$WORKDIR/build/mc_canonical_1024" "$WORKDIR/src/mc_canonical.c" -lm -Wall
 echo "Compiled."
 
 # Parameters
@@ -30,10 +33,10 @@ NMEAS=100000000
 THERM=2000000
 NBIN=200
 BASE_SEED=20260324
-BIN="$WORKDIR/mc_canonical_1024"
+BIN="$WORKDIR/build/mc_canonical_1024"
 
 # Directories
-RUNDIR="$WORKDIR/run_280pt_1024"
+RUNDIR="${RUN_ROOT:-$WORKDIR/runs/main_1024}"
 RESULTSDIR="$RUNDIR/results"
 DATADIR="$RUNDIR/data"
 mkdir -p "$RESULTSDIR" "$DATADIR"

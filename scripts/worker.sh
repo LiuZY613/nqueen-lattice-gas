@@ -2,6 +2,8 @@
 # worker.sh — 单个 (N, T) 模拟任务
 # 由 srun 调用，SLURM_PROCID 自动设置为 0~279
 
+set -euo pipefail
+
 N=$1
 TEMP_LIST=$2
 OUTDIR=$3
@@ -11,7 +13,7 @@ NBIN=$6
 BASE_SEED=$7
 BIN=$8
 
-RANK=${SLURM_PROCID}
+RANK=${SLURM_PROCID:?SLURM_PROCID is required}
 T=$(sed -n "$((RANK+1))p" "$TEMP_LIST")
 
 if [ -z "$T" ]; then
